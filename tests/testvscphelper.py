@@ -29,53 +29,59 @@
 import sys
 from ctypes import *
 import time
-from vscp import *
+
+sys.path.append('../pyvscp')    # Must have dir structure on same level as pyvscphelper
+import vscp
+sys.path.append('../pyvscpclasses')    # Must have dir structure on same level as pyvscphelper
+import vscp_class
+sys.path.append('../pyvscptypes')    # Must have dir structure on same level as pyvscphelper
+import vscp_type
 
 sys.path.append('.')
 import vscphelper 
 
-print(vscp.VSCP_ERROR_SUCCESS)
+print(vscp.VSCP_ERROR_ERROR)
 
 print("------------------------------------------------------------------------")
-h1 = vscphelper.vscphelper.newSession()
+h1 = vscphelper.newSession()
 if (0 == h1 ):
-    vscphelper.vscphelper.closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Unable to open vscphelp library session')
 
 print("------------------------------------------------------------------------")
 print("\n\nConnection in progress...")
-rv = open(h1,"192.168.1.7:9598","admin","secret")
+rv = vscphelper.open(h1,"192.168.1.7:9598","admin","secret")
 if vscp.VSCP_ERROR_SUCCESS == rv :
     print("Command success: open on channel 1")
 else:
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: open on channel 1  Error code=%d' % rv )
 
-if ( vscp.VSCP_ERROR_SUCCESS == isConnected(h1) ):
+if ( vscp.VSCP_ERROR_SUCCESS == vscphelper.isConnected(h1) ):
     print("CONNECTED!")
 else:
     print("DISCONNECTED!")
 
 print("------------------------------------------------------------------------")
 print("command: noop")
-rv = lib.vscphlp_noop( h1 )
+rv = vscphelper.noop( h1 )
 if vscp.VSCP_ERROR_SUCCESS != rv :
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: ''noop''  Error code=%d' % rv )
 
 print("------------------------------------------------------------------------")
 print("command: doCommand")
 command = "NOOP\r\n"
-rv = doCommand( h1, command )
+rv = vscphelper.doCommand( h1, command )
 if vscp.VSCP_ERROR_SUCCESS != rv :
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: ''doCommand''  Error code=%d' % rv )    
 
 print("------------------------------------------------------------------------")
 print("command: Get sever version")
-(rv,v1,v2,v3) = getVersion(h1)
+(rv,v1,v2,v3) = vscphelper.getVersion(h1)
 if vscp.VSCP_ERROR_SUCCESS != rv :
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: ''getVersion''  Error code=%d' % rv )
 print("Server version = %d.%d.%d" % (v1.value,v2.value,v3.value))
 
@@ -89,9 +95,9 @@ ex.data[0] = 1
 ex.data[1] = 2
 ex.data[2] = 3
 print("command: sendEventEx")
-rv = sendEventEx(h1,ex)
+rv = vscphelper.sendEventEx(h1,ex)
 if vscp.VSCP_ERROR_SUCCESS != rv :
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: sendEventEx  Error code=%d' % rv )
 
 e = vscp.vscpEvent()
@@ -107,9 +113,9 @@ e.pdata = cast(p, POINTER(c_ubyte))
 
 print("------------------------------------------------------------------------")
 print("command: sendEvent")
-rv = sendEvent(h1,e)
+rv = vscphelper.sendEvent(h1,e)
 if vscp.VSCP_ERROR_SUCCESS != rv :
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: sendEvent  Error code=%d' % rv )
 e.pdata = None    
 
@@ -120,18 +126,18 @@ cntAvailable = c_uint(0)
 while cntAvailable.value==0:
     print('Still waiting...')
     time.sleep(1)
-    isDataAvailable(h1,cntAvailable)
+    vscphelper.isDataAvailable(h1,cntAvailable)
 
 print('%d event(s) is available' % cntAvailable.value)
 
 for i in range(0,cntAvailable.value):
     ex = vscp.vscpEventEx()
-    if vscp.VSCP_ERROR_SUCCESS == receiveEventEx(h1,ex):
+    if vscp.VSCP_ERROR_SUCCESS == vscphelper.receiveEventEx(h1,ex):
         ex.dump()
 
 print("------------------------------------------------------------------------")
 print("Empty VSCP server queue")
-rv = clearDaemonEventQueue(h1)
+rv = vscphelper.clearDaemonEventQueue(h1)
 if vscp.VSCP_ERROR_SUCCESS == rv:
     print("Server queue now is empty")
 else:
@@ -139,13 +145,13 @@ else:
 
 print("------------------------------------------------------------------------")
 print("Enter receive loop. Will lock channel on just receiving events")
-if vscp.VSCP_ERROR_SUCCESS == enterReceiveLoop(h1):
+if vscp.VSCP_ERROR_SUCCESS == vscphelper.enterReceiveLoop(h1):
     print("Now blocking receive - will take forever if no events is received")
     
     rv = -1
     while vscp.VSCP_ERROR_SUCCESS != rv:
         ex = vscp.vscpEventEx()
-        rv = blockingReceiveEventEx(h1,ex, 1000 )
+        rv = vscphelper.blockingReceiveEventEx(h1,ex, 1000 )
         
         if vscp.VSCP_ERROR_SUCCESS == rv: 
             ex.dump()
@@ -155,7 +161,7 @@ if vscp.VSCP_ERROR_SUCCESS == enterReceiveLoop(h1):
                 break;
             print("Waiting for event in blocking mode rv=%d" % rv)
 
-    if vscp.VSCP_ERROR_SUCCESS == quitReceiveLoop(h1):
+    if vscp.VSCP_ERROR_SUCCESS == vscphelper.quitReceiveLoop(h1):
         print("Successfully left receive loop")
     else:
         print("failed to leave receive loop")
@@ -167,20 +173,20 @@ else:
 print("------------------------------------------------------------------------")
 filter = vscp.vscpEventFilter()
 filter.mask_class = 0xFFFF                      # All bits should be checked
-filter.filter_class = vscp_class.CLASS1_MEASUREMENT   # Only CLASS1.MEASUREMENT received
-rv = setFilter( h1, filter )
+filter.filter_class = vscp_class.VSCP_CLASS1_MEASUREMENT   # Only CLASS1.MEASUREMENT received
+rv = vscphelper.setFilter( h1, filter )
 if vscp.VSCP_ERROR_SUCCESS != rv :
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: setFilter  Error code=%d' % rv )
 
 print("Enter receive loop. Will lock channel for 60 seconds or unit CLASS1.MEASUREMENT event received")
-if vscp.VSCP_ERROR_SUCCESS == enterReceiveLoop(h1):
+if vscp.VSCP_ERROR_SUCCESS == vscphelper.enterReceiveLoop(h1):
        
     cnt = 0   
     rv = -1
     while vscp.VSCP_ERROR_SUCCESS != rv:
         ex = vscp.vscpEventEx()
-        rv = blockingReceiveEventEx(h1,ex, 1000 )
+        rv = vscphelper.blockingReceiveEventEx(h1,ex, 1000 )
         
         if vscp.VSCP_ERROR_SUCCESS == rv: 
             ex.dump()
@@ -192,7 +198,7 @@ if vscp.VSCP_ERROR_SUCCESS == enterReceiveLoop(h1):
             print("Not received within 60 seconds. We quit!")
             break
 
-    if vscp.VSCP_ERROR_SUCCESS == quitReceiveLoop(h1):
+    if vscp.VSCP_ERROR_SUCCESS == vscphelper.quitReceiveLoop(h1):
         print("Successfully left receive loop")
     else:
         print("failed to leave receive loop")
@@ -206,18 +212,18 @@ print("------------------------------------------------------------------------"
 print("Clear filter")
 filter = vscp.vscpEventFilter()
 filter.clear()
-rv = setFilter( h1, filter )
+rv = vscphelper.setFilter( h1, filter )
 if vscp.VSCP_ERROR_SUCCESS != rv :
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: setFilter  Error code=%d' % rv )  
 
 # Get statistics
 print("------------------------------------------------------------------------")
 print("Get statistics")
 statistics = vscp.VSCPStatistics()
-rv = getStatistics( h1, statistics )
+rv = vscphelper.getStatistics( h1, statistics )
 if vscp.VSCP_ERROR_SUCCESS != rv :
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: setStatistics  Error code=%d' % rv )      
 print("Received frames = %d" % statistics.cntReceiveFrames)
 print("Transmitted frames = %d" % statistics.cntTransmitFrames)
@@ -229,9 +235,9 @@ print("Overruns = %d" % statistics.cntOverruns)
 print("------------------------------------------------------------------------")
 print("Get status")
 status = vscp.VSCPStatus()
-rv = getStatus( h1, status )
+rv = vscphelper.getStatus( h1, status )
 if vscp.VSCP_ERROR_SUCCESS != rv :
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: getStatus  Error code=%d' % rv )
 print("Channel status = %d" % status.channel_status) 
 print("Channel status = %d" % status.lasterrorcode) 
@@ -240,39 +246,39 @@ print("Channel status = %d" % status.lasterrorsubcode)
 # Get DLL version
 print("------------------------------------------------------------------------")
 print("Get DLL version")
-(rv,dllversion) = getDLLVersion( h1 )
+(rv,dllversion) = vscphelper.getDLLVersion( h1 )
 if vscp.VSCP_ERROR_SUCCESS != rv :
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: getStatus  Error code=%d' % rv )
 print("DLL version = %d" % dllversion.value)
 
 # Get vendor string
 print("------------------------------------------------------------------------")
 print("Get vendor string")
-(rv,strvendor) = getVendorString( h1 )
+(rv,strvendor) = vscphelper.getVendorString( h1 )
 if vscp.VSCP_ERROR_SUCCESS != rv :
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: getVendorString  Error code=%d' % rv )
 print("Vendor string = %s" % strvendor)
 
 # Get driver info string
 print("------------------------------------------------------------------------")
 print("Get driver info string")
-(rv,strdriverinfo) = getDriverInfo( h1 )
+(rv,strdriverinfo) = vscphelper.getDriverInfo( h1 )
 if vscp.VSCP_ERROR_SUCCESS != rv :
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: getDriverInfo  Error code=%d' % rv )
 print("Driver info string = %s" % strdriverinfo)
 
 print("------------------------------------------------------------------------")
 print("command: close")
-rv = close(h1)
+rv = vscphelper.close(h1)
 if vscp.VSCP_ERROR_SUCCESS != rv :
-    closeSession(h1)
+    vscphelper.closeSession(h1)
     raise ValueError('Command error: close  Error code=%d' % rv )
 
 print("------------------------------------------------------------------------")
 print("command: closeSession")
-closeSession(h1)
+vscphelper.closeSession(h1)
 
 
