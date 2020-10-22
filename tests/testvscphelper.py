@@ -1,6 +1,6 @@
 # FILE: vscphelper.py
 #
-# VSCP UDP functionality
+# VSCP helper library functionality
 #
 # This file is part of the VSCP (http://www.vscp.org)
 #
@@ -29,15 +29,17 @@
 import sys
 from ctypes import *
 import time
-
-sys.path.append('../')
-from vscp.vscphelper import *
 from vscp import *
 
+sys.path.append('.')
+import vscphelper 
+
+print(vscp.VSCP_ERROR_SUCCESS)
+
 print("------------------------------------------------------------------------")
-h1 = newSession()
+h1 = vscphelper.vscphelper.newSession()
 if (0 == h1 ):
-    closeSession(h1)
+    vscphelper.vscphelper.closeSession(h1)
     raise ValueError('Unable to open vscphelp library session')
 
 print("------------------------------------------------------------------------")

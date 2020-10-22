@@ -29,7 +29,7 @@
 import os
 from ctypes import *
 import _ctypes
-#from vscp import *
+import vscp 
 
 
 if os.name == "nt":
