@@ -51,11 +51,8 @@ def newSession():
 #
 
 def closeSession( handle ):
-    print("A")
     lib.vscphlp_closeSession( c_long(handle) )
-    print("B")
     _ctypes.dlclose(lib._handle) 
-    print("C")
     # Is this needed?
     # if os.name == "nt":
     #     _ctypes.FreeLibrary(lib1._handle)
