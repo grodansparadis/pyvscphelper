@@ -3,14 +3,26 @@
 # setup.py that excludes installing the "tests" package
 
 import sys
-sys.path.append('../')
+
+sys.path.append('../..')
 from vscp import *
 
+sys.path.append('..')
+from vscphelper import *
+
 def test_success():
-    h1 = pyvscphlp_newSession()
+    print("New session")
+    h1 = newSession()
+    print(h1)
     if (0 == h1 ):
-        pyvscphlp_closeSession(h1)
+        print("Failed to open new session")
+    rv = open(h1,"192.168.1.7:9598","admin","secret")
+    print("connected rv=",rv)
+    close(h1)
+    print("closed")
     assert True
+    print("Close session")
+    closeSession(h1)
 
 if __name__ == "__main__":
     test_success()

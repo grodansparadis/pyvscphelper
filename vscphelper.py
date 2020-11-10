@@ -42,7 +42,7 @@ else:
 #
 
 def newSession():
-    lib.vscphlp_newSession.restype = c_ulong
+    lib.vscphlp_newSession.restype = c_long
     handle = lib.vscphlp_newSession()
     return handle
 
@@ -51,19 +51,23 @@ def newSession():
 #
 
 def closeSession( handle ):
-    lib.vscphlp_closeSession( c_ulong(handle) )
+    print("A")
+    lib.vscphlp_closeSession( c_long(handle) )
+    print("B")
+    _ctypes.dlclose(lib._handle) 
+    print("C")
     # Is this needed?
-    if os.name == "nt":
-        _ctypes.FreeLibrary(lib1._handle)
-    else:    
-        _ctypes.dlclose(lib._handle)      
+    # if os.name == "nt":
+    #     _ctypes.FreeLibrary(lib1._handle)
+    # else:    
+    #     _ctypes.dlclose(lib._handle)      
 
 ###############################################################################
 # setResponseTimeout
 #
 
 def setResponseTimeout(handle, timeout):
-    rv = lib.vscphlp_setResponseTimeout( c_ulong(handle), c_ulong(timeout) )
+    rv = lib.vscphlp_setResponseTimeout( c_long(handle), c_ulong(timeout) )
     return rv
 
 ###############################################################################
@@ -71,7 +75,7 @@ def setResponseTimeout(handle, timeout):
 #
 
 def setAfterCommandSleep(handle, timeout):
-    rv = lib.vscphlp_setAfterCommandSleep( c_ulong(handle), c_ushort(timeout) )
+    rv = lib.vscphlp_setAfterCommandSleep( c_long(handle), c_ushort(timeout) )
     return rv
 
 ###############################################################################
@@ -79,7 +83,7 @@ def setAfterCommandSleep(handle, timeout):
 #
 
 def open(handle,host,user,password):
-    rv = lib.vscphlp_open( c_ulong(handle),
+    rv = lib.vscphlp_open( c_long(handle),
                             c_char_p(host.encode('utf-8')),
                             c_char_p(user.encode('utf-8')),
                             c_char_p(password.encode('utf-8')))
@@ -90,7 +94,7 @@ def open(handle,host,user,password):
 #
 
 def openInterface(handle,interface,flags):
-    rv = lib.vscphlp_openInterface( c_ulong(handle),
+    rv = lib.vscphlp_openInterface( c_long(handle),
                                         c_char_p(interface.encode('utf-8')),
                                         c_ulong(flags) )
     return rv 
@@ -100,7 +104,7 @@ def openInterface(handle,interface,flags):
 #
 
 def close(handle):
-    rv = lib.vscphlp_close( c_ulong(handle) )
+    rv = lib.vscphlp_close( c_long(handle) )
     return rv    
 
 ###############################################################################
@@ -108,7 +112,7 @@ def close(handle):
 #
 
 def isConnected(handle):
-    rv = lib.vscphlp_isConnected( c_ulong(handle) )
+    rv = lib.vscphlp_isConnected( c_long(handle) )
     return rv
 
 ###############################################################################
@@ -116,7 +120,7 @@ def isConnected(handle):
 #
 
 def doCommand(handle, command):
-    rv = lib.vscphlp_doCommand( c_ulong(handle), c_char_p(command.encode('utf-8')) )
+    rv = lib.vscphlp_doCommand( c_long(handle), c_char_p(command.encode('utf-8')) )
     return rv
 
 ###############################################################################
@@ -124,7 +128,7 @@ def doCommand(handle, command):
 #
 
 def checkReply(handle, bClear):
-    rv = lib.vscphlp_checkReply( c_ulong(handle), c_int(bClear) )
+    rv = lib.vscphlp_checkReply( c_long(handle), c_int(bClear) )
     return rv
 
 ###############################################################################
@@ -132,7 +136,7 @@ def checkReply(handle, bClear):
 #
 
 def clearLocalInputQueue(handle):
-    rv = lib.vscphlp_clearLocalInputQueue( c_ulong(handle) )
+    rv = lib.vscphlp_clearLocalInputQueue( c_long(handle) )
     return rv
 
 ###############################################################################
@@ -140,7 +144,7 @@ def clearLocalInputQueue(handle):
 #
 
 def noop(handle):    
-    rv = lib.vscphlp_noop( c_ulong(handle) )
+    rv = lib.vscphlp_noop( c_long(handle) )
     return rv  
 
 ###############################################################################
@@ -148,7 +152,7 @@ def noop(handle):
 #
 
 def clearDaemonEventQueue(handle):    
-    rv = lib.vscphlp_clearDaemonEventQueue( c_ulong(handle) )
+    rv = lib.vscphlp_clearDaemonEventQueue( c_long(handle) )
     return rv  
 
 ###############################################################################
@@ -156,7 +160,7 @@ def clearDaemonEventQueue(handle):
 #
 
 def sendEvent(handle,event):    
-    rv = lib.vscphlp_sendEvent( c_ulong(handle), byref(event) )
+    rv = lib.vscphlp_sendEvent( c_long(handle), byref(event) )
     return rv 
 
 ###############################################################################
@@ -164,7 +168,7 @@ def sendEvent(handle,event):
 #
 
 def sendEventEx(handle,eventex):    
-    rv = lib.vscphlp_sendEventEx( c_ulong(handle), byref(eventex) )
+    rv = lib.vscphlp_sendEventEx( c_long(handle), byref(eventex) )
     return rv 
 
 ###############################################################################
@@ -172,7 +176,7 @@ def sendEventEx(handle,eventex):
 #
 
 def sendEvent(handle,event):    
-    rv = lib.vscphlp_sendEvent( c_ulong(handle), byref(event) )
+    rv = lib.vscphlp_sendEvent( c_long(handle), byref(event) )
     return rv 
 
 ###############################################################################
@@ -180,7 +184,7 @@ def sendEvent(handle,event):
 #
 
 def receiveEvent(handle,event):    
-    rv = lib.vscphlp_receiveEvent( c_ulong(handle), byref(event) )
+    rv = lib.vscphlp_receiveEvent( c_long(handle), byref(event) )
     return rv 
 
 ###############################################################################
@@ -188,7 +192,7 @@ def receiveEvent(handle,event):
 #
 
 def receiveEventEx(handle,eventex):    
-    rv = lib.vscphlp_receiveEventEx( c_ulong(handle), byref(eventex) )
+    rv = lib.vscphlp_receiveEventEx( c_long(handle), byref(eventex) )
     return rv 
 
 ###############################################################################
@@ -196,7 +200,7 @@ def receiveEventEx(handle,eventex):
 #
 
 def isDataAvailable(handle,cntAvailable):    
-    rv = lib.vscphlp_isDataAvailable( c_ulong(handle), byref(cntAvailable))
+    rv = lib.vscphlp_isDataAvailable( c_long(handle), byref(cntAvailable))
     return rv
 
 ###############################################################################
@@ -204,7 +208,7 @@ def isDataAvailable(handle,cntAvailable):
 #
 
 def enterReceiveLoop(handle):    
-    rv = lib.vscphlp_enterReceiveLoop( c_ulong(handle) )
+    rv = lib.vscphlp_enterReceiveLoop( c_long(handle) )
     return rv
 
 ###############################################################################
@@ -212,7 +216,7 @@ def enterReceiveLoop(handle):
 #
 
 def quitReceiveLoop(handle):    
-    rv = lib.vscphlp_quitReceiveLoop( c_ulong(handle) )
+    rv = lib.vscphlp_quitReceiveLoop( c_long(handle) )
     return rv
 
 ###############################################################################
@@ -220,7 +224,7 @@ def quitReceiveLoop(handle):
 #
 
 def blockingReceiveEvent( handle, event, timeout):    
-    rv = lib.vscphlp_blockingReceiveEvent( c_ulong(handle), byref(event), c_ulong(timeout) )
+    rv = lib.vscphlp_blockingReceiveEvent( c_long(handle), byref(event), c_ulong(timeout) )
     return rv 
 
 ###############################################################################
@@ -228,7 +232,7 @@ def blockingReceiveEvent( handle, event, timeout):
 #
 
 def blockingReceiveEventEx( handle, eventex, timeout ):    
-    rv = lib.vscphlp_blockingReceiveEventEx( c_ulong(handle), byref(eventex), c_ulong(timeout) )
+    rv = lib.vscphlp_blockingReceiveEventEx( c_long(handle), byref(eventex), c_ulong(timeout) )
     return rv 
 
 ###############################################################################
@@ -236,7 +240,7 @@ def blockingReceiveEventEx( handle, eventex, timeout ):
 #
 
 def getStatistics( handle, statistics ):    
-    rv = lib.vscphlp_getStatistics( c_ulong(handle), byref(statistics) )
+    rv = lib.vscphlp_getStatistics( c_long(handle), byref(statistics) )
     return rv 
 
 ###############################################################################
@@ -244,7 +248,7 @@ def getStatistics( handle, statistics ):
 #
 
 def getStatus( handle, status ):    
-    rv = lib.vscphlp_getStatus( c_ulong(handle), byref(status) )
+    rv = lib.vscphlp_getStatus( c_long(handle), byref(status) )
     return rv
 
 ###############################################################################
@@ -252,7 +256,7 @@ def getStatus( handle, status ):
 #
 
 def setFilter( handle, filter ):    
-    rv = lib.vscphlp_setFilter( c_ulong(handle), byref(filter) )
+    rv = lib.vscphlp_setFilter( c_long(handle), byref(filter) )
     return rv 
 
 ###############################################################################
@@ -263,7 +267,7 @@ def getVersion(handle):
     v1 = c_ubyte()
     v2 = c_ubyte()
     v3 = c_ubyte()
-    rv = lib.vscphlp_getVersion( c_ulong(handle), byref(v1), byref(v2), byref(v3) )
+    rv = lib.vscphlp_getVersion( c_long(handle), byref(v1), byref(v2), byref(v3) )
     return (rv,v1,v2,v3)
 
 ###############################################################################
@@ -272,7 +276,7 @@ def getVersion(handle):
 
 def getDLLVersion(handle):
     dllversion = c_ulong()
-    rv = lib.vscphlp_getDLLVersion( c_ulong(handle), byref( dllversion ) )
+    rv = lib.vscphlp_getDLLVersion( c_long(handle), byref( dllversion ) )
     return (rv,dllversion )
 
 ###############################################################################
@@ -281,7 +285,7 @@ def getDLLVersion(handle):
 
 def getVendorString(handle):
     strvendor = create_string_buffer(b'\000' * 80)
-    rv = lib.vscphlp_getVendorString( c_ulong(handle), strvendor, c_size_t( 80 ) )
+    rv = lib.vscphlp_getVendorString( c_long(handle), strvendor, c_size_t( 80 ) )
     return (rv,repr(strvendor.value) )
 
 ###############################################################################
@@ -290,7 +294,7 @@ def getVendorString(handle):
 
 def getDriverInfo(handle):
     strdrvinfo = create_string_buffer(b'\000' * 32000)
-    rv = lib.vscphlp_getDriverInfo( c_ulong(handle), strdrvinfo, c_size_t( 32000 ) )
+    rv = lib.vscphlp_getDriverInfo( c_long(handle), strdrvinfo, c_size_t( 32000 ) )
     return (rv,repr(strdrvinfo.value) )
 
 ###############################################################################
@@ -298,5 +302,5 @@ def getDriverInfo(handle):
 #
 
 def vscphlp_serverShutDown(handle):
-    rv = lib.vscphlp_vscphlp_serverShutDown( c_ulong(handle)  )
+    rv = lib.vscphlp_vscphlp_serverShutDown( c_long(handle)  )
     return rv 

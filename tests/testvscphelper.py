@@ -37,7 +37,7 @@ import vscp_class
 sys.path.append('../pyvscptypes')    # Must have dir structure on same level as pyvscphelper
 import vscp_type
 
-sys.path.append('.')
+sys.path.append('..')
 import vscphelper 
 
 print(vscp.VSCP_ERROR_ERROR)
