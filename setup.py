@@ -23,7 +23,9 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.0.4',
+    #use_scm_version=True,
+    #setup_requires=["setuptools_scm"],
+    version='0.0.6',
 
     description='Official VSCP helper Python package',
     long_description=long_description,
@@ -48,7 +50,8 @@ setup(
 
         # Indicate who your project is intended for
         'Intended Audience :: Developers',
-        'Topic :: Software Development :: Build Tools',
+        "Topic :: Software Development :: Libraries",
+        "Topic :: System :: Hardware",
 
         # Pick your license as you wish (should match "license" above)
         'License :: OSI Approved :: MIT License',
@@ -70,7 +73,7 @@ setup(
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=find_packages(exclude=['contrib', 'docs', 'tests']),
+    py_modules=["vscphelper"],
 
     python_requires='>=3.0',
 
