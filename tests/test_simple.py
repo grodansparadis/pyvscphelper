@@ -10,9 +10,10 @@ from vscp import *
 sys.path.append('..')
 from vscphelper import *
 
-def test_success():
+def test_connect():
     print("New session")
     h1 = newSession()
+    assert h1 != 0
     print(h1)
     if (0 == h1 ):
         print("Failed to open new session")
@@ -24,6 +25,14 @@ def test_success():
     print("Close session")
     closeSession(h1)
 
+def test_conversions():
+    value = 3.14
+    ba = float2ByteArray(value)
+    print([ "0x%02x" % b for b in ba ])
+    ba = double2ByteArray(value)
+    print([ "0x%02x" % b for b in ba ])
+
 if __name__ == "__main__":
-    test_success()
+    test_connect()
+    test_conversions()
     print("Everything passed")

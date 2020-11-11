@@ -27,8 +27,10 @@
 # SOFTWARE.
 
 import os
+import sys
 from ctypes import *
 import _ctypes
+import struct
 import vscp 
 
 
@@ -301,3 +303,33 @@ def getDriverInfo(handle):
 def vscphlp_serverShutDown(handle):
     rv = lib.vscphlp_vscphlp_serverShutDown( c_long(handle)  )
     return rv 
+
+
+# -----------------------------------------------------------------------------
+
+
+###############################################################################
+# float2ByteArray
+# Convert floating point value to byte array (four bytes). Note that VSCP
+# stores and transfer everything MSB first so may need to be reversed
+#
+# value = 5.1
+# ba = bytearray(struct.pack("d", value))   
+# print([ "0x%02x" % b for b in ba ])
+
+def float2ByteArray(val):
+    ba = bytearray(struct.pack("f", val))
+    if sys.byteorder == 'little':
+        ba.reverse()
+    return ba
+
+###############################################################################
+# double2ByteArray
+# Convert floating point value to byte array (eight bytes)
+
+def double2ByteArray(val):
+    ba = bytearray(struct.pack("d", val))
+    if sys.byteorder == 'little':
+        ba.reverse()
+    return ba
+
