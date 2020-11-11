@@ -1,6 +1,6 @@
 # ![](/assets/logo_100.png)
 
-# The VSCP helper library
+# The VSCP helper library for Python
 
 Author 2000-2020 Åke Hedman, [Grodans Paradis AB](https://www.grodansparadis.com), &lt;[akhe@grodansparadis.com](mailto:akhe@grodansparadis.com)&gt;
 
