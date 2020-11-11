@@ -1,6 +1,6 @@
 # FILE: vscphelper.py
 #
-# VSCP UDP functionality
+# VSCP Helper Library binding for Python
 #
 # This file is part of the VSCP (http://www.vscp.org)
 #
@@ -42,6 +42,11 @@ else:
 ###############################################################################
 # newSession
 #
+# Start a new library session
+# 
+# @return Handle to a new session as a c_long or null on
+# failure
+#
 
 def newSession():
     lib.vscphlp_newSession.restype = c_long
@@ -50,6 +55,10 @@ def newSession():
 
 ###############################################################################
 # closeSession
+#
+# End library session
+# 
+# @param handle c_long handle received from a newSession call.
 #
 
 def closeSession( handle ):
@@ -310,12 +319,13 @@ def vscphlp_serverShutDown(handle):
 
 ###############################################################################
 # float2ByteArray
-# Convert floating point value to byte array (four bytes). Note that VSCP
-# stores and transfer everything MSB first so may need to be reversed
+# Convert floating point value to byte array (four bytes). This translation is
+# done by the function if needed.
 #
 # value = 5.1
 # ba = bytearray(struct.pack("d", value))   
 # print([ "0x%02x" % b for b in ba ])
+#
 
 def float2ByteArray(val):
     ba = bytearray(struct.pack("f", val))
@@ -326,10 +336,61 @@ def float2ByteArray(val):
 ###############################################################################
 # double2ByteArray
 # Convert floating point value to byte array (eight bytes)
+# https://docs.python.org/2/library/struct.html
 
 def double2ByteArray(val):
     ba = bytearray(struct.pack("d", val))
     if sys.byteorder == 'little':
         ba.reverse()
     return ba
+
+###############################################################################
+# byteArray2Float
+# Convert floating point value in big endian bytearray to floating point
+# value
+#
+
+def byteArray2Float(ba):
+    return struct.unpack(">f", ba)
+
+###############################################################################
+# byteArray2Double
+# Convert double precision floating point value in big endian bytearray to 
+# double precision floating point value
+#
+
+def byteArray2Double(ba):
+    return struct.unpack(">d", ba)
+
+###############################################################################
+# string2ByteArray
+#
+# String is converted into byte array with terminating zero
+#
+# @param str String toi convert to byte array
+# @return bytearray representation fo string 
+#
+
+def string2ByteArray(str):
+    ba = bytearray()
+    if(sys.version_info[:3] < (3,0)):
+        ba.extend(str)  # Python 2
+    else:    
+        ba.extend(map(ord, str))  # Python 3
+    ba.append(0)
+    return ba
+
+###############################################################################
+# byteArrayToPos
+#
+# Writes the content of as bytearray into a specific position of another
+# byte array
+#
+# @param ba_to Byte array that should receive the content
+# @param pos Position to copy to
+# @param ba_from Byte array to copy from.
+# @return Return the resulting bytearray
+
+def byteArrayToPos(ba_to, pos, ba_from):
+    return ba_to[:pos] + ba_from[:] + ba_to[pos+len(ba_from):]
 

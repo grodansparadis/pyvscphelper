@@ -1,0 +1,13 @@
+{
+    "plugins": [ "theme-api" ],
+    "pluginsConfig": {
+        "theme-api": {
+            "languages": [
+                {
+                    "lang": "python",
+                    "name": "Python"
+                }
+            ]
+        }
+    }
+}

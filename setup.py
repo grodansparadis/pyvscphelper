@@ -87,6 +87,8 @@ setup(
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
         'pyvscp',
+        'pyvscpclasses'
+        'pyvscptypes'
         'pythoncrc',
         'crypto'
     ],
