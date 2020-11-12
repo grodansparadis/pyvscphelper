@@ -1,6 +1,9 @@
 ## CANBUS
 Control Area Network. A very robust network protocol that among other things is commonly used in cars and heavy machinery.
 
+## CAN-BUS
+Control Area Network. A very robust network protocol that among other things is commonly used in cars and heavy machinery.
+
 ## CAN4VSCP
 VSCP level I over CAN. Also specifies bus-speed and power.
 
