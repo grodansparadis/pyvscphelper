@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_convertVSCPtoEx( vscpEventEx *pEventEx, 
+int convertVSCPtoEx( vscpEventEx *pEventEx, 
                               const vscpEvent *pEvent )
 ```
 
@@ -23,14 +23,14 @@ Convert VSCP standard event form to ex form.
 
 ```clike
 vscpEventEx ex4;
-if ( VSCP_ERROR_SUCCESS != vscphlp_convertVSCPtoEx( &ex4, pEvent ) ) {
-    printf( "\aError: vscphlp_getGuidFromStringToArray\n");
+if ( VSCP_ERROR_SUCCESS != convertVSCPtoEx( &ex4, pEvent ) ) {
+    printf( "\aError: getGuidFromStringToArray\n");
 }
 ```
 
 
 ### See Also
-[vscphlp_convertVSCPfromEx](vscphlp_convertvscpfromex.md)
+[convertVSCPfromEx](convertvscpfromex.md)
 
 
 

@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_isMeasurement( const vscpEvent *pEvent )
+int isMeasurement( const vscpEvent *pEvent )
 ```
 
 ### Parameters

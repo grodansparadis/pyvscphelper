@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_getMeasurementZone( const vscpEvent *pEvent )
+int getMeasurementZone( const vscpEvent *pEvent )
 ```
 
 ### Parameters

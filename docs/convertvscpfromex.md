@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_convertVSCPfromEx( vscpEvent *pEvent, 
+int convertVSCPfromEx( vscpEvent *pEvent, 
                     const vscpEventEx *pEventEx )
 ```
 
@@ -22,13 +22,13 @@ Convert VSCP ex. event form to standard form.
 #### C example
 
 ```clike
-if ( VSCP_ERROR_SUCCESS != vscphlp_convertVSCPfromEx( pEvent, &ex4 ) ) {
-    printf( "\aError: vscphlp_convertVSCPfromEx\n");
+if ( VSCP_ERROR_SUCCESS != convertVSCPfromEx( pEvent, &ex4 ) ) {
+    printf( "\aError: convertVSCPfromEx\n");
 }
 ```
 
 ### See Also
-[vscphlp_convertVSCPtoEx](vscphlp_convertvscptoex.md)
+[convertVSCPtoEx](convertvscptoex.md)
 
 
 

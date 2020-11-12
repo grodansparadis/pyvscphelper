@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_readFilterFromString( vscpEventFilter *pFilter, 
+int readFilterFromString( vscpEventFilter *pFilter, 
                             char *strFilter )
 ```
 
@@ -39,14 +39,14 @@ and all is optional but if given must be given in order.
 #### C example
 
 ```clike
-if ( VSCP_ERROR_SUCCESS != vscphlp_readFilterFromString( &filter, 
+if ( VSCP_ERROR_SUCCESS != readFilterFromString( &filter, 
                 "1,0x0000,0x0006,ff:ff:ff:ff:ff:ff:ff:01:00:00:00:00:00:00:00:00" ) ) {
-    printf( "\aError: vscphlp_readFilterFromString\n");   
+    printf( "\aError: readFilterFromString\n");   
 }
 ```
 
 ### See Also
-[vscphlp_writeFilterToString](vscphlp_writefiltertostring.md)
+[writeFilterToString](writefiltertostring.md)
 
 
 

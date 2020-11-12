@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_getGuidFromStringEx( vscpEvent *pEvent, 
+int getGuidFromStringEx( vscpEvent *pEvent, 
                             const char * pGUID )
 ```
 
@@ -25,17 +25,17 @@ Write GUID into VSCP event ex from a string.
 ```clike
 char strguid[64], strguid2[64];
  
-if ( VSCP_ERROR_SUCCESS == vscphlp_getGuidFromStringEx( &ex3, strguid ) ) {        
-    vscphlp_writeGuidToStringEx( &ex3, strguid2, sizeof( strguid2 )-1 );
+if ( VSCP_ERROR_SUCCESS == getGuidFromStringEx( &ex3, strguid ) ) {        
+    writeGuidToStringEx( &ex3, strguid2, sizeof( strguid2 )-1 );
     printf( "GUID=%s\n", strguid2 );
 }
 else {
-    printf( "\aError: vscphlp_writeGuidArrayToString\n");
+    printf( "\aError: writeGuidArrayToString\n");
 }
 ```
 
 ### See Also
-[vscphlp_getGuidFromString](vscphlp_getguidfromstring.md)
+[getGuidFromString](getguidfromstring.md)
 
 
 

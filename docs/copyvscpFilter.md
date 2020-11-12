@@ -1,7 +1,7 @@
 
 
 ```clike
-void vscphlp_copyVSCPFilter( vscpEventFilter *pToFilter, 
+void copyVSCPFilter( vscpEventFilter *pToFilter, 
                     const vscpEventFilter *pFromFilter )
 ```
 
@@ -23,7 +23,7 @@ Copy VSCP filter from one to another.
 #### C example
 
 ```clike
-vscphlp_clearVSCPFilter( pFilter )
+clearVSCPFilter( pFilter )
 ```
 
 

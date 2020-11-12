@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_copyVSCPEvent( vscpEvent *pEventTo, 
+int copyVSCPEvent( vscpEvent *pEventTo, 
                               const vscpEvent *pEventFrom )
 ```
 
@@ -37,16 +37,16 @@ pEventFrom->pdata = new unsigned char[2];
 pEventFrom->pdata[ 0 ] = 0xAA;
 pEventFrom->pdata[ 1 ] = 0x55;
  
-if ( VSCP_ERROR_SUCCESS == vscphlp_copyVSCPEvent( pEventTo, pEventFrom ) ) {
-    printf( "OK vscphlp_copyVSCPEvent %02X %02X \n", pEventTo->pdata[0], pEventTo->pdata[1] );
+if ( VSCP_ERROR_SUCCESS == copyVSCPEvent( pEventTo, pEventFrom ) ) {
+    printf( "OK copyVSCPEvent %02X %02X \n", pEventTo->pdata[0], pEventTo->pdata[1] );
 }
 else {
-    printf( "\aError: vscphlp_copyVSCPEvent\n");
+    printf( "\aError: copyVSCPEvent\n");
 }
  
 // Free the events
-vscphlp_deleteVSCPevent( pEventFrom );
-vscphlp_deleteVSCPevent( pEventTo );
+deleteVSCPevent( pEventFrom );
+deleteVSCPevent( pEventTo );
 ```
 
 

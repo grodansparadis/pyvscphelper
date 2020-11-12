@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_convertCanalToEvent( vscpEvent *pvscpEvent,
+int convertCanalToEvent( vscpEvent *pvscpEvent,
                                     const canalMsg *pcanalMsg,
                                     unsigned char *pGUID )
 ```
@@ -32,19 +32,19 @@ canalMsg.sizeData = 3;
 canalMsg.data[0] = 138;
 canalMsg.data[1] = 0;
 canalMsg.data[2] = 30;
-if ( VSCP_ERROR_SUCCESS == vscphlp_convertCanalToEvent( pEvent,
+if ( VSCP_ERROR_SUCCESS == convertCanalToEvent( pEvent,
                                                           &canalMsg,
                                                           GUID2 ) ) {
-    printf( "OK vscphlp_convertCanalToEvent VSCP class=%d Type=%d\n", 
+    printf( "OK convertCanalToEvent VSCP class=%d Type=%d\n", 
                    pEvent->vscp_class, pEvent->vscp_type );
 }
 else {
-    printf( "\aError: vscphlp_convertCanalToEvent\n");
+    printf( "\aError: convertCanalToEvent\n");
 }
 ```
 
 ### See Also
-[vscphlp_convertCanalToEventEx](vscphlp_convertcanaltoeventex.md)  [vscphlp_convertEventToCanal](vscphlp_converteventtocanal.md)  [vscphlp_convertEventExToCanal](vscphlp_converteventextocanal.md)
+[convertCanalToEventEx](convertcanaltoeventex.md)  [convertEventToCanal](converteventtocanal.md)  [convertEventExToCanal](converteventextocanal.md)
 
 
 

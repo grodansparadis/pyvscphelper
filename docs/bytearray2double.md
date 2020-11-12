@@ -1,4 +1,3 @@
-# byteArray2Double
 
 
 ```python

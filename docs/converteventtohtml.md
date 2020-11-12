@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_convertEventToHTML( vscpEvent *pEvent, 
+int convertEventToHTML( vscpEvent *pEvent, 
                                 char *pBuffer, 
                                 size_t len )
 ```
@@ -25,7 +25,7 @@ Write VSCP event on HTML format to string. Format is specified in [vscp.h](https
 
 
 ### See Also
-[vscphlp_convertEventExToHTML](vscphlp_converteventextohtml.md)
+[convertEventExToHTML](converteventextohtml.md)
 
 
 

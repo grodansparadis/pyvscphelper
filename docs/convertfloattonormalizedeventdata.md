@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_convertFloatToNormalizedEventData( 
+int convertFloatToNormalizedEventData( 
                             unsigned char *pdata,        unsigned short *psize,    
                             double value, 
                             unsigned char unit,

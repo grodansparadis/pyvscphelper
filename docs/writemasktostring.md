@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_writeMaskToString( vscpEventFilter *pFilter, 
+int writeMaskToString( vscpEventFilter *pFilter, 
                                 char * strMask )
 ```
 
@@ -24,14 +24,14 @@ Write the mask in comma separated form to a string. If strMask is an empty strin
 #### C example
 
 ```clike
-if ( VSCP_ERROR_SUCCESS != vscphlp_writeMaskToString( &filter, 
+if ( VSCP_ERROR_SUCCESS != writeMaskToString( &filter, 
                 "1,0x0000,0x0006,ff:ff:ff:ff:ff:ff:ff:01:00:00:00:00:00:00:00:00" ) ) {
-    printf( "\aError: vscphlp_writeMaskToString\n");   
+    printf( "\aError: writeMaskToString\n");   
 } 
 ```
 
 ### See Also
-[vscphlp_readMaskFromString](vscphlp_readmaskfromstring.md)
+[readMaskFromString](readmaskfromstring.md)
 
 
 

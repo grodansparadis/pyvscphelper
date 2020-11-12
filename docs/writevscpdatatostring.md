@@ -1,6 +1,6 @@
 
 ```clike
-int vscphlp_writeVscpDataToString( const vscpEvent *pEvent, 
+int writeVscpDataToString( const vscpEvent *pEvent, 
                                        char *pstr, 
                                        size_t len,
                                        int bUseHtmlBreak )
@@ -28,14 +28,14 @@ Write VSCP data in readable form to a possibly multi line string.
 char dataBuf[80];
  
 if ( VSCP_ERROR_SUCCESS == 
-    vscphlp_writeVscpDataToString( pEvent, 
+    writeVscpDataToString( pEvent, 
                                     dataBuf, 
                                     sizeof( dataBuf )-1,
                                     0 ) ) {
-    printf( "OK vscphlp_writeVscpDataToString \n%s \n", dataBuf );
+    printf( "OK writeVscpDataToString \n%s \n", dataBuf );
 }
 else {
-    printf( "\aError: vscphlp_writeVscpDataToString\n");
+    printf( "\aError: writeVscpDataToString\n");
 }
 ```
 

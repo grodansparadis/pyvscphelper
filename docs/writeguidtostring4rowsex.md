@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_writeGuidToString4RowsEx( const vscpEventEx *pEvent, 
+int writeGuidToString4RowsEx( const vscpEventEx *pEvent, 
                                         char *strGUID,
                                         size_t len )
 ```
@@ -26,17 +26,17 @@ Write GUID from VSCP event to string with four bytes on each row separated by â€
 #### C example
 
 ```clike
-if ( VSCP_ERROR_SUCCESS == vscphlp_writeGuidToString4RowsEx( &ex3, strguid2, sizeof( strguid2 )-1 ) ) {
+if ( VSCP_ERROR_SUCCESS == writeGuidToString4RowsEx( &ex3, strguid2, sizeof( strguid2 )-1 ) ) {
     printf( "GUID\n%s\n", strguid2 );
 }
 else {
-    printf( "Error: vscphlp_writeGuidArrayToString\n");
+    printf( "Error: writeGuidArrayToString\n");
 }
 ```
 
 
 ### See Also
-[vscphlp_writeGuidToString4Rows](vscphlp_writeguidtostring4rows.md)
+[writeGuidToString4Rows](writeguidtostring4rows.md)
 
 
 

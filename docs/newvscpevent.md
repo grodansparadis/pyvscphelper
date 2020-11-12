@@ -1,7 +1,7 @@
 
 
 ```clike
-bool vscphlp_newVSCPevent( vscpEvent **ppEvent )
+bool newVSCPevent( vscpEvent **ppEvent )
 ```
 
 ### Parameters
@@ -19,13 +19,13 @@ Creates a new VSCP event. Initializes the data pointer.
 
 ```clike
 vscpEvent *pEvent;
-vscphlp_newVSCPevent( &pEvent );
+newVSCPevent( &pEvent );
 ```
 
 
 ### See Also
-[vscphlp_deleteVSCPevent](vscphlp_deletevscpevent.md)  
-[vscphlp_deleteVSCPevent_v2](vscphlp_deletescpevent_v2.md)
+[deleteVSCPevent](deletevscpevent.md)  
+[deleteVSCPevent_v2](deletescpevent_v2.md)
 
 
 

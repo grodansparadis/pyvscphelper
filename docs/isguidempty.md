@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_isGUIDEmpty( unsigned char *pGUID )
+int isGUIDEmpty( unsigned char *pGUID )
 ```
 
 ### Parameters
@@ -20,18 +20,18 @@ Check if GUID is empty (all nulls).
 ```clike
 unsigned char emptyGUID[16];
 memset( emptyGUID,0, 16 );
-if ( vscphlp_isGUIDEmpty( emptyGUID ) ) {
-    printf( "vscphlp_isGUIDEmpty  - GUID is detected as empty as it should be\n" );    
+if ( isGUIDEmpty( emptyGUID ) ) {
+    printf( "isGUIDEmpty  - GUID is detected as empty as it should be\n" );    
 }
 else {
-    printf( "\aError: vscphlp_isGUIDEmpty\n");
+    printf( "\aError: isGUIDEmpty\n");
 }
  
-if ( vscphlp_isGUIDEmpty( GUID2 ) ) {
-    printf( "\aError: vscphlp_isGUIDEmpty\n");    
+if ( isGUIDEmpty( GUID2 ) ) {
+    printf( "\aError: isGUIDEmpty\n");    
 }
 else {
-    printf( "vscphlp_isGUIDEmpty  - GUID is detected as NOT empty as it should be\n" );
+    printf( "isGUIDEmpty  - GUID is detected as NOT empty as it should be\n" );
 }
 ```
 

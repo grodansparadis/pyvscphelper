@@ -1,17 +1,13 @@
 
 
 ```clike
-int vscphlp_close( long handle )
-```
-
-```python
-int pyvscphlp_close( handle )
+int close( handle )
 ```
 
 ### Parameters
 
 #### handle
-Handle for the communication channel obtained from a call to [vscphlp_newsession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](newsession.md).
 
 ### Return Value
 VSCP_ERROR_SUCCESS is returned on sucess. VSCP_ERROR_INVALID_HANDLE will be returned if the interface is not initialized. 
@@ -19,27 +15,23 @@ VSCP_ERROR_SUCCESS is returned on sucess. VSCP_ERROR_INVALID_HANDLE will be retu
 ### Description
 Close the interface. 
 
-#### C example
 
-```clike
-if ( VSCP_ERROR_SUCCESS == vscphlp_close( handle1 ) ) {
-    prinf("Closed successfully.\n");
- }
-```
-
-#### Python example
+### Example
 
 ```python
-print "command: close"
-rv = pyvscphlp_close(h1)
-if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
+import vscp
+import vscphelper as vhlp
+
+print("command: close")
+rv = vhlp.close(h1)
+if vscp.VSCP_ERROR_SUCCESS != rv :
+    vhlp.closeSession(h1)
     raise ValueError('Command error: close  Error code=%d' % rv )
 ```
 
 ### See Also
-[vscphlp_open](vscphlp_open.md)  
-[vscphlp_openInterface](vscphlp_openinterface.md)  
+[open](open.md)  
+[openInterface](openinterface.md)  
 
 
 

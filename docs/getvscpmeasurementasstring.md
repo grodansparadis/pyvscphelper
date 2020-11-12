@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_getVSCPMeasurementAsString( const vscpEvent *pEvent, 
+int getVSCPMeasurementAsString( const vscpEvent *pEvent, 
                                         char *pResult, 
                                         size_t len )
 ```
@@ -40,13 +40,13 @@ pEventMeasurement->pdata[1] = 0x02;
 pEventMeasurement->pdata[2] = 0x00;
 pEventMeasurement->pdata[3] = 0xF1;
  
-if ( VSCP_ERROR_SUCCESS == vscphlp_getVSCPMeasurementAsString( pEventMeasurement, 
+if ( VSCP_ERROR_SUCCESS == getVSCPMeasurementAsString( pEventMeasurement, 
                                                               stringbuf, 
                                                               sizeof( stringbuf ) ) ) {
-    printf("OK - vscphlp_getVSCPMeasurementAsString value = %s \n", stringbuf );
+    printf("OK - getVSCPMeasurementAsString value = %s \n", stringbuf );
 }
 else {
-    printf("Error - vscphlp_getVSCPMeasurementAsString value = %s \n", stringbuf );
+    printf("Error - getVSCPMeasurementAsString value = %s \n", stringbuf );
 }
  
 pEventMeasurement->pdata[0] = 0x89;
@@ -54,17 +54,17 @@ pEventMeasurement->pdata[1] = 0x02;
 pEventMeasurement->pdata[2] = 0xFF;
 pEventMeasurement->pdata[3] = 0xF1;
  
-if ( VSCP_ERROR_SUCCESS == vscphlp_getVSCPMeasurementAsString( pEventMeasurement, 
+if ( VSCP_ERROR_SUCCESS == getVSCPMeasurementAsString( pEventMeasurement, 
                                                               stringbuf, 
                                                               sizeof( stringbuf ) ) ) {
-    printf("OK - vscphlp_getVSCPMeasurementAsString value = %s \n", stringbuf );
+    printf("OK - getVSCPMeasurementAsString value = %s \n", stringbuf );
 }
 else {
-    printf("Error - vscphlp_getVSCPMeasurementAsString value = %s \n", stringbuf );
+    printf("Error - getVSCPMeasurementAsString value = %s \n", stringbuf );
 }
  
 // Free the event
-vscphlp_deleteVSCPevent( pEventMeasurement );
+deleteVSCPevent( pEventMeasurement );
 ```
 
 

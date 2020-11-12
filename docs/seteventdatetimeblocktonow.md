@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_setEventDateTimeBlockToNow( vscpEvent *pEvent )
+int setEventDateTimeBlockToNow( vscpEvent *pEvent )
 ```
 
 ### Parameters
@@ -19,9 +19,9 @@ Get date/time block for an event.
 
 ```clike
 vscpEvent *pEvent;
-vscphlp_setEventDateTimeBlockToNow( pEvent );
+setEventDateTimeBlockToNow( pEvent );
 ```
-[vscphlp_setEventExDateTimeBlockToNow](vscphlp_seteventexdatetimeblocktonow.md)
+[setEventExDateTimeBlockToNow](seteventexdatetimeblocktonow.md)
 
 
 

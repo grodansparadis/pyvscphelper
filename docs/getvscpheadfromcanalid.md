@@ -2,7 +2,7 @@
 
 ```clike
 unsigned unsigned char 
-vscphlp_getVSCPheadFromCANALid( const unsigned long id ))
+getVSCPheadFromCANALid( const unsigned long id ))
 ```
 
 ### Parameters
@@ -21,12 +21,12 @@ Get the VSCP head from a CANAL message id. The VSCP head is defined as shown in 
 ```clike
 unsigned char vscphead;
 unsigned long canalid = 0x0c0a0601;
-vscphead = vscphlp_getVSCPheadFromCANALid( canalid );
+vscphead = getVSCPheadFromCANALid( canalid );
 if ( 96 == vscphead ) {  // Priority == 3 Not hard coded
     printf("VSCP head = %d\n", vscphead );
 }
 else {
-   printf("\aError: vscphlp_getVSCPheadFromCANALid = %d\n", vscphead );
+   printf("\aError: getVSCPheadFromCANALid = %d\n", vscphead );
 }
 ```
 

@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_getTimeString( char *buf, 
+int getTimeString( char *buf, 
                             size_t buf_len, 
                             time_t *t )
 ```

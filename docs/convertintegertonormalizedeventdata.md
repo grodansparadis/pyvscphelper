@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_convertIntegerToNormalizedEventData( unsigned char *pdata,
+int convertIntegerToNormalizedEventData( unsigned char *pdata,
                                 unsigned short *psize,
                                 unsigned long long val64,
                                 unsigned char unit,

@@ -1,7 +1,7 @@
 
 
 ```clike
-unsigned char vscphlp_getMeasurementDataCoding( const vscpEvent *pEvent )
+unsigned char getMeasurementDataCoding( const vscpEvent *pEvent )
 ```
 
 ### Parameters
@@ -32,7 +32,7 @@ pEvent->pdata[ 0 ] = 138;
 pEvent->pdata[ 1 ] = 0;
 pEvent->pdata[ 2 ] = 30;
  
-unsigned char dataCoding = vscphlp_getMeasurementDataCoding( pEvent );
+unsigned char dataCoding = getMeasurementDataCoding( pEvent );
 if ( dataCoding = 138 ) {
     printf("Data Coding = %d\n", dataCoding );
 }

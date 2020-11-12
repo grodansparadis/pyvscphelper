@@ -1,5 +1,3 @@
-# float2ByteArray
-
 
 ```python
 float2ByteArray(val)

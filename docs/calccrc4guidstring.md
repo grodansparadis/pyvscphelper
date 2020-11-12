@@ -1,7 +1,7 @@
 
 
 ```clike
-unsigned char vscphlp_calcCRC4GUIDString( unsigned char *strguid)
+unsigned char calcCRC4GUIDString( unsigned char *strguid)
 ```
 
 ### Parameters
@@ -22,7 +22,7 @@ Calculate 8-bit crc for a GUID string.
 // Calculate GUID for GUID string
 char strguid[64];
 strcpy( strguid, "FF:FF:FF:FF:FF:FF:FF:00:00:00:00:7F:00:01:01:FD" );
-crc8 = vscphlp_calcCRC4GUIDString( strguid);
+crc8 = calcCRC4GUIDString( strguid);
 printf("CRC = %02X\n", crc8 )
 ```
 

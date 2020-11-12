@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_makeFloatMeasurementEvent( vscpEvent *pEvent, 
+int makeFloatMeasurementEvent( vscpEvent *pEvent, 
                                 float value,
                                 unsigned char unit,
                                 unsigned char sensoridx )

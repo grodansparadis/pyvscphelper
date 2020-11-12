@@ -10,10 +10,10 @@ This part of the library describes the many helpers that are available to handle
 
 # Misc helpers
 
-##  vscphlp_readStringValue
+##  readStringValue
 
 `<code="c">`
-long vscphlp_readStringValue( const char * pStrValue )
+long readStringValue( const char * pStrValue )
 `</code>`
 
 Convert a string to an integer value. The string can be expressed as a decimal  (10, 00001 ) or a hexadecimal value(0xff).
@@ -30,14 +30,14 @@ The converted number.
 ##### Example
 
 `<code="c">`
-long readValue = vscphlp_readStringValue("0x22");
+long readValue = readStringValue("0x22");
 `</code>`
 
 
-## vscphlp_replaceBackslash
+## replaceBackslash
 
 `<code="c">`
-int vscphlp_replaceBackslash( const char *pStr )
+int replaceBackslash( const char *pStr )
 `</code>`
 
 Replace all backslashes ("\") in a string with forward slashes ("/").
@@ -56,10 +56,10 @@ VSCP_ERROR_SUCCESS on success.
 \\ \\ 
 
 
-## vscphlp_getTimeString
+## getTimeString
 
 `<code="c">`
-int vscphlp_getTimeString( char *buf, size_t buf_len, time_t *t )
+int getTimeString( char *buf, size_t buf_len, time_t *t )
 `</code>`
 
 Get GMT time (https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3). 
@@ -88,10 +88,10 @@ VSCP_ERROR_SUCCESS on success.
 ----
 \\ \\ 
 
-## vscphlp_getISOTimeString
+## getISOTimeString
 
 `<code="c">`
-int vscphlp_getISOTimeString( char *buf, size_t buf_len, time_t *t )
+int getISOTimeString( char *buf, size_t buf_len, time_t *t )
 `</code>`
 
 ##### buf
@@ -120,10 +120,10 @@ VSCP_ERROR_SUCCESS on success.
 
 # Event handling
 
-## vscphlp_copyVSCPEvent
+## copyVSCPEvent
 
 `<code="c">`
-int vscphlp_copyVSCPEvent( vscpEvent *pEventTo, 
+int copyVSCPEvent( vscpEvent *pEventTo, 
                               const vscpEvent *pEventFrom )
 `</code>`
 
@@ -158,24 +158,24 @@ pEventFrom->pdata = new unsigned char[2];
 pEventFrom->pdata[ 0 ] = 0xAA;
 pEventFrom->pdata[ 1 ] = 0x55;
 
-if ( VSCP_ERROR_SUCCESS == vscphlp_copyVSCPEvent( pEventTo, pEventFrom ) ) {
-    printf( "OK vscphlp_copyVSCPEvent %02X %02X \n", pEventTo->pdata[0], pEventTo->pdata[1] );
+if ( VSCP_ERROR_SUCCESS == copyVSCPEvent( pEventTo, pEventFrom ) ) {
+    printf( "OK copyVSCPEvent %02X %02X \n", pEventTo->pdata[0], pEventTo->pdata[1] );
 }
 else {
-    printf( "\aError: vscphlp_copyVSCPEvent\n");
+    printf( "\aError: copyVSCPEvent\n");
 }
 
 // Free the events
-vscphlp_deleteVSCPevent( pEventFrom );
-vscphlp_deleteVSCPevent( pEventTo );
+deleteVSCPevent( pEventFrom );
+deleteVSCPevent( pEventTo );
 `</code>`
 
 
 
-## vscphlp_writeVscpDataToString
+## writeVscpDataToString
 
 `<code="c">`
-int vscphlp_writeVscpDataToString( const vscpEvent *pEvent, 
+int writeVscpDataToString( const vscpEvent *pEvent, 
                                        char *pstr, 
                                        size_t len,
                                        int bUseHtmlBreak )
@@ -201,21 +201,21 @@ VSCP_ERROR_SUCCESS is returned on success.
 `<code="c">`
 char dataBuf[80];
 
-if ( VSCP_ERROR_SUCCESS == vscphlp_writeVscpDataToString( pEvent, 
+if ( VSCP_ERROR_SUCCESS == writeVscpDataToString( pEvent, 
                                                             dataBuf, 
                                                             sizeof( dataBuf )-1,
                                                             0 ) ) {
-    printf( "OK vscphlp_writeVscpDataToString \n%s \n", dataBuf );
+    printf( "OK writeVscpDataToString \n%s \n", dataBuf );
 }
 else {
-    printf( "\aError: vscphlp_writeVscpDataToString\n");
+    printf( "\aError: writeVscpDataToString\n");
 }
 `</code>`
 
-## vscphlp_writeVscpDataWithSizeToString
+## writeVscpDataWithSizeToString
 
 `<code="c">`
-int vscphlp_writeVscpDataWithSizeToString( const unsigned char *pdata,
+int writeVscpDataWithSizeToString( const unsigned char *pdata,
                                               const unsigned short. 
                                               char *pstr, 
                                               size_t len,
@@ -254,10 +254,10 @@ Set to true (non zero) to add the break character.
 VSCP_ERROR_SUCCESS is returned on success.
 
 
-## vscphlp_setVscpDataFromString
+## setVscpDataFromString
 
 `<code="c">`
-int vscphlp_setVscpDataFromString( vscpEvent *pEvent, 
+int setVscpDataFromString( vscpEvent *pEvent, 
                                    const char *pstr )
 `</code>`
 
@@ -285,24 +285,24 @@ vscpEvent e;
 if ( VSCP_ERROR_SUCCESS == 
     setVscpDataFromString( e,
                            "1,2,3,4,5,6,0x07,0x55,3,4,0xaa,0xff,0xff" ) ) {
-        printf( "OK vscphlp_setVscpDataFromString size=%d Data = \n", e.sizeData );
+        printf( "OK setVscpDataFromString size=%d Data = \n", e.sizeData );
         for ( int i=0; i<e.sizeData; i++ ) {
             printf("%d ", e.data[i] );
         }
         printf("\n");
 }
 else {
-   printf( "\aError: vscphlp_setVscpDataFromString\n");
+   printf( "\aError: setVscpDataFromString\n");
 }
 `</code>`
 
 
 
 
-## vscphlp_writeVscpEventToString
+## writeVscpEventToString
 
 `<code="c">`
-int vscphlp_writeVscpEventToString( const vscpEvent *pEvent, char *pstr, size_t len )
+int writeVscpEventToString( const vscpEvent *pEvent, char *pstr, size_t len )
 `</code>`
 
 Write VSCP event content to a string.
@@ -329,20 +329,20 @@ VSCP_ERROR_SUCCESS is returned on success.
 
 `<code="c">`
 char eventBuf[128];
-if ( VSCP_ERROR_SUCCESS == vscphlp_writeVscpEventToString( pEvent, eventBuf, sizeof( eventBuf )-1 ) ) {
-    printf( "OK vscphlp_writeVscpEventToString Event = %s\n", eventBuf );    
+if ( VSCP_ERROR_SUCCESS == writeVscpEventToString( pEvent, eventBuf, sizeof( eventBuf )-1 ) ) {
+    printf( "OK writeVscpEventToString Event = %s\n", eventBuf );    
 }
 else {
-    printf( "\aError: vscphlp_writeVscpEventToString\n");
+    printf( "\aError: writeVscpEventToString\n");
 }
 `</code>`
 
 
 
-## vscphlp_writeVscpEventExToString
+## writeVscpEventExToString
 
 `<code="c">`
-int vscphlp_writeVscpEventExToString( const vscpEventEx *pEvent, char *pstr, size_t len )
+int writeVscpEventExToString( const vscpEventEx *pEvent, char *pstr, size_t len )
 `</code>`
 
 Write VSCP event ex content to a string.
@@ -368,21 +368,21 @@ VSCP_ERROR_SUCCESS is returned on success.
 
 `<code="c">`
 char eventBuf[128];
-if ( VSCP_ERROR_SUCCESS == vscphlp_writeVscpEventExToString( &ex, 
+if ( VSCP_ERROR_SUCCESS == writeVscpEventExToString( &ex, 
                                            eventBuf, 
                                            sizeof( eventBuf )-1 ) ) {
-    printf( "OK vscphlp_writeVscpEventExToString Event = %s\n", eventBuf );    
+    printf( "OK writeVscpEventExToString Event = %s\n", eventBuf );    
 }
 else {
-    printf( "\aError: vscphlp_writeVscpEventExToString\n");
+    printf( "\aError: writeVscpEventExToString\n");
 }
 `</code>`
 
 
-##  vscphlp_setVscpEventFromString
+##  setVscpEventFromString
 
 `<code="c">`
-int vscphlp_setVscpEventFromString( vscpEvent *pEvent, const char *pstr )
+int setVscpEventFromString( vscpEvent *pEvent, const char *pstr )
 `</code>`
 
 Set VSCP event from a string.
@@ -408,23 +408,23 @@ VSCP_ERROR_SUCCESS is returned on success.
 vscpEvent *pEventString1 = new vscpEvent;
 pEventString1->pdata = NULL;
 
-if ( VSCP_ERROR_SUCCESS == vscphlp_setVscpEventFromString( pEventString1,                
+if ( VSCP_ERROR_SUCCESS == setVscpEventFromString( pEventString1,                
        "0,10,6,0,0,FF:FF:FF:FF:FF:FF:FF:00:00:00:00:7F:00:01:01:FD,0x8A,0x00,0x1E" ) ) {
-    printf( "OK vscphlp_setVscpEventFromString class=%d Type=%d\n", 
+    printf( "OK setVscpEventFromString class=%d Type=%d\n", 
                    pEventString1->vscp_class, pEventString1->vscp_type );
 }
 else {
-    printf( "\aError: vscphlp_setVscpEventFromString\n");
+    printf( "\aError: setVscpEventFromString\n");
 }
 
 // Free the events
-vscphlp_deleteVSCPevent( pEventString1 );
+deleteVSCPevent( pEventString1 );
 `</code>`
 
-## vscphlp_setVscpEventExFromString
+## setVscpEventExFromString
 
 `<code="c">`
-int vscphlp_setVscpEventExFromString( vscpEventEx *pEvent, const char *pstr )
+int setVscpEventExFromString( vscpEventEx *pEvent, const char *pstr )
 `</code>`
 
 Set VSCP event ex from a string.
@@ -448,13 +448,13 @@ VSCP_ERROR_SUCCESS is returned on success.
 
 `<code="c">`
 vscpEventEx ex6;
-if ( VSCP_ERROR_SUCCESS == vscphlp_setVscpEventExFromString( &ex6,  
+if ( VSCP_ERROR_SUCCESS == setVscpEventExFromString( &ex6,  
       "0,10,6,0,0,FF:FF:FF:FF:FF:FF:FF:00:00:00:00:7F:00:01:01:FD,0x8A,0x00,0x1E" ) ) 
-    printf( "OK vscphlp_setVscpEventExFromString class=%d Type=%d\n", 
+    printf( "OK setVscpEventExFromString class=%d Type=%d\n", 
                    ex6.vscp_class, ex6.vscp_type );
 }
 else {
-    printf( "\aError: vscphlp_setVscpEventExFromString\n");
+    printf( "\aError: setVscpEventExFromString\n");
 }
 `</code>`
 
@@ -462,10 +462,10 @@ else {
 
 
 
-## vscphlp_getVscpPriority
+## getVscpPriority
 
 `<code="c">`
-unsigned char vscphlp_getVscpPriority( const vscpEvent *pEvent )
+unsigned char getVscpPriority( const vscpEvent *pEvent )
 `</code>`
 
 Extract the event priority from a VSCP event. Priority is defined as a value between 0-7 where 0 is the highest priority.
@@ -497,7 +497,7 @@ pEvent->pdata[ 1 ] = 0;
 pEvent->pdata[ 2 ] = 30;
     
 unsigned char eventPriority;
-if ( 0 == ( eventPriority = vscphlp_getVscpPriority( pEvent ) ) ) {
+if ( 0 == ( eventPriority = getVscpPriority( pEvent ) ) ) {
     printf("Event priority = %d\n", eventPriority );
 }
 else {
@@ -505,14 +505,14 @@ else {
 }
 
 // Free the event
-vscphlp_deleteVSCPevent( pEvent );
+deleteVSCPevent( pEvent );
 `</code>`
 
 
-## vscphlp_getVscpPriorityEx
+## getVscpPriorityEx
 
 `<code="c">`
-unsigned char vscphlp_getVscpPriorityEx( const vscpEventEx *pEvent )
+unsigned char getVscpPriorityEx( const vscpEventEx *pEvent )
 `</code>`
 
 Extract the event priority from a VSCP event. Priority is defined as a value between 0-7 where 0 is the highest priority.
@@ -543,17 +543,17 @@ ex3.data[ 1 ] = 0;
 ex3.data[ 2 ] = 30;
     
 unsigned char eventPriority;
-if ( 0 == ( eventPriority = vscphlp_getVscpPriorityEx( &ex3 ) ) ) {
+if ( 0 == ( eventPriority = getVscpPriorityEx( &ex3 ) ) ) {
     printf("EventEx priority = %d\n", eventPriority );
 }
 else {
     printf("\aError: EventEx priority = %d\n", eventPriority );
 }
 `</code>`
-## vscphlp_setVscpPriority
+## setVscpPriority
 
 `<code="c">`
-void vscphlp_setVscpPriority( vscpEvent *pEvent, unsigned char priority )
+void setVscpPriority( vscpEvent *pEvent, unsigned char priority )
 `</code>`
 
 Set Event priority. Priority is defined as a value between 0-7 where 0 is the highest priority.
@@ -584,8 +584,8 @@ pEvent->pdata[ 1 ] = 0;
 pEvent->pdata[ 2 ] = 30;
 
 unsigned char eventPriority;
-vscphlp_setVscpPriority( pEvent, VSCP_PRIORITY_NORMAL );
-if ( VSCP_PRIORITY_NORMAL == ( eventPriority = vscphlp_getVscpPriority( pEvent ) ) ) {
+setVscpPriority( pEvent, VSCP_PRIORITY_NORMAL );
+if ( VSCP_PRIORITY_NORMAL == ( eventPriority = getVscpPriority( pEvent ) ) ) {
     printf("Event priority = %d\n", eventPriority );
 }
 else {
@@ -593,15 +593,15 @@ else {
 }
 
 // Free the event
-vscphlp_deleteVSCPevent( pEvent );
+deleteVSCPevent( pEvent );
 `</code>`
 
 
-## vscphlp_setVscpPriorityEx
+## setVscpPriorityEx
 
 `<code="c">`
 unsigned char eventPriority;
-void vscphlp_setVscpPriorityEx( vscpEventEx *pEvent, unsigned char priority )
+void setVscpPriorityEx( vscpEventEx *pEvent, unsigned char priority )
 `</code>`
 
 Set Event priority. Priority is defined as a value between 0-7 where 0 is the highest priority.
@@ -631,8 +631,8 @@ ex3.data[ 1 ] = 0;
 ex3.data[ 2 ] = 30;
     
 unsigned char eventPriority;
-vscphlp_setVscpPriorityEx( &ex3, VSCP_PRIORITY_LOW );
-if ( VSCP_PRIORITY_LOW == ( eventPriority = vscphlp_getVscpPriorityEx( &ex3 ) ) ) {
+setVscpPriorityEx( &ex3, VSCP_PRIORITY_LOW );
+if ( VSCP_PRIORITY_LOW == ( eventPriority = getVscpPriorityEx( &ex3 ) ) ) {
     printf("Event priority = %d\n", eventPriority );
 }
 else {
@@ -640,10 +640,10 @@ else {
 }
 `</code>`
 
-## vscphlp_getVSCPheadFromCANALid
+## getVSCPheadFromCANALid
 
 `<code="c">`
-unsigned unsigned char vscphlp_getVSCPheadFromCANALid( const unsigned long id ))
+unsigned unsigned char getVSCPheadFromCANALid( const unsigned long id ))
 `</code>`
 
 Get the VSCP head from a CANAL message id.  The VSCP head is defined  as shown in the [vscp.h header file](https///github.com/grodansparadis/vscp_software/blob/master/src/vscp/common/vscp.h).
@@ -662,21 +662,21 @@ VSCP head byte.
 `<code="c">`
 unsigned char vscphead;
 unsigned long canalid = 0x0c0a0601;
-vscphead = vscphlp_getVSCPheadFromCANALid( canalid );
+vscphead = getVSCPheadFromCANALid( canalid );
 if ( 96 == vscphead ) {  // Priority == 3 Not hard coded
     printf("VSCP head = %d\n", vscphead );
 }
 else {
-   printf("\aError: vscphlp_getVSCPheadFromCANALid = %d\n", vscphead );
+   printf("\aError: getVSCPheadFromCANALid = %d\n", vscphead );
 }
 `</code>`
 
 
 
-## vscphlp_getVSCPclassFromCANALid
+## getVSCPclassFromCANALid
 
 `<code="c">`
-unsigned short vscphlp_getVSCPclassFromCANALid( unsigned long id )
+unsigned short getVSCPclassFromCANALid( unsigned long id )
 `</code>`
 
 Get the VSCP class from a CANAL message id.
@@ -694,21 +694,21 @@ VSCP class.
 
 `<code="c">`
 unsigned long canalid = 0x0c0a0601;
-unsigned short can_vscpclass = vscphlp_getVSCPclassFromCANALid( canalid );
+unsigned short can_vscpclass = getVSCPclassFromCANALid( canalid );
 if ( 10 == can_vscpclass ) {
     printf("VSCP Class = %d\n", can_vscpclass );
 }
 else {
-    printf("\aError: vscphlp_getVSCPclassFromCANAALid = %d\n", can_vscpclass );
+    printf("\aError: getVSCPclassFromCANAALid = %d\n", can_vscpclass );
 }
 `</code>`
 
 
 
-## vscphlp_getVSCPtypeFromCANALid
+## getVSCPtypeFromCANALid
 
 `<code="c">`
-unsigned short vscphlp_getVSCPtypeFromCANANALid( const unsigned long id )
+unsigned short getVSCPtypeFromCANANALid( const unsigned long id )
 `</code>`
 
 Get the VSCP type from a a CANAL message id (CAN id).
@@ -727,21 +727,21 @@ VSCP type.
 `<code="c">`
 unsigned long cananalid = 0x0c0a0601;
 
-unsigned short canal_vscptype = vscphlp_getVSCPtypeFromCANALid( canalid );
+unsigned short canal_vscptype = getVSCPtypeFromCANALid( canalid );
 if ( 6 == canal_vscptype ) {
     printf("VSCP Type = %d\n", canal_vscptype );
 }
 else {
-    printf("\aError: vscphlp_getVSCPtypeFromCANALid = %d\n", canal_vscptype );
+    printf("\aError: getVSCPtypeFromCANALid = %d\n", canal_vscptype );
 }
 `</code>`
 
 
 
-## vscphlp_getVSCPnicknameFromCANALid
+## getVSCPnicknameFromCANALid
 
 `<code="c">`
-unsigned short vscphlp_getVSCPnicknameFromCANALid( unsigned long id )
+unsigned short getVSCPnicknameFromCANALid( unsigned long id )
 `</code>`
 
 Get the VSCP 8-bit nickname from a a CANAL message id.
@@ -759,21 +759,21 @@ VSCP 8-bit nickname.
 
 `<code="c">`
 unsigned long canalid = 0x0c0a0601;
-unsigned char canal_nickname = vscphlp_getVSCPnicknameFromCANALid( canalid );
+unsigned char canal_nickname = getVSCPnicknameFromCANALid( canalid );
 if ( 1 == canal_nickname ) {
     printf("VSCP Type = %d\n", canal_vscptype );
 }
 else {
-    printf("\aError: vscphlp_getVSCPnicknameFromCANALid = %d\n", canal_nickname );
+    printf("\aError: getVSCPnicknameFromCANALid = %d\n", canal_nickname );
 }
 `</code>`
 
 
 
-## vscphlp_getCANALidFromVSCPdata
+## getCANALidFromVSCPdata
 
 `<code="c">`
-unsigned long vscphlp_getCANALidFromVSCPdata( unsigned char priority, 
+unsigned long getCANALidFromVSCPdata( unsigned char priority, 
                                                 unsigned short vscp_class, 
                                                 unsigned short vscp_type )
 `</code>`
@@ -800,20 +800,20 @@ CANAL (CAN) id.
 ##### Example
 
 `<code="c">`
-unsigned long constr_canal_id2 = vscphlp_getCANALidFromVSCPdata( 3, 10, 6 ); 
+unsigned long constr_canal_id2 = getCANALidFromVSCPdata( 3, 10, 6 ); 
 if ( 0x0c0a0600 == constr_canal_id2 ) {
     printf("Nickname = %08X\n", constr_canal_id2 );
 }
 else {
-   printf("\aError: vscphlp_getVSCPnicknameFromCANALid = %08X\n", constr_canal_id2 );
+   printf("\aError: getVSCPnicknameFromCANALid = %08X\n", constr_canal_id2 );
 } 
 `</code>`
 
 
-## vscphlp_getCANALidFromVSCPevent
+## getCANALidFromVSCPevent
 
 `<code="c">`
-unsigned long vscphlp_getCANALidFromVSCPevent( const vscpEvent *pEvent )
+unsigned long getCANALidFromVSCPevent( const vscpEvent *pEvent )
 `</code>`
 
 Get CANAL id (CAN id) from VSCP event.
@@ -830,19 +830,19 @@ CANAL (CAN) id.
 ##### Example
 
 `<code="c">`
-constr_canal_id2 = vscphlp_getCANALidFromVSCPevent( pEvent ); 
+constr_canal_id2 = getCANALidFromVSCPevent( pEvent ); 
 if ( 0x0c0a0600 == constr_canal_id2 ) {
     printf("Nickname = %08X\n", constr_canal_id2 );
 }
 else {
-    printf("\aError: vscphlp_getCANALidFromVSCPevent = %08X\n", constr_canal_id2 );
+    printf("\aError: getCANALidFromVSCPevent = %08X\n", constr_canal_id2 );
 }  
 `</code>`
 
-## vscphlp_getCANALidFromVSCPeventEx
+## getCANALidFromVSCPeventEx
 
 `<code="c">`
-unsigned long vscphlp_getCANALidFromVSCPeventEx( const vscpEventEx *pEvent )
+unsigned long getCANALidFromVSCPeventEx( const vscpEventEx *pEvent )
 `</code>`
 
 Get CANAL id (CAN id) from VSCP event.
@@ -859,18 +859,18 @@ CANAL (CAN) id.
 ##### Example
 
 `<code="c">`
-constr_canal_id2 = vscphlp_getCANALidFromVSCPeventEx( &ex ); 
+constr_canal_id2 = getCANALidFromVSCPeventEx( &ex ); 
 if ( 0x0c0a0600 == constr_canal_id2 ) {
     printf("Nickname = %08X\n", constr_canal_id2 );
 }
 else {
-    printf("\aError: vscphlp_getCANALidFromVSCPeventEx = %08X\n", constr_canal_id2 );
+    printf("\aError: getCANALidFromVSCPeventEx = %08X\n", constr_canal_id2 );
 }  
 `</code>`
-## vscphlp_calc_crc_Event
+## calc_crc_Event
 
 `<code="c">`
-short vscphlp_calc_crc_Event ( vscpEvent *pEvent, int bSet )
+short calc_crc_Event ( vscpEvent *pEvent, int bSet )
 `</code>`
 
 Calculate VSCP CRC and optionally set it.
@@ -890,14 +890,14 @@ VSCP CRC.
 ##### Example
 
 `<code="c">`
-unsigned short crc = vscphlp_calc_crc_Event( pEvent, false );
+unsigned short crc = calc_crc_Event( pEvent, false );
 printf("CRC = %04X\n", crc );
 `</code>`
 
-## vscphlp_calc_crc_EventEx
+## calc_crc_EventEx
 
 `<code="c">`
-short vscphlp_calc_crc_EventEx( vscpEvent *pEvent, int bSet )
+short calc_crc_EventEx( vscpEvent *pEvent, int bSet )
 `</code>`
 
 Calculate VSCP CRC and optionally set it.
@@ -917,14 +917,14 @@ VSCP CRC.
 ##### Example
 
 `<code="c">`
-unsigned short crc = vscphlp_calc_crc_EventEx( pEvent, false );
+unsigned short crc = calc_crc_EventEx( pEvent, false );
 printf("CRC = %04X\n", crc );
 `</code>`
 
-## vscphlp_convertVSCPtoEx
+## convertVSCPtoEx
 
 `<code="c">`
-int vscphlp_convertVSCPtoEx( vscpEventEx *pEventEx, 
+int convertVSCPtoEx( vscpEventEx *pEventEx, 
                               const vscpEvent *pEvent )
 `</code>`
 
@@ -947,17 +947,17 @@ VSCP_ERROR_SUCCESS on success.
 
 `<code="c">`
 vscpEventEx ex4;
-if ( VSCP_ERROR_SUCCESS != vscphlp_convertVSCPtoEx( &ex4, pEvent ) ) {
-    printf( "\aError: vscphlp_getGuidFromStringToArray\n");
+if ( VSCP_ERROR_SUCCESS != convertVSCPtoEx( &ex4, pEvent ) ) {
+    printf( "\aError: getGuidFromStringToArray\n");
 }
 `</code>`
 
 
 
-## vscphlp_convertVSCPfromEx
+## convertVSCPfromEx
 
 `<code="c">`
-int vscphlp_convertVSCPfromEx( vscpEvent *pEvent, 
+int convertVSCPfromEx( vscpEvent *pEvent, 
                                         const vscpEventEx *pEventEx )
 `</code>`
 
@@ -978,16 +978,16 @@ VSCP_ERROR_SUCCESS on success.
 ##### Example
 
 `<code="c">`
-if ( VSCP_ERROR_SUCCESS != vscphlp_convertVSCPfromEx( pEvent, &ex4 ) ) {
-    printf( "\aError: vscphlp_convertVSCPfromEx\n");
+if ( VSCP_ERROR_SUCCESS != convertVSCPfromEx( pEvent, &ex4 ) ) {
+    printf( "\aError: convertVSCPfromEx\n");
 }
 `</code>`
 
 
-## vscphlp_newVSCPevent
+## newVSCPevent
 
 `<code="c">`
-bool vscphlp_newVSCPevent( vscpEvent **ppEvent )
+bool newVSCPevent( vscpEvent **ppEvent )
 `</code>`
 
 Creates a new VSCP event.
@@ -1005,13 +1005,13 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure.
 
 `<code="c">`
 vscpEvent *pEvent;
-vscphlp_newVSCPevent( &pEvent );
+newVSCPevent( &pEvent );
 `</code>`
 
-## vscphlp_deleteVSCPevent
+## deleteVSCPevent
 
 `<code="c">`
-void vscphlp_deleteVSCPevent( vscpEvent *pEvent )
+void deleteVSCPevent( vscpEvent *pEvent )
 `</code>`
 
 Delete VSCP event.
@@ -1024,14 +1024,14 @@ VSCP event.
 ##### Example
 
 `<code="c">`
-vscphlp_deleteVSCPevent( pEvent );
+deleteVSCPevent( pEvent );
 `</code>`
 
 
-## vscphlp_deleteVSCPevent_v2
+## deleteVSCPevent_v2
 
 `<code="c">`
-void vscphlp_deleteVSCPevent_v2( vscpEvent **ppEvent )
+void deleteVSCPevent_v2( vscpEvent **ppEvent )
 `</code>`
 
 Delete VSCP event and set to NULL.
@@ -1044,12 +1044,12 @@ Pointer to pointer to a valid VSCP event.
 ##### Example
 
 `<code="c">`
-vscphlp_deleteVSCPevent_v2( pEvent );
+deleteVSCPevent_v2( pEvent );
 `</code>`
-## vscphlp_deleteVSCPeventEx
+## deleteVSCPeventEx
 
 `<code="c">`
-void vscphlp_deleteVSCPeventEx( vscpEventEx *pEventEx )
+void deleteVSCPeventEx( vscpEventEx *pEventEx )
 `</code>`
 
 Delete VSCP event ex.
@@ -1062,14 +1062,14 @@ VSCP event ex.
 ##### Example
 
 `<code="c">`
-vscphlp_deleteVSCPeventEx( &ex )
+deleteVSCPeventEx( &ex )
 `</code>`
 
 
-## vscphlp_convertCanalToEvent
+## convertCanalToEvent
 
 `<code="c">`
-int vscphlp_convertCanalToEvent( vscpEvent *pvscpEvent,
+int convertCanalToEvent( vscpEvent *pvscpEvent,
                                     const canalMsg *pcanalMsg,
                                     unsigned char *pGUID )
 `</code>`
@@ -1101,22 +1101,22 @@ canalMsg.sizeData = 3;
 canalMsg.data[0] = 138;
 canalMsg.data[1] = 0;
 canalMsg.data[2] = 30;
-if ( VSCP_ERROR_SUCCESS == vscphlp_convertCanalToEvent( pEvent,
+if ( VSCP_ERROR_SUCCESS == convertCanalToEvent( pEvent,
                                                           &canalMsg,
                                                           GUID2 ) ) {
-    printf( "OK vscphlp_convertCanalToEvent VSCP class=%d Type=%d\n", 
+    printf( "OK convertCanalToEvent VSCP class=%d Type=%d\n", 
                    pEvent->vscp_class, pEvent->vscp_type );
 }
 else {
-    printf( "\aError: vscphlp_convertCanalToEvent\n");
+    printf( "\aError: convertCanalToEvent\n");
 }
 `</code>`
 
 
-## vscphlp_convertCanalToEventEx
+## convertCanalToEventEx
 
 `<code="c">`
-int vscphlp_convertCanalToEventEx( vscpEvent *pvscpEvent, 
+int convertCanalToEventEx( vscpEvent *pvscpEvent, 
                                       const canalMsg *pcanalMsg, 
                                       unsigned char *pGUID )
 `</code>`
@@ -1151,20 +1151,20 @@ canalMsg.data[1] = 0;
 canalMsg.data[2] = 30;
 
 vscpEventEx ex5;
-if ( VSCP_ERROR_SUCCESS == vscphlp_convertCanalToEventEx( &ex5,
+if ( VSCP_ERROR_SUCCESS == convertCanalToEventEx( &ex5,
                                                             &canalMsg,
                                                             GUID2 ) ) {
-    printf( "OK vscphlp_convertCanalToEventEx VSCP class=%d Type=%d\n",
+    printf( "OK convertCanalToEventEx VSCP class=%d Type=%d\n",
                        ex5.vscp_class, ex5.vscp_type );
 }
 else {
-    printf( "\aError: vscphlp_convertCanalToEvent\n");
+    printf( "\aError: convertCanalToEvent\n");
 }
 `</code>`
-## vscphlp_convertEventToCanal
+## convertEventToCanal
 
 `<code="c">`
-bool vscphlp_convertEventToCanal( canalMsg *pcanalMsg, 
+bool convertEventToCanal( canalMsg *pcanalMsg, 
                                   const vscpEvent *pvscpEvent )
 `</code>`
 Convert VSCP event to CANAL message.
@@ -1185,19 +1185,19 @@ VSCP_ERROR_SUCCESS on succes.
 ##### Example
 
 `<code="c">`
-if ( VSCP_ERROR_SUCCESS == vscphlp_convertEventToCanal( &canalMsg, pEvent ) ) {
-    printf( "OK vscphlp_convertEventToCanal id=%08X\n", canalMsg.id );
+if ( VSCP_ERROR_SUCCESS == convertEventToCanal( &canalMsg, pEvent ) ) {
+    printf( "OK convertEventToCanal id=%08X\n", canalMsg.id );
 }
 else {
-    printf( "\aError: vscphlp_convertEventToCanal\n");
+    printf( "\aError: convertEventToCanal\n");
 }
 `</code>`
 
 
-## vscphlp_convertEventExToCanal
+## convertEventExToCanal
 
 `<code="c">`
-bool vscphlp_convertEventExToCanal( canalMsg *pcanalMsg, 
+bool convertEventExToCanal( canalMsg *pcanalMsg, 
                                        const vscpEventEx *pvscpEvent )
 `</code>`
 Convert VSCP event ex to CANAL message.
@@ -1218,11 +1218,11 @@ VSCP_ERROR_SUCCESS on succes.
 ##### Example
 
 `<code="c">`
-if ( VSCP_ERROR_SUCCESS == vscphlp_convertEventExToCanal( &canalMsg, &ex5 ) ) {
-    printf( "OK vscphlp_convertEventExToCanal id=%08X\n", canalMsg.id );
+if ( VSCP_ERROR_SUCCESS == convertEventExToCanal( &canalMsg, &ex5 ) ) {
+    printf( "OK convertEventExToCanal id=%08X\n", canalMsg.id );
 }
 else {
-    printf( "\aError: vscphlp_convertEventExToCanal\n");
+    printf( "\aError: convertEventExToCanal\n");
 }
 `</code>`
 
@@ -1232,7 +1232,7 @@ else {
 ## vscphlp makeTimeStamp
 
 `<code="c">`
-unsigned long vscphlp_makeTimeStamp( void )
+unsigned long makeTimeStamp( void )
 `</code>`
 
 Get new VSCP timestamp.
@@ -1244,17 +1244,17 @@ Timestamp in microseconds.
 ##### Example
 
 `<code="c">`
-printf( "vscphlp_makeTimeStamp  %04X\n", vscphlp_makeTimeStamp() );
+printf( "makeTimeStamp  %04X\n", makeTimeStamp() );
 `</code>`
 
 \\ \\ 
 ----
 \\ \\  
 
-## vscphlp_setEventDateTimeBlockToNow
+## setEventDateTimeBlockToNow
 
 `<code="c">`
-int vscphlp_setEventDateTimeBlockToNow( vscpEvent *pEvent )
+int setEventDateTimeBlockToNow( vscpEvent *pEvent )
 `</code>`
 
 Get date/time block for an event.
@@ -1267,17 +1267,17 @@ VSCP_ERROR_SUCCESS is returned on success.
 
 `<code="c">`
 vscpEvent *pEvent;
-vscphlp_setEventDateTimeBlockToNow( pEvent );
+setEventDateTimeBlockToNow( pEvent );
 `</code>`
 
 \\ \\ 
 ----
 \\ \\  
 
-## vscphlp_setEventExDateTimeBlockToNow
+## setEventExDateTimeBlockToNow
 
 `<code="c">`
-int vscphlp_setEventExDateTimeBlockToNow( vscpEventEx *pEventEx )
+int setEventExDateTimeBlockToNow( vscpEventEx *pEventEx )
 `</code>`
 
 Get date/time block for an ex event.
@@ -1290,7 +1290,7 @@ VSCP_ERROR_SUCCESS is returned on success.
 
 `<code="c">`
 vscpEventEx *pEventEx;
-vscphlp_setEventExDateTimeBlockToNow( pEventEx );
+setEventExDateTimeBlockToNow( pEventEx );
 `</code>`
 
 \\ \\ 
@@ -1299,10 +1299,10 @@ vscphlp_setEventExDateTimeBlockToNow( pEventEx );
 
 
 
-## vscphlp_getDateStringFromEvent
+## getDateStringFromEvent
 
 `<code="c">`
-int vscphlp_getDateStringFromEvent( char *buf, size_t buf_len, vscpEvent *pEvent )
+int getDateStringFromEvent( char *buf, size_t buf_len, vscpEvent *pEvent )
 `</code>`
 
 ##### buf
@@ -1330,10 +1330,10 @@ VSCP_ERROR_SUCCESS on success.
 
 
 
-## vscphlp_getDateStringFromEventEx
+## getDateStringFromEventEx
 
 `<code="c">`
-int vscphlp_getDateStringFromEventEx( char *buf, size_t buf_len, vscpEventEx *pEventEx )
+int getDateStringFromEventEx( char *buf, size_t buf_len, vscpEventEx *pEventEx )
 `</code>`
 
 ##### buf
@@ -1361,10 +1361,10 @@ VSCP_ERROR_SUCCESS on success.
 
 # Filter handling
 
-## vscphlp_clearVSCPFilter
+## clearVSCPFilter
 
 `<code="c">`
-void vscphlp_clearVSCPFilter( vscpEventFilter *pFilter )
+void clearVSCPFilter( vscpEventFilter *pFilter )
 `</code>`
 
 Clear VSCP filter.
@@ -1376,14 +1376,14 @@ Pointer to VSCP filter structure.
 ##### Example
 
 `<code="c">`
-vscphlp_clearVSCPFilter( pFilter )
+clearVSCPFilter( pFilter )
 `</code>`
 
 
-## vscphlp_copyVSCPFilter
+## copyVSCPFilter
 
 `<code="c">`
-void vscphlp_copyVSCPFilter( vscpEventFilter *pToFilter, const vscpEventFilter *pFromFilter )
+void copyVSCPFilter( vscpEventFilter *pToFilter, const vscpEventFilter *pFromFilter )
 `</code>`
 
 Copy VSCP filter from one to another.
@@ -1399,13 +1399,13 @@ Pointer to VSCP filter structure that data will be copied from.
 ##### Example
 
 `<code="c">`
-vscphlp_clearVSCPFilter( pFilter )
+clearVSCPFilter( pFilter )
 `</code>`
 
-## vscphlp_readFilterFromString
+## readFilterFromString
 
 `<code="c">`
-int vscphlp_readFilterFromString( vscpEventFilter *pFilter, 
+int readFilterFromString( vscpEventFilter *pFilter, 
                                    char *strFilter )
 `</code>`
 
@@ -1440,13 +1440,13 @@ VSCP_ERROR_SUCCESS on success.
 ##### Example
 
 `<code="c">`
-if ( VSCP_ERROR_SUCCESS != vscphlp_readFilterFromString( &filter, 
+if ( VSCP_ERROR_SUCCESS != readFilterFromString( &filter, 
                 "1,0x0000,0x0006,ff:ff:ff:ff:ff:ff:ff:01:00:00:00:00:00:00:00:00" ) ) {
-    printf( "\aError: vscphlp_readFilterFromString\n");   
+    printf( "\aError: readFilterFromString\n");   
 }
 `</code>`
 
-## vscphlp_writeFilterToString
+## writeFilterToString
 
 `<code="c">`
     bool vscp_writeFilterToString(vscpEventFilter *pFilter, char * strFilter);
@@ -1471,14 +1471,14 @@ VSCP_ERROR_SUCCESS on success.
 ##### Example
 
 `<code="c">`
-if ( VSCP_ERROR_SUCCESS != vscphlp_writeFilterToString( &filter, str ) ) {
-    printf( "\aError: vscphlp_writeFilterToString\n");   
+if ( VSCP_ERROR_SUCCESS != writeFilterToString( &filter, str ) ) {
+    printf( "\aError: writeFilterToString\n");   
 }
 `</code>`
-## vscphlp_readMaskFromString
+## readMaskFromString
 
 `<code="c">`
-int vscphlp_readMaskFromString( vscpEventFilter *pFilter, 
+int readMaskFromString( vscpEventFilter *pFilter, 
                                    const char * strMask )
 `</code>`
 
@@ -1514,16 +1514,16 @@ VSCP_ERROR_SUCCESS on success.
 ##### Example
 
 `<code="c">`
-if ( VSCP_ERROR_SUCCESS != vscphlp_readMaskFromString( &filter, 
+if ( VSCP_ERROR_SUCCESS != readMaskFromString( &filter, 
                 "1,0x0000,0x0006,ff:ff:ff:ff:ff:ff:ff:01:00:00:00:00:00:00:00:00" ) ) {
-    printf( "\aError: vscphlp_readMaskFromString\n");   
+    printf( "\aError: readMaskFromString\n");   
 }
 `</code>`
 
-## vscphlp_writeMaskToString
+## writeMaskToString
 
 `<code="c">`
-int vscphlp_writeMaskToString( vscpEventFilter *pFilter, 
+int writeMaskToString( vscpEventFilter *pFilter, 
                                    char * strMask )
 `</code>`
 
@@ -1547,17 +1547,17 @@ VSCP_ERROR_SUCCESS on success.
 ##### Example
 
 `<code="c">`
-if ( VSCP_ERROR_SUCCESS != vscphlp_writeMaskToString( &filter, 
+if ( VSCP_ERROR_SUCCESS != writeMaskToString( &filter, 
                 "1,0x0000,0x0006,ff:ff:ff:ff:ff:ff:ff:01:00:00:00:00:00:00:00:00" ) ) {
-    printf( "\aError: vscphlp_writeMaskToString\n");   
+    printf( "\aError: writeMaskToString\n");   
 }
 `</code>`
 
 
-## vscphlp_doLevel2Filter 
+## doLevel2Filter 
 
 `<code="c">`
-int vscphlp_doLevel2Filter( const vscpEvent *pEvent, 
+int doLevel2Filter( const vscpEvent *pEvent, 
                              const vscpEventFilter *pFilter )
 `</code>`
 Check VSCP filter condition.
@@ -1570,11 +1570,11 @@ Return true (non-zero) if the event is accepted by the filter.
 ##### Example
 
 `<code="c">`
-if ( vscphlp_doLevel2Filter( pEvent, &filter ) ) {
-    printf( "Event pass:  vscphlp_doLevel2Filter\n");
+if ( doLevel2Filter( pEvent, &filter ) ) {
+    printf( "Event pass:  doLevel2Filter\n");
 }
 else {
-   printf( "Event does NOT pass:  vscphlp_doLevel2Filter\n");
+   printf( "Event does NOT pass:  doLevel2Filter\n");
 }
 `</code>`
 
@@ -1587,10 +1587,10 @@ else {
 # GUID Handling
 
 
-## vscphlp_getGuidFromString
+## getGuidFromString
 
 `<code="c">`
-int vscphlp_getGuidFromString( vscpEvent *pEvent, const char * pGUID )
+int getGuidFromString( vscpEvent *pEvent, const char * pGUID )
 `</code>`
 
 Write GUID into VSCP event from a string.
@@ -1613,19 +1613,19 @@ VSCP_ERROR_SUCCESS on success.
 `<code="c">`
 char strguid[64], strguid2[64];
 
-if ( VSCP_ERROR_SUCCESS == vscphlp_getGuidFromString( pEvent, strguid ) )  { 
-    vscphlp_writeGuidToString( pEvent, strguid2, sizeof( strguid2 )-1 );
+if ( VSCP_ERROR_SUCCESS == getGuidFromString( pEvent, strguid ) )  { 
+    writeGuidToString( pEvent, strguid2, sizeof( strguid2 )-1 );
     printf( "GUID=%s\n", strguid2 );
 }
 else {
-    printf( "\aError: vscphlp_writeGuidArrayToString\n");
+    printf( "\aError: writeGuidArrayToString\n");
 }
 `</code>`
 
-## vscphlp_getGuidFromStringEx
+## getGuidFromStringEx
 
 `<code="c">`
-int vscphlp_getGuidFromStringEx( vscpEvent *pEvent, const char * pGUID )
+int getGuidFromStringEx( vscpEvent *pEvent, const char * pGUID )
 `</code>`
 
 Write GUID into VSCP event ex from a string.
@@ -1648,18 +1648,18 @@ VSCP_ERROR_SUCCESS on success.
 `<code="c">`
 char strguid[64], strguid2[64];
 
-if ( VSCP_ERROR_SUCCESS == vscphlp_getGuidFromStringEx( &ex3, strguid ) ) {        
-    vscphlp_writeGuidToStringEx( &ex3, strguid2, sizeof( strguid2 )-1 );
+if ( VSCP_ERROR_SUCCESS == getGuidFromStringEx( &ex3, strguid ) ) {        
+    writeGuidToStringEx( &ex3, strguid2, sizeof( strguid2 )-1 );
     printf( "GUID=%s\n", strguid2 );
 }
 else {
-    printf( "\aError: vscphlp_writeGuidArrayToString\n");
+    printf( "\aError: writeGuidArrayToString\n");
 }
 `</code>`
-## vscphlp_getGuidFromStringToArray
+## getGuidFromStringToArray
 
 `<code="c">`
-int vscphlp_getGuidFromStringToArray( uint8_t *pGUID, const char * pStr )
+int getGuidFromStringToArray( uint8_t *pGUID, const char * pStr )
 `</code>`
 
 Write GUID from string into array.
@@ -1680,20 +1680,20 @@ VSCP_ERROR_SUCCESS on success.
 ##### Example
 
 `<code="c">`
-if ( VSCP_ERROR_SUCCESS == vscphlp_getGuidFromStringToArray( GUID2, strguid ) ) {
-    vscphlp_writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 );
+if ( VSCP_ERROR_SUCCESS == getGuidFromStringToArray( GUID2, strguid ) ) {
+    writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 );
     printf( "GUID  after reverse = %s\n", strguid2 );
 }
 else {
-    printf( "\aError: vscphlp_getGuidFromStringToArray\n");
+    printf( "\aError: getGuidFromStringToArray\n");
 }
 `</code>`
 
 
-## vscphlp_writeGuidToString
+## writeGuidToString
 
 `<code="c">`
-int vscphlp_writeGuidToString( const vscpEvent *pEvent, char *pStr, size_t len )
+int writeGuidToString( const vscpEvent *pEvent, char *pStr, size_t len )
 `</code>`
 
 Write GUID from VSCP event to string.
@@ -1718,19 +1718,19 @@ VSCP_ERROR_SUCCESS on success.
 ##### Example
 
 `<code="c">`
-if ( VSCP_ERROR_SUCCESS == vscphlp_getGuidFromString( pEvent, strguid ) ) {
-   vscphlp_writeGuidToString( pEvent, strguid2, sizeof( strguid2 )-1 );
+if ( VSCP_ERROR_SUCCESS == getGuidFromString( pEvent, strguid ) ) {
+   writeGuidToString( pEvent, strguid2, sizeof( strguid2 )-1 );
    printf( "GUID=%s\n", strguid2 );
 }
 else {
-    printf( "\aError: vscphlp_writeGuidArrayToString\n");
+    printf( "\aError: writeGuidArrayToString\n");
 }
 `</code>`
 
-## vscphlp_writeGuidToStringEx
+## writeGuidToStringEx
 
 `<code="c">`
-int vscphlp_writeGuidToStringEc( const vscpEventEx *pEvent, char *pStr, size_t len )
+int writeGuidToStringEc( const vscpEventEx *pEvent, char *pStr, size_t len )
 `</code>`
 
 Write GUID from VSCP event to string.
@@ -1755,18 +1755,18 @@ VSCP_ERROR_SUCCESS on success.
 ##### Example
 
 `<code="c">`
-if ( VSCP_ERROR_SUCCESS == vscphlp_getGuidFromStringEx( &ex3, strguid ) ) {
-    vscphlp_writeGuidToStringEx( &ex3, strguid2, sizeof( strguid2 )-1 );
+if ( VSCP_ERROR_SUCCESS == getGuidFromStringEx( &ex3, strguid ) ) {
+    writeGuidToStringEx( &ex3, strguid2, sizeof( strguid2 )-1 );
     printf( "GUID=%s\n", strguid2 );
 }
 else {
-    printf( "\aError: vscphlp_writeGuidArrayToString\n");
+    printf( "\aError: writeGuidArrayToString\n");
 }
 `</code>`
-## vscphlp_writeGuidToString4Rows
+## writeGuidToString4Rows
 
 `<code="c">`
-int vscphlp_writeGuidToString4Rows( const vscpEvent *pEvent, 
+int writeGuidToString4Rows( const vscpEvent *pEvent, 
                                       char *strGUID,
                                       size_t len )
 `</code>`
@@ -1793,18 +1793,18 @@ VSCP_ERROR_SUCCESS on success.
 ##### Example
 
 `<code="c">`
-if ( VSCP_ERROR_SUCCESS == vscphlp_writeGuidToString4Rows( pEvent, strguid2, sizeof( strguid2 )-1 ) ) {
+if ( VSCP_ERROR_SUCCESS == writeGuidToString4Rows( pEvent, strguid2, sizeof( strguid2 )-1 ) ) {
     printf( "GUID\n%s\n", strguid2 );
 }
 else {
-    printf( "Error: vscphlp_writeGuidArrayToString\n");
+    printf( "Error: writeGuidArrayToString\n");
 }
 `</code>`
 
-## vscphlp_writeGuidToString4RowsEx
+## writeGuidToString4RowsEx
 
 `<code="c">`
-int vscphlp_writeGuidToString4RowsEx( const vscpEventEx *pEvent, 
+int writeGuidToString4RowsEx( const vscpEventEx *pEvent, 
                                           char *strGUID,
                                           size_t len )
 `</code>`
@@ -1831,17 +1831,17 @@ VSCP_ERROR_SUCCESS on success.
 ##### Example
 
 `<code="c">`
-if ( VSCP_ERROR_SUCCESS == vscphlp_writeGuidToString4RowsEx( &ex3, strguid2, sizeof( strguid2 )-1 ) ) {
+if ( VSCP_ERROR_SUCCESS == writeGuidToString4RowsEx( &ex3, strguid2, sizeof( strguid2 )-1 ) ) {
     printf( "GUID\n%s\n", strguid2 );
 }
 else {
-    printf( "Error: vscphlp_writeGuidArrayToString\n");
+    printf( "Error: writeGuidArrayToString\n");
 }
 `</code>`
-## vscphlp_writeGuidArrayToString
+## writeGuidArrayToString
 
 `<code="c">`
-int vscphlp_writeGuidArrayToString( const unsigned char * pGUID, 
+int writeGuidArrayToString( const unsigned char * pGUID, 
                                      char *strGUID,
                                      size_t len )
 `</code>`
@@ -1867,19 +1867,19 @@ VSCP_ERROR_SUCCESS on success.
 ##### Example
 
 `<code="c">`
-if ( VSCP_ERROR_SUCCESS == vscphlp_writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 ) ) {
+if ( VSCP_ERROR_SUCCESS == writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 ) ) {
     printf( "GUID=%s\n", strguid2 );
 }
 else {
-    printf( "Error: vscphlp_writeGuidArrayToString\n");
+    printf( "Error: writeGuidArrayToString\n");
 }
 `</code>`
 
 
-## vscphlp_isGUIDEmpty
+## isGUIDEmpty
 
 `<code="c">`
-int vscphlp_isGUIDEmpty( unsigned char *pGUID )
+int isGUIDEmpty( unsigned char *pGUID )
 `</code>`
 
 Check if GUID is empty (all nulls).
@@ -1898,26 +1898,26 @@ True (non-zero) if GUID are empty.
 `<code="c">`
 unsigned char emptyGUID[16];
 memset( emptyGUID,0, 16 );
-if ( vscphlp_isGUIDEmpty( emptyGUID ) ) {
-    printf( "vscphlp_isGUIDEmpty  - GUID is detected as empty as it should be\n" );    
+if ( isGUIDEmpty( emptyGUID ) ) {
+    printf( "isGUIDEmpty  - GUID is detected as empty as it should be\n" );    
 }
 else {
-    printf( "\aError: vscphlp_isGUIDEmpty\n");
+    printf( "\aError: isGUIDEmpty\n");
 }
 
-if ( vscphlp_isGUIDEmpty( GUID2 ) ) {
-    printf( "\aError: vscphlp_isGUIDEmpty\n");    
+if ( isGUIDEmpty( GUID2 ) ) {
+    printf( "\aError: isGUIDEmpty\n");    
 }
 else {
-    printf( "vscphlp_isGUIDEmpty  - GUID is detected as NOT empty as it should be\n" );
+    printf( "isGUIDEmpty  - GUID is detected as NOT empty as it should be\n" );
 }
 `</code>`
 
 
-## vscphlp_isSameGUID
+## isSameGUID
 
 `<code="c">`
-int vscphlp_isSameGUID( const unsigned char *pGUID1, 
+int isSameGUID( const unsigned char *pGUID1, 
                          const unsigned char *pGUID2 )
 `</code>`
 
@@ -1938,19 +1938,19 @@ True (non-zero) if GUIDs are the same.
 ##### Example
 
 `<code="c">`
-if ( vscphlp_isSameGUID( emptyGUID, GUID2) ) {
-    printf( "\aError: vscphlp_isSameGUID\n");
+if ( isSameGUID( emptyGUID, GUID2) ) {
+    printf( "\aError: isSameGUID\n");
 }
 else {
-    printf( "vscphlp_isSameGUID  - Correct, GUIDs are not the same.\n" );
+    printf( "isSameGUID  - Correct, GUIDs are not the same.\n" );
 }
 `</code>`
 
 
-##  vscphlp_reverseGUID
+##  reverseGUID
 
 `<code="c">`
-int vscphlp_reverseGUID(unsigned char *pGUID)
+int reverseGUID(unsigned char *pGUID)
 `</code>`
 
 Reverse a GUID array.
@@ -1966,20 +1966,20 @@ Return VSCP_ERROR_SUCCESS on success.
 ##### Example
 
 `<code="c">`
-vscphlp_writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 );
+writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 );
 printf( "GUID before reverse = %s\n", strguid2 );
-if ( VSCP_ERROR_SUCCESS == vscphlp_reverseGUID( GUID2 ) ) {
-    vscphlp_writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 );
+if ( VSCP_ERROR_SUCCESS == reverseGUID( GUID2 ) ) {
+    writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 );
     printf( "GUID  after reverse = %s\n", strguid2 );
 }
 else {
-    printf( "\aError: vscphlp_reverseGUID\n");
+    printf( "\aError: reverseGUID\n");
 }
 `</code>`
-##  vscphlp_calcCRC4GUIDArray
+##  calcCRC4GUIDArray
 
 `<code="c">`
-unsigned char vscphlp_calcCRC4GUIDArray( unsigned char *pguid )
+unsigned char calcCRC4GUIDArray( unsigned char *pguid )
 `</code>`
 
 Calculate 8-bit crc for a GUID array.
@@ -2002,14 +2002,14 @@ memset( GUID2, 0, 16 );
 for ( int i=0;i<16; i++ ) {
     GUID2[i] = i;
 }
-unsigned char crc8 = vscphlp_calcCRC4GUIDArray( GUID2 );
+unsigned char crc8 = calcCRC4GUIDArray( GUID2 );
 printf("CRC = %02X\n", crc8 );
 `</code>`
 
-##  vscphlp_calcCRC4GUIDString
+##  calcCRC4GUIDString
 
 `<code="c">`
-unsigned char vscphlp_calcCRC4GUIDString( unsigned char *strguid)
+unsigned char calcCRC4GUIDString( unsigned char *strguid)
 `</code>`
 
 Calculate 8-bit crc for a GUID string.
@@ -2029,7 +2029,7 @@ String containing GUID on standard string form.
 // Calculate GUID for GUID string
 char strguid[64];
 strcpy( strguid, "FF:FF:FF:FF:FF:FF:FF:00:00:00:00:7F:00:01:01:FD" );
-crc8 = vscphlp_calcCRC4GUIDString( strguid);
+crc8 = calcCRC4GUIDString( strguid);
 printf("CRC = %02X\n", crc8 )
 `</code>`
 
@@ -2043,10 +2043,10 @@ printf("CRC = %02X\n", crc8 )
 
 # Measurement helpers
 
-##  vscphlp_getMeasurementDataCoding
+##  getMeasurementDataCoding
 
 `<code="c">`
-unsigned char vscphlp_getMeasurementDataCoding( const vscpEvent *pEvent )
+unsigned char getMeasurementDataCoding( const vscpEvent *pEvent )
 `</code>`
 
 Get the [measurement data coding byte](https://www.vscp.org/docs/vscpspec/doku.php?id=data_coding) from an event. The measurement data coding byte specifies how the data in the event should be interpreted.
@@ -2075,7 +2075,7 @@ pEvent->pdata[ 0 ] = 138;
 pEvent->pdata[ 1 ] = 0;
 pEvent->pdata[ 2 ] = 30;
     
-unsigned char dataCoding = vscphlp_getMeasurementDataCoding( pEvent );
+unsigned char dataCoding = getMeasurementDataCoding( pEvent );
 if ( dataCoding = 138 ) {
     printf("Data Coding = %d\n", dataCoding );
 }
@@ -2085,10 +2085,10 @@ else {
 `</code>`
 
 
-## vscphlp_getDataCodingBitArray
+## getDataCodingBitArray
 
 `<code="c">`
-unsigned long long vscphlp_getDataCodingBitArray( const unsigned char *pNorm,
+unsigned long long getDataCodingBitArray( const unsigned char *pNorm,
                                                     int size)
 `</code>`
 
@@ -2113,14 +2113,14 @@ unsigned char bitarry[3];
 bitarry[0] = VSCP_DATACODING_BIT; // Data cding byte. Default unit, sensoridx=0
 bitarry[1] = 0x55;
 bitarry[2] = 0xAA;
-unsigned long long bitarray64 = vscphlp_getDataCodingBitArray( bitarry, sizeof( bitarry ) )
+unsigned long long bitarray64 = getDataCodingBitArray( bitarry, sizeof( bitarry ) )
 `</code>`
 
 
-##  vscphlp_getDataCodingInteger
+##  getDataCodingInteger
 
 `<code="c">`
-unsigned long long vscphlp_getDataCodingInteger(const unsigned char *pCode, 
+unsigned long long getDataCodingInteger(const unsigned char *pCode, 
                                                    int size )
 `</code>`
 
@@ -2146,22 +2146,22 @@ normarry[0] = 0x60; // Data coding byte:integer, unit=0, sensoridx=0
 normarry[1] = 0xFF;
 normarry[2] = 0xFF;
 normarry[3] = 0xFF;
-double value =  vscphlp_getDataCodingInteger (normarry, sizeof( normarry ) );
+double value =  getDataCodingInteger (normarry, sizeof( normarry ) );
 if ( 3.1 == value ) {
-    printf("OK - vscphlp_getDataCodingInteger value = %f \n", value );
+    printf("OK - getDataCodingInteger value = %f \n", value );
 }
 else {
-    printf("Error - vscphlp_getDataCodingNormalizedInteger value = %f \n", value );
+    printf("Error - getDataCodingNormalizedInteger value = %f \n", value );
 }
 `</code>`
 
 
 
 
-##  vscphlp_getDataCodingNormalizedInteger
+##  getDataCodingNormalizedInteger
 
 `<code="c">`
-double vscphlp_getDataCodingNormalizedInteger(const unsigned char *pCode, 
+double getDataCodingNormalizedInteger(const unsigned char *pCode, 
                                                  int size )
 `</code>`
 
@@ -2187,21 +2187,21 @@ normarry[0] = 0x89; // Data coding byte: Normalized integer, unit=1, sensoridx=1
 normarry[1] = 0x02;
 normarry[2] = 0x01;
 normarry[3] = 0x36;
-double value =  vscphlp_getDataCodingNormalizedInteger (normarry, sizeof( normarry ) );
+double value =  getDataCodingNormalizedInteger (normarry, sizeof( normarry ) );
 if ( 3.1 == value ) {
-    printf("OK - vscphlp_getDataCodingNormalizedInteger value = %f \n", value );
+    printf("OK - getDataCodingNormalizedInteger value = %f \n", value );
 }
 else {
-    printf("Error - vscphlp_getDataCodingNormalizedInteger value = %f \n", value );
+    printf("Error - getDataCodingNormalizedInteger value = %f \n", value );
 }
 `</code>`
 
 
 
-## vscphlp_getDataCodingString
+## getDataCodingString
 
 `<code="c">`
-int vscphlp_getDataCodingString(const unsigned char *pData,
+int getDataCodingString(const unsigned char *pData,
                                    unsigned char dataLength, 
                                    char *strResult,
                                    size_t len )
@@ -2238,22 +2238,22 @@ stringarry[3] = 0x34;
 stringarry[4] = 0x2E;
 stringarry[5] = 0x35;
 char stringbuf[32];
-if ( VSCP_ERROR_SUCCESS == vscphlp_getDataCodingString( stringarry,
+if ( VSCP_ERROR_SUCCESS == getDataCodingString( stringarry,
                                                            sizeof( stringarry ), 
                                                            stringbuf,
                                                            sizeof( stringbuf ) ) ) {
-    printf("OK - vscphlp_getDataCodingString value = %s \n", stringbuf );
+    printf("OK - getDataCodingString value = %s \n", stringbuf );
 }
 else {
-    printf("Error - vscphlp_getDataCodingString value = %s \n", stringbuf );
+    printf("Error - getDataCodingString value = %s \n", stringbuf );
 }
 `</code>`
 
 
-##  vscphlp_getVSCPMeasurementAsString
+##  getVSCPMeasurementAsString
 
 `<code="c">`
-int vscphlp_getVSCPMeasurementAsString( const vscpEvent *pEvent, 
+int getVSCPMeasurementAsString( const vscpEvent *pEvent, 
                                            char *pResult, 
                                            size_t len )
 `</code>`
@@ -2293,13 +2293,13 @@ pEventMeasurement->pdata[1] = 0x02;
 pEventMeasurement->pdata[2] = 0x00;
 pEventMeasurement->pdata[3] = 0xF1;
 
-if ( VSCP_ERROR_SUCCESS == vscphlp_getVSCPMeasurementAsString( pEventMeasurement, 
+if ( VSCP_ERROR_SUCCESS == getVSCPMeasurementAsString( pEventMeasurement, 
                                                               stringbuf, 
                                                               sizeof( stringbuf ) ) ) {
-    printf("OK - vscphlp_getVSCPMeasurementAsString value = %s \n", stringbuf );
+    printf("OK - getVSCPMeasurementAsString value = %s \n", stringbuf );
 }
 else {
-    printf("Error - vscphlp_getVSCPMeasurementAsString value = %s \n", stringbuf );
+    printf("Error - getVSCPMeasurementAsString value = %s \n", stringbuf );
 }
 
 pEventMeasurement->pdata[0] = 0x89;
@@ -2307,25 +2307,25 @@ pEventMeasurement->pdata[1] = 0x02;
 pEventMeasurement->pdata[2] = 0xFF;
 pEventMeasurement->pdata[3] = 0xF1;
 
-if ( VSCP_ERROR_SUCCESS == vscphlp_getVSCPMeasurementAsString( pEventMeasurement, 
+if ( VSCP_ERROR_SUCCESS == getVSCPMeasurementAsString( pEventMeasurement, 
                                                               stringbuf, 
                                                               sizeof( stringbuf ) ) ) {
-    printf("OK - vscphlp_getVSCPMeasurementAsString value = %s \n", stringbuf );
+    printf("OK - getVSCPMeasurementAsString value = %s \n", stringbuf );
 }
 else {
-    printf("Error - vscphlp_getVSCPMeasurementAsString value = %s \n", stringbuf );
+    printf("Error - getVSCPMeasurementAsString value = %s \n", stringbuf );
 }
 
 // Free the event
-vscphlp_deleteVSCPevent( pEventMeasurement );
+deleteVSCPevent( pEventMeasurement );
 `</code>`
 
 
 
-## vscphlp_getVSCPMeasurementAsDouble
+## getVSCPMeasurementAsDouble
 
 `<code="c">`
-int vscphlp_getVSCPMeasurementAsDouble( const vscpEvent *pEvent, 
+int getVSCPMeasurementAsDouble( const vscpEvent *pEvent, 
                                            double *pvalue)
 `</code>`
 
@@ -2351,20 +2351,20 @@ pEventMeasurement->pdata[1] = 0xFF;
 pEventMeasurement->pdata[2] = 0xFF;
 pEventMeasurement->pdata[3] = 0xFF;
 
-if ( VSCP_ERROR_SUCCESS == vscphlp_getVSCPMeasurementAsDouble( pEventMeasurement, &value ) ) {
-    printf("OK - vscphlp_getVSCPMeasurementAsDouble value = %lf\n", value );
+if ( VSCP_ERROR_SUCCESS == getVSCPMeasurementAsDouble( pEventMeasurement, &value ) ) {
+    printf("OK - getVSCPMeasurementAsDouble value = %lf\n", value );
 }
 else {
-    printf("Error - vscphlp_getVSCPMeasurementAsDouble value = %slf \n", value );
+    printf("Error - getVSCPMeasurementAsDouble value = %slf \n", value );
 }
 `</code>`
 
 
 
-## vscphlp_getVSCPMeasurementFloat64AsString
+## getVSCPMeasurementFloat64AsString
 
 `<code="c">`
-int vscphlp_getVSCPMeasurementFloat64AsString(const vscpEvent *pEvent, 
+int getVSCPMeasurementFloat64AsString(const vscpEvent *pEvent, 
                                                  char *pStrResult, 
                                                  size_t len )
 `</code>`
@@ -2409,24 +2409,24 @@ pEventfloat->pdata[6] = 9;
 pEventfloat->pdata[7] = 64;
 
 if ( VSCP_ERROR_SUCCESS == 
-       vscphlp_getVSCPMeasurementFloat64AsString( pEventfloat, 
+       getVSCPMeasurementFloat64AsString( pEventfloat, 
                                                     stringbuf,
                                                     sizeof( stringbuf ) ) ) {
-    printf("OK - vscphlp_getVSCPMeasurementFloat64AsString value = %s \n", stringbuf );
+    printf("OK - getVSCPMeasurementFloat64AsString value = %s \n", stringbuf );
 }
 else {
-    printf("Error - vscphlp_getVSCPMeasurementFloat64AsString value = %s \n", stringbuf );
+    printf("Error - getVSCPMeasurementFloat64AsString value = %s \n", stringbuf );
 }
 
 // Free the event
-vscphlp_deleteVSCPevent( pEventfloat );
+deleteVSCPevent( pEventfloat );
 `</code>`
 
 
-## vscphlp_convertFloatToNormalizedEventData
+## convertFloatToNormalizedEventData
 
 `<code="c">`
-int vscphlp_convertFloatToNormalizedEventData( 
+int convertFloatToNormalizedEventData( 
                                    unsigned char *pdata,                                                        
                                    unsigned short *psize,    
                                    double value, 
@@ -2467,10 +2467,10 @@ Example will be added.
 `</code>`
 
 
-##  vscphlp_convertFloatToFloatEventData
+##  convertFloatToFloatEventData
 
 `<code="c">`
-int vscphlp_convertFloatToFloatEventData( unsigned char *pdata,
+int convertFloatToFloatEventData( unsigned char *pdata,
                                               unsigned short *psize, 
                                               float value,
                                               unsigned char unit,
@@ -2511,10 +2511,10 @@ Example will be added.
 `</code>`
 
 
-## vscphlp_convertIntegerToNormalizedEventData
+## convertIntegerToNormalizedEventData
 
 `<code="c">`
-int vscphlp_convertIntegerToNormalizedEventData( unsigned char *pdata,
+int convertIntegerToNormalizedEventData( unsigned char *pdata,
                                                     unsigned short *psize,
                                                     unsigned long long val64,
                                                     unsigned char unit,
@@ -2553,10 +2553,10 @@ VSCP_ERROR_SUCCESS is returned on success.
 Example will be added.
 `</code>`
 
-## vscphlp_makeFloatMeasurementEvent
+## makeFloatMeasurementEvent
 
 `<code="c">`
-int vscphlp_makeFloatMeasurementEvent( vscpEvent *pEvent, 
+int makeFloatMeasurementEvent( vscpEvent *pEvent, 
                                           float value,
                                           unsigned char unit,
                                           unsigned char sensoridx )
@@ -2594,10 +2594,10 @@ Example will be added.
 `</code>`
 
 
-## vscphlp_makeFloatMeasurementEvent
+## makeFloatMeasurementEvent
 
 `<code="c">`
-int vscphlp_makeFloatMeasurementEvent( vscpEvent *pEvent, 
+int makeFloatMeasurementEvent( vscpEvent *pEvent, 
                                           float value,
                                           unsigned char unit,
                                           unsigned char sensoridx )
@@ -2637,10 +2637,10 @@ Example will be added.
 `</code>`
 
 
-##  vscphlp_getMeasurementAsFloat
+##  getMeasurementAsFloat
 
 `<code="c">`
-int vscphlp_getMeasurementAsFloat(const unsigned char *pData, 
+int getMeasurementAsFloat(const unsigned char *pData, 
                                      unsigned char length,
                                      float *pResult )
 `</code>`
@@ -2652,10 +2652,10 @@ This event is yet to be defined. Do not use.
 
 VSCP_ERROR_SUCCESS is returned on success.
 
-##  vscphlp_getMeasurementUnit
+##  getMeasurementUnit
 
 `<code="c">`
-int vscphlp_getMeasurementUnit( const vscpEvent *pEvent )
+int getMeasurementUnit( const vscpEvent *pEvent )
 `</code>`
 
 Get unit for a measurement event. Some events does not have a unit defined and for then zero is always returned as it is understood that the default unit should be used.
@@ -2665,10 +2665,10 @@ Get unit for a measurement event. Some events does not have a unit defined and f
 Unit is returned as 0-3 for a Level I event and as 0-255 for a level II event.  
 
 
-##  vscphlp_getMeasurementSensorIndex
+##  getMeasurementSensorIndex
 
 `<code="c">`
-int vscphlp_getMeasurementSenzorIndex( const vscpEvent *pEvent )
+int getMeasurementSenzorIndex( const vscpEvent *pEvent )
 `</code>`
 
 Get the sensor index for a measurement event. Some events does not have a sensor index defined and for them zero is always returned.
@@ -2677,10 +2677,10 @@ Get the sensor index for a measurement event. Some events does not have a sensor
 
 Sensor index is returned as 0-7 for a Level I event and as 0-255 for a level II event. 1 is returned if the event is not a measurement event or is invalid. 
 
-##  vscphlp_getMeasurementZone
+##  getMeasurementZone
 
 `<code="c">`
-int vscphlp_getMeasurementZone( const vscpEvent *pEvent )
+int getMeasurementZone( const vscpEvent *pEvent )
 `</code>`
 
 Get zone for a measurement event. Some events does not have a zone defined and for them zero is always returned.
@@ -2689,10 +2689,10 @@ Get zone for a measurement event. Some events does not have a zone defined and f
 
 Zone is returned as 0-255 where 255 means "all zones". 1 is returned if the event is not a measurement event or is invalid. 
 
-##  vscphlp_getMeasurementSubZone
+##  getMeasurementSubZone
 
 `<code="c">`
-int vscphlp_getMeasurementSubZone( const vscpEvent *pEvent )
+int getMeasurementSubZone( const vscpEvent *pEvent )
 `</code>`
 
 Get subzone for a measurement event.
@@ -2700,10 +2700,10 @@ Get subzone for a measurement event.
 ##### Return value
 
 Zone is returned as 0-255 where 255 means "all zones". -1 is returned if the event is not a measurement event or is invalid. Some events does not have a subzone defined and for them zero is always returned.  
-## vscphlp_isMeasurement
+## isMeasurement
 
 `<code="c">`
-int vscphlp_isMeasurement( const vscpEvent *pEvent )
+int isMeasurement( const vscpEvent *pEvent )
 `</code>`
 
 Check if an event is a measurement.
@@ -2713,10 +2713,10 @@ Check if an event is a measurement.
 VSCP_ERROR_SUCCESS is returned if the event is a measurement, VSCP_ERROR_ERROR is returned if the event is not a measurement.
 
 
-## vscphlp_convertLevel1MeasuremenToLevel2Double
+## convertLevel1MeasuremenToLevel2Double
 
 `<code="c">`
-int vscphlp_convertLevel1MeasuremenToLevel2Double( vscpEvent *pEvent )
+int convertLevel1MeasuremenToLevel2Double( vscpEvent *pEvent )
 `</code>`
 
 Convert Level I measurement to a Level II float measurement event ([CLASS2.MEASUREMENT_FLOAT](https://docs.vscp.org/spec/latest/#/./class2.measurement_float)).
@@ -2726,10 +2726,10 @@ Convert Level I measurement to a Level II float measurement event ([CLASS2.MEASU
 VSCP_ERROR_SUCCESS is returned if the measurement event is converted correctly, VSCP_ERROR_ERROR is returned if not.
 
 
-## vscphlp_convertLevel1MeasuremenToLevel2String
+## convertLevel1MeasuremenToLevel2String
 
 `<code="c">`
-int vscphlp_convertLevel1MeasuremenToLevel2String( vscpEvent *pEvent )
+int convertLevel1MeasuremenToLevel2String( vscpEvent *pEvent )
 `</code>`
 
 Convert Level I measurement to a Level II string measurement event ([CLASS2.MEASUREMENT_STRING](https://docs.vscp.org/spec/latest/#/./class2.measurement_str)).
@@ -2739,10 +2739,10 @@ Convert Level I measurement to a Level II string measurement event ([CLASS2.MEAS
 VSCP_ERROR_SUCCESS is returned if the measurement event is converted correctly, VSCP_ERROR_ERROR is returned if not.
 
 
-## vscphlp_makeLevel2FloatMeasurementEvent
+## makeLevel2FloatMeasurementEvent
 
 `<code="c">`
-int vscphlp_makeLevel2FloatMeasurementEvent( vscpEvent *pEvent, 
+int makeLevel2FloatMeasurementEvent( vscpEvent *pEvent, 
                                                 uint16_t type,
                                                 double value,
                                                 uint8_t unit,
@@ -2787,10 +2787,10 @@ Construct a Level II floating point measurement event from supplied data.
 
 VSCP_ERROR_SUCCESS is returned if the measurement event is constructed correctly, VSCP_ERROR_ERROR is returned if not.
 
-## vscphlp_makeLevel2StringMeasurementEvent
+## makeLevel2StringMeasurementEvent
 
 `<code="c">`
-int vscphlp_makeLevel2StringMeasurementEvent( vscpEvent *pEvent, 
+int makeLevel2StringMeasurementEvent( vscpEvent *pEvent, 
                                                 uint16_t type,
                                                 double value,
                                                 uint8_t unit,
@@ -2835,10 +2835,10 @@ Construct a Level II string measurement event from supplied data.
 
 VSCP_ERROR_SUCCESS is returned if the measurement event is constructed correctly, VSCP_ERROR_ERROR is returned if not.
 
-## vscphlp_convertEventToJSON
+## convertEventToJSON
 
 `<code="c">`
-int vscphlp_convertEventToJSON( vscpEvent *pEvent, char *pBuffer, size_t len );
+int convertEventToJSON( vscpEvent *pEvent, char *pBuffer, size_t len );
 `</code>`
 
 Write VSCP event on JSON format to string. Format is specified in [vscp.h](https///github.com/grodansparadis/vscp/blob/master/src/vscp/common/vscp.h).
@@ -2859,10 +2859,10 @@ Size of string buffer.
 
 VSCP_ERROR_SUCCESS is returned on success, VSCP_ERROR_BUFFER_TO_SMALL is returned if the size of the supplied buffer is to small.
 
-## vscphlp_convertEventExToJSON
+## convertEventExToJSON
 
 `<code="c">`
-int vscphlp_convertEventExToJSON( vscpEventEx *pEventEx, char *pBuffer, size_t len );
+int convertEventExToJSON( vscpEventEx *pEventEx, char *pBuffer, size_t len );
 `</code>`
 
 Write VSCP event-ex on JSON format to string. Format is specified in [vscp.h](https///github.com/grodansparadis/vscp/blob/master/src/vscp/common/vscp.h).
@@ -2883,10 +2883,10 @@ Size of string buffer.
 
 VSCP_ERROR_SUCCESS is returned on success, VSCP_ERROR_BUFFER_TO_SMALL is returned if the size of the supplied buffer is to small.
 
-## vscphlp_convertEventToXML
+## convertEventToXML
 
 `<code="c">`
-int vscphlp_convertEventToXML( vscpEvent *pEvent, char *pBuffer, size_t len );
+int convertEventToXML( vscpEvent *pEvent, char *pBuffer, size_t len );
 `</code>`
 
 Write VSCP event on XML format to string. Format is specified in [vscp.h](https///github.com/grodansparadis/vscp/blob/master/src/vscp/common/vscp.h).
@@ -2907,10 +2907,10 @@ Size of string buffer.
 
 VSCP_ERROR_SUCCESS is returned on success, VSCP_ERROR_BUFFER_TO_SMALL is returned if the size of the supplied buffer is to small.
 
-## vscphlp_convertEventExToXML
+## convertEventExToXML
 
 `<code="c">`
-int vscphlp_convertEventExToXML( vscpEventEx *pEventEx, char *pBuffer, size_t len );
+int convertEventExToXML( vscpEventEx *pEventEx, char *pBuffer, size_t len );
 `</code>`
 
 Write VSCP event-ex on XML format to string. Format is specified in [vscp.h](https///github.com/grodansparadis/vscp/blob/master/src/vscp/common/vscp.h).
@@ -2931,10 +2931,10 @@ Size of string buffer.
 
 VSCP_ERROR_SUCCESS is returned on success, VSCP_ERROR_BUFFER_TO_SMALL is returned if the size of the supplied buffer is to small.
 
-## vscphlp_convertEventToHTML
+## convertEventToHTML
 
 `<code="c">`
-int vscphlp_convertEventToHTML( vscpEvent *pEvent, char *pBuffer, size_t len );
+int convertEventToHTML( vscpEvent *pEvent, char *pBuffer, size_t len );
 `</code>`
 
 Write VSCP event on HTML format to string. Format is specified in [vscp.h](https///github.com/grodansparadis/vscp/blob/master/src/vscp/common/vscp.h).
@@ -2955,10 +2955,10 @@ Size of string buffer.
 
 VSCP_ERROR_SUCCESS is returned on success, VSCP_ERROR_BUFFER_TO_SMALL is returned if the size of the supplied buffer is to small.
 
-## vscphlp_convertEventExToHTML
+## convertEventExToHTML
 
 `<code="c">`
-int vscphlp_convertEventExToHTML( vscpEventEx *pEventEx, char *pBuffer, size_t len );
+int convertEventExToHTML( vscpEventEx *pEventEx, char *pBuffer, size_t len );
 `</code>`
 
 Write VSCP event-ex on HTML format to string. Format is specified in [vscp.h](https///github.com/grodansparadis/vscp/blob/master/src/vscp/common/vscp.h).

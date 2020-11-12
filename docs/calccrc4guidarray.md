@@ -1,7 +1,7 @@
 
 
 ```clike
-unsigned char vscphlp_calcCRC4GUIDArray( unsigned char *pguid )
+unsigned char calcCRC4GUIDArray( unsigned char *pguid )
 ```
 
 ### Parameters
@@ -25,7 +25,7 @@ memset( GUID2, 0, 16 );
 for ( int i=0;i<16; i++ ) {
     GUID2[i] = i;
 }
-unsigned char crc8 = vscphlp_calcCRC4GUIDArray( GUID2 );
+unsigned char crc8 = calcCRC4GUIDArray( GUID2 );
 printf("CRC = %02X\n", crc8 );
 ```
 

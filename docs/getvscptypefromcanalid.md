@@ -2,7 +2,7 @@
 
 ```clike
 unsigned short 
-vscphlp_getVSCPtypeFromCANANALid( const unsigned long id )
+getVSCPtypeFromCANANALid( const unsigned long id )
 ```
 
 ### Parameters
@@ -21,12 +21,12 @@ Get the VSCP type from a a CANAL message id (CAN id).
 ```clike
 unsigned long cananalid = 0x0c0a0601;
  
-unsigned short canal_vscptype = vscphlp_getVSCPtypeFromCANALid( canalid );
+unsigned short canal_vscptype = getVSCPtypeFromCANALid( canalid );
 if ( 6 == canal_vscptype ) {
     printf("VSCP Type = %d\n", canal_vscptype );
 }
 else {
-    printf("\aError: vscphlp_getVSCPtypeFromCANALid = %d\n", canal_vscptype );
+    printf("\aError: getVSCPtypeFromCANALid = %d\n", canal_vscptype );
 }
 ```
 

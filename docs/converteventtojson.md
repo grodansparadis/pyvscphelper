@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_convertEventToJSON( vscpEvent *pEvent, 
+int convertEventToJSON( vscpEvent *pEvent, 
                                 char *pBuffer, 
                                 size_t len )
 ```
@@ -26,7 +26,7 @@ Write VSCP event on JSON format to string. Format is specified in [vscp.h](https
 
 
 ### See Also
-[vscphlp_convertEventExToJSON](vscphlp_converteventextojson.md)
+[convertEventExToJSON](converteventextojson.md)
 
 
 

@@ -1,4 +1,4 @@
-## vvscphlp_byteArray2HexStr
+
 
 ```clike
 long tttt(void)

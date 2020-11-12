@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_writeVscpDataWithSizeToString( const unsigned char *pdata,
+int writeVscpDataWithSizeToString( const unsigned char *pdata,
                                               const unsigned short. 
                                               char *pstr, 
                                               size_t len,

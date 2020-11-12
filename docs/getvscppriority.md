@@ -1,7 +1,7 @@
 
 
 ```clike
-unsigned char vscphlp_getVscpPriority( const vscpEvent *pEvent )
+unsigned char getVscpPriority( const vscpEvent *pEvent )
 ```
 
 ### Parameters
@@ -39,7 +39,7 @@ pEvent->pdata[ 1 ] = 0;
 pEvent->pdata[ 2 ] = 30;
  
 unsigned char eventPriority;
-if ( 0 == ( eventPriority = vscphlp_getVscpPriority( pEvent ) ) ) {
+if ( 0 == ( eventPriority = getVscpPriority( pEvent ) ) ) {
     printf("Event priority = %d\n", eventPriority );
 }
 else {
@@ -47,11 +47,11 @@ else {
 }
  
 // Free the event
-vscphlp_deleteVSCPevent( pEvent );
+deleteVSCPevent( pEvent );
 ```
 
 ### See Also
-[vscphlp_getVscpPriorityEx](vscphlp_getvscppriorityex.md)
+[getVscpPriorityEx](getvscppriorityex.md)
 
 
 

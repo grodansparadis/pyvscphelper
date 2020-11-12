@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_setVscpDataFromString( vscpEvent *pEvent, 
+int setVscpDataFromString( vscpEvent *pEvent, 
                                    const char *pstr )
 ```
 
@@ -31,14 +31,14 @@ vscpEvent e;
 if ( VSCP_ERROR_SUCCESS == 
     setVscpDataFromString( e,
                            "1,2,3,4,5,6,0x07,0x55,3,4,0xaa,0xff,0xff" ) ) {
-        printf( "OK vscphlp_setVscpDataFromString size=%d Data = \n", e.sizeData );
+        printf( "OK setVscpDataFromString size=%d Data = \n", e.sizeData );
         for ( int i=0; i<e.sizeData; i++ ) {
             printf("%d ", e.data[i] );
         }
         printf("\n");
 }
 else {
-   printf( "\aError: vscphlp_setVscpDataFromString\n");
+   printf( "\aError: setVscpDataFromString\n");
 }
 ```
 

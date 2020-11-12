@@ -1,17 +1,13 @@
 
 
 ```clike
-int vscphlp_isConnected( long handle )
-```
-
-```python
-int vscphlp_isConnected( handle )
+int isConnected( handle )
 ```
 
 ### Parameters
 
 #### handle
-Handle for the communication channel obtained from a call to [vscphlp_newsession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newsession](newsession.md).
 
 ### Return Value
 VSCP_ERROR_SUCCESS if the session is active and VSCP_ERROR_ERROR if it is inactive. VSCP_ERROR_INVALID_HANDLE is returned if an invalid handle is given. 
@@ -19,29 +15,24 @@ VSCP_ERROR_SUCCESS if the session is active and VSCP_ERROR_ERROR if it is inacti
 ### Description
 Check if the session is active or not. 
 
-#### C example
-
-```clike
-if ( VSCP_ERROR_SUCCESS == vscphlp_isConnected( handle1 ) ) {
-    // Do your stuff here 
-}
-```
-
-#### Python example
+### Example
 
 ```python
-print "\n\nConnection in progress..."
-rv = pyvscphlp_open(h1,"127.0.0.1:9598","admin","secret")
-if VSCP_ERROR_SUCCESS == rv :
-    print "Command success: pyvscphlp_open on channel 1"
+import vscp
+import vscphelper as vhlp
+
+print("\n\nConnection in progress...")
+rv = vhlp.open(h1,"127.0.0.1:9598","admin","secret")
+if vscp.VSCP_ERROR_SUCCESS == rv :
+    print("Command success: open on channel 1")
 else:
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: pyvscphlp_open on channel 1  Error code=%d' % rv )
+    vphlp.closeSession(h1)
+    raise ValueError('Command error: open on channel 1  Error code=%d' % rv )
  
-if ( VSCP_ERROR_SUCCESS == pyvscphlp_isConnected(h1) ):
-    print "CONNECTED!"
+if ( vscp.VSCP_ERROR_SUCCESS == vhlp.isConnected(h1) ):
+    print("CONNECTED!")
 else:
-    print "DISCONNECTED!"
+    print("DISCONNECTED!")
 ```
 
 

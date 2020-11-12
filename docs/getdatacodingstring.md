@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_getDataCodingString(const unsigned char *pData,
+int getDataCodingString(const unsigned char *pData,
                                    unsigned char dataLength, 
                                    char *strResult,
                                    size_t len )
@@ -40,14 +40,14 @@ stringarry[3] = 0x34;
 stringarry[4] = 0x2E;
 stringarry[5] = 0x35;
 char stringbuf[32];
-if ( VSCP_ERROR_SUCCESS == vscphlp_getDataCodingString( stringarry,
+if ( VSCP_ERROR_SUCCESS == getDataCodingString( stringarry,
                                                            sizeof( stringarry ), 
                                                            stringbuf,
                                                            sizeof( stringbuf ) ) ) {
-    printf("OK - vscphlp_getDataCodingString value = %s \n", stringbuf );
+    printf("OK - getDataCodingString value = %s \n", stringbuf );
 }
 else {
-    printf("Error - vscphlp_getDataCodingString value = %s \n", stringbuf );
+    printf("Error - getDataCodingString value = %s \n", stringbuf );
 }
 ```
 

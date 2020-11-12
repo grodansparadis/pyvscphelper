@@ -1,5 +1,5 @@
 
-## vscphlp_xxx
+## xxx
 
 ```clike
 long tttt(void)
@@ -12,7 +12,7 @@ xxxx
 ### Parameters
 
 #### handle
-Handle for the communication channel obtained from a call to [vscphlp_newsession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](newsession.md).
 
 ### Return Value
 CANAL_ERROR_SUCCESS on success or an error code on failure. 

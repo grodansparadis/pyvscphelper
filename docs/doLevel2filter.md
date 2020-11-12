@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_doLevel2Filter( const vscpEvent *pEvent, 
+int doLevel2Filter( const vscpEvent *pEvent, 
                             const vscpEventFilter *pFilter )
 ```
 
@@ -22,11 +22,11 @@ Check VSCP filter condition.
 #### C example
 
 ```clike
-if ( vscphlp_doLevel2Filter( pEvent, &filter ) ) {
-    printf( "Event pass:  vscphlp_doLevel2Filter\n");
+if ( doLevel2Filter( pEvent, &filter ) ) {
+    printf( "Event pass:  doLevel2Filter\n");
 }
 else {
-   printf( "Event does NOT pass:  vscphlp_doLevel2Filter\n");
+   printf( "Event does NOT pass:  doLevel2Filter\n");
 }
 ```
 

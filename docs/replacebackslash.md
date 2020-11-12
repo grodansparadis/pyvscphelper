@@ -1,13 +1,13 @@
 
 
 ```clike
-int vscphlp_replaceBackslash( const char *pStr )
+int replaceBackslash( const char *pStr )
 ```
 
 ### Parameters
 
 #### handle
-Handle for the communication channel obtained from a call to [vscphlp_newsession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](newsession.md).
 
 ### Return Value
 VSCP_ERROR_SUCCESS is returned on success.

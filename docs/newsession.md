@@ -1,7 +1,7 @@
 
 
 
-```python
+```clike
 c_long newSession()
 ```
 
@@ -20,6 +20,9 @@ Opens a new communication session. This is the first function that should be cal
 Open a new session using Python.
 
 ```python
+import vscp
+import vscphelper as vhlp
+
 h1 = vhlp.newSession()
 if (0 == h1):
     vhlp.closeSession(h1)

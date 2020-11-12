@@ -2,7 +2,7 @@
 
 ```clike
 unsigned short 
-vscphlp_getVSCPclassFromCANALid( unsigned long id )
+getVSCPclassFromCANALid( unsigned long id )
 ```
 
 ### Parameters
@@ -20,12 +20,12 @@ Get the VSCP class from a CANAL message id.
 
 ```clike
 unsigned long canalid = 0x0c0a0601;
-unsigned short can_vscpclass = vscphlp_getVSCPclassFromCANALid( canalid );
+unsigned short can_vscpclass = getVSCPclassFromCANALid( canalid );
 if ( 10 == can_vscpclass ) {
     printf("VSCP Class = %d\n", can_vscpclass );
 }
 else {
-    printf("\aError: vscphlp_getVSCPclassFromCANAALid = %d\n", can_vscpclass );
+    printf("\aError: getVSCPclassFromCANAALid = %d\n", can_vscpclass );
 }
 ```
 

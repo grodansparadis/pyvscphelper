@@ -1,23 +1,16 @@
 
 
 ```clike
-unsigned long vscphlp_getVersion( long handle, 
-                                    unsigned char *pMajorVer,
-                                    unsigned char *pMinorVer,
-                                    unsigned char *pSubMinorVer )
-```
-
-```python
-unsigned long pyvscphlp_getVersion( handle, 
-                                      MajorVer,
-                                      MinorVer,
-                                      SubMinorVer )
+unsigned long pygetVersion( handle, 
+                            MajorVer,
+                            MinorVer,
+                            SubMinorVer )
 ```
 
 ### Parameters
 
 #### handle
-Handle for the communication channel obtained from a call to [vscphlp_newsession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](newsession.md).
 
 #### MajorVer
 VSCP server major version.
@@ -34,29 +27,20 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 ### Description
 Get the version of the remote VSCP server. 
 
-#### C example
-
-```clike
-// Get server version
-unsigned char v1,v2,v3;
-if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_getVersion( handle2, &v1, &v2, &v3 ) ) ) {
-    printf( "Command success: vscphlp_getVersion on channel 2\n" );
-    printf( "Version for VSCP daemon on channel 2 is %d.%d.%d\n", v1,v2,v3 );
-}
-else {
-    printf("\aCommand error: vscphlp_getVersion on channel 2  Error code=%d\n", rv);
-}
-```
-
-#### Python example
+### Example
 
 ```python
-print "command: Get sever version"
-(rv,v1,v2,v3) = pyvscphlp_getVersion(h1)
-if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: ''pyvscphlp_getVersion''  Error code=%d' % rv )
-print "Server version = %d.%d.%d" % (v1.value,v2.value,v3.value)
+import vscp
+import vscphelper as vhlp
+
+...
+
+print("command: Get sever version")
+(rv,v1,v2,v3) = vhlp.getVersion(h1)
+if vscp.VSCP_ERROR_SUCCESS != rv :
+    vhlp.closeSession(h1)
+    raise ValueError('Command error: ''pygetVersion''  Error code=%d' % rv )
+print("Server version = %d.%d.%d" % (v1.value,v2.value,v3.value))
 ```
 
 

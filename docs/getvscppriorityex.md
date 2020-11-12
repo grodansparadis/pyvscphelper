@@ -1,7 +1,7 @@
 
 
 ```clike
-unsigned char vscphlp_getVscpPriorityEx( const vscpEventEx *pEvent )
+unsigned char getVscpPriorityEx( const vscpEventEx *pEvent )
 ```
 
 ### Parameters
@@ -37,7 +37,7 @@ ex3.data[ 1 ] = 0;
 ex3.data[ 2 ] = 30;
  
 unsigned char eventPriority;
-if ( 0 == ( eventPriority = vscphlp_getVscpPriorityEx( &ex3 ) ) ) {
+if ( 0 == ( eventPriority = getVscpPriorityEx( &ex3 ) ) ) {
     printf("EventEx priority = %d\n", eventPriority );
 }
 else {
@@ -53,7 +53,7 @@ xxx
 ```
 
 ### See Also
-[vscphlp_getVscpPriority](vscphlp_getvscppriority.md.md)
+[getVscpPriority](getvscppriority.md.md)
 
 
 

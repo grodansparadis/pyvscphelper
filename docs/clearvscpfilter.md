@@ -1,7 +1,7 @@
 
 
 ```clike
-void vscphlp_clearVSCPFilter( vscpEventFilter *pFilter )
+void clearVSCPFilter( vscpEventFilter *pFilter )
 ```
 
 ### Parameters
@@ -18,7 +18,7 @@ Clear VSCP filter.
 #### C example
 
 ```clike
-vscphlp_clearVSCPFilter( pFilter )
+clearVSCPFilter( pFilter )
 ```
 
 

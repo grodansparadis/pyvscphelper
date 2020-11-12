@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_convertLevel1MeasuremenToLevel2Double( vscpEvent *pEvent )
+int convertLevel1MeasuremenToLevel2Double( vscpEvent *pEvent )
 ```
 
 ### Parameters
@@ -17,7 +17,7 @@ Convert Level I measurement to a Level II float measurement event [CLASS2.MEASUR
 
 
 ### See Also
-[vscphlp_convertLevel1MeasuremenToLevel2String](vscphlp_convertlevel1measurementolevel2string.md)
+[convertLevel1MeasuremenToLevel2String](convertlevel1measurementolevel2string.md)
 
 
 

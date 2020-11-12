@@ -1,7 +1,7 @@
 
 
 ```clike
-bool vscphlp_convertEventToCanal( canalMsg *pcanalMsg, 
+bool convertEventToCanal( canalMsg *pcanalMsg, 
                         const vscpEvent *pvscpEvent )
 ```
 
@@ -26,17 +26,17 @@ Convert VSCP event to CANAL message.
 #### C example
 
 ```clike
-if ( VSCP_ERROR_SUCCESS == vscphlp_convertEventToCanal( &canalMsg, pEvent ) ) {
-    printf( "OK vscphlp_convertEventToCanal id=%08X\n", canalMsg.id );
+if ( VSCP_ERROR_SUCCESS == convertEventToCanal( &canalMsg, pEvent ) ) {
+    printf( "OK convertEventToCanal id=%08X\n", canalMsg.id );
 }
 else {
-    printf( "\aError: vscphlp_convertEventToCanal\n");
+    printf( "\aError: convertEventToCanal\n");
 }
 ```
 
 ### See Also
-[vscphlp_convertCanalToEvent](vscphlp_convertcanaltoevent.md)  
-[vscphlp_convertCanalToEventEx](vscphlp_convertcanaltoeventex.md)
+[convertCanalToEvent](convertcanaltoevent.md)  
+[convertCanalToEventEx](convertcanaltoeventex.md)
 
 
 

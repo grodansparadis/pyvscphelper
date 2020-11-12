@@ -2,7 +2,7 @@
 
 ```clike
 unsigned long long 
-vscphlp_getDataCodingInteger(const unsigned char *pCode, 
+getDataCodingInteger(const unsigned char *pCode, 
                             int size )
 ```
 
@@ -28,12 +28,12 @@ normarry[0] = 0x60; // Data coding byte:integer, unit=0, sensoridx=0
 normarry[1] = 0xFF;
 normarry[2] = 0xFF;
 normarry[3] = 0xFF;
-double value =  vscphlp_getDataCodingInteger (normarry, sizeof( normarry ) );
+double value =  getDataCodingInteger (normarry, sizeof( normarry ) );
 if ( 3.1 == value ) {
-    printf("OK - vscphlp_getDataCodingInteger value = %f \n", value );
+    printf("OK - getDataCodingInteger value = %f \n", value );
 }
 else {
-    printf("Error - vscphlp_getDataCodingNormalizedInteger value = %f \n", value );
+    printf("Error - getDataCodingNormalizedInteger value = %f \n", value );
 }
 ```
 

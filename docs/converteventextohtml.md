@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_convertEventExToHTML( vscpEventEx *pEventEx, 
+int convertEventExToHTML( vscpEventEx *pEventEx, 
                                     char *pBuffer, 
                                     size_t len )
 ```
@@ -25,7 +25,7 @@ Write VSCP event-ex on HTML format to string. Format is specified in [vscp.h](ht
 
 
 ### See Also
-[vscphlp_convertEventToHTML](vscphlp_converteventtohtml.md)
+[convertEventToHTML](converteventtohtml.md)
 
 
 

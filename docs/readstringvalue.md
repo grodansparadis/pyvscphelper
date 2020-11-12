@@ -1,7 +1,7 @@
 
 
 ```clike
-long vscphlp_readStringValue( const char * pStrValue )
+long readStringValue( const char * pStrValue )
 ```
 
 ### Parameters
@@ -18,7 +18,7 @@ Convert a string to an integer value. The string can be expressed as a decimal (
 #### C example
 
 ```clike
-long readValue = vscphlp_readStringValue("0x22");
+long readValue = readStringValue("0x22");
 ```
 
 

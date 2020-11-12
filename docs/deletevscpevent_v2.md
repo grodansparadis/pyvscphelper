@@ -1,7 +1,7 @@
 
 
 ```clike
-void vscphlp_deleteVSCPevent_v2( vscpEvent *pEvent )
+void deleteVSCPevent_v2( vscpEvent *pEvent )
 ```
 
 ### Parameters
@@ -19,12 +19,12 @@ Delete VSCP event.
 #### C example
 
 ```clike
-vscphlp_deleteVSCPevent_v2( pEvent );
+deleteVSCPevent_v2( pEvent );
 ```
 
 ### See Also
-[vscphlp_newVSCPevent](vscphlp_newvscpevent.md)  
-[vscphlp_deleteVSCPevent](vscphlp_deletevscpevent.md)
+[newVSCPevent](newvscpevent.md)  
+[deleteVSCPevent](deletevscpevent.md)
 
 
 

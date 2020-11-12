@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_setVscpEventFromString( vscpEvent *pEvent, 
+int setVscpEventFromString( vscpEvent *pEvent, 
                                     const char *pstr )
 ```
 
@@ -27,20 +27,20 @@ Set VSCP event from a string.
 vscpEvent *pEventString1 = new vscpEvent;
 pEventString1->pdata = NULL;
  
-if ( VSCP_ERROR_SUCCESS == vscphlp_setVscpEventFromString( pEventString1,                
+if ( VSCP_ERROR_SUCCESS == setVscpEventFromString( pEventString1,                
        "0,10,6,0,20170102T19:32:48,0,FF:FF:FF:FF:FF:FF:FF:00:00:00:00:7F:00:01:01:FD,0x8A,0x00,0x1E" ) ) {
-    printf( "OK vscphlp_setVscpEventFromString class=%d Type=%d\n", 
+    printf( "OK setVscpEventFromString class=%d Type=%d\n", 
                    pEventString1->vscp_class, pEventString1->vscp_type );
 }
 else {
-    printf( "\aError: vscphlp_setVscpEventFromString\n");
+    printf( "\aError: setVscpEventFromString\n");
 }
  
 // Free the events
-vscphlp_deleteVSCPevent( pEventString1 );
+deleteVSCPevent( pEventString1 );
 ```
 ### See Also
-[vscphlp_setVscpEventExFromString](vscphlp_setvscpeventexfromstring.md)
+[setVscpEventExFromString](setvscpeventexfromstring.md)
 
 
 

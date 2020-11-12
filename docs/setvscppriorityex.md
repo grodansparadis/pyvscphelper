@@ -1,7 +1,7 @@
 
 
 ```clike
-void vscphlp_setVscpPriorityEx( vscpEventEx *pEvent, 
+void setVscpPriorityEx( vscpEventEx *pEvent, 
                                 unsigned char priority )
 ```
 
@@ -9,7 +9,7 @@ void vscphlp_setVscpPriorityEx( vscpEventEx *pEvent,
 ### Parameters
 
 #### handle
-Handle for the communication channel obtained from a call to [vscphlp_newsession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](newsession.md).
 
 ### Return Value
 None
@@ -39,8 +39,8 @@ ex3.data[ 1 ] = 0;
 ex3.data[ 2 ] = 30;
  
 unsigned char eventPriority;
-vscphlp_setVscpPriorityEx( &ex3, VSCP_PRIORITY_LOW );
-if ( VSCP_PRIORITY_LOW == ( eventPriority = vscphlp_getVscpPriorityEx( &ex3 ) ) ) {
+setVscpPriorityEx( &ex3, VSCP_PRIORITY_LOW );
+if ( VSCP_PRIORITY_LOW == ( eventPriority = getVscpPriorityEx( &ex3 ) ) ) {
     printf("Event priority = %d\n", eventPriority );
 }
 else {
@@ -50,7 +50,7 @@ else {
 
 
 ### See Also
-[vscphlp_setVscpPriority](vscphlp_setvscppriority.md)
+[setVscpPriority](setvscppriority.md)
 
 
 

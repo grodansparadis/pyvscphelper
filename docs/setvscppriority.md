@@ -1,14 +1,14 @@
 
 
 ```clike
-void vscphlp_setVscpPriority( vscpEvent *pEvent, 
+void setVscpPriority( vscpEvent *pEvent, 
                                 unsigned char priority )
 ```
 
 ### Parameters
 
 #### handle
-Handle for the communication channel obtained from a call to [vscphlp_newsession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](newsession.md).
 
 ### Return Value
 None
@@ -39,8 +39,8 @@ pEvent->pdata[ 1 ] = 0;
 pEvent->pdata[ 2 ] = 30;
  
 unsigned char eventPriority;
-vscphlp_setVscpPriority( pEvent, VSCP_PRIORITY_NORMAL );
-if ( VSCP_PRIORITY_NORMAL == ( eventPriority = vscphlp_getVscpPriority( pEvent ) ) ) {
+setVscpPriority( pEvent, VSCP_PRIORITY_NORMAL );
+if ( VSCP_PRIORITY_NORMAL == ( eventPriority = getVscpPriority( pEvent ) ) ) {
     printf("Event priority = %d\n", eventPriority );
 }
 else {
@@ -48,12 +48,12 @@ else {
 }
  
 // Free the event
-vscphlp_deleteVSCPevent( pEvent );
+deleteVSCPevent( pEvent );
 ```
 
 
 ### See Also
-[vscphlp_setVscpPriorityEx](vscphlp_setvscppriorityex.md)
+[setVscpPriorityEx](setvscppriorityex.md)
 
 
 

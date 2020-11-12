@@ -2,7 +2,7 @@
 
 ```clike
 unsigned long long 
-vscphlp_getDataCodingBitArray( const unsigned char *pNorm,
+getDataCodingBitArray( const unsigned char *pNorm,
                                 int size)
 ```
 
@@ -28,7 +28,7 @@ unsigned char bitarry[3];
 bitarry[0] = VSCP_DATACODING_BIT; // Data cding byte. Default unit, sensoridx=0
 bitarry[1] = 0x55;
 bitarry[2] = 0xAA;
-unsigned long long bitarray64 = vscphlp_getDataCodingBitArray( bitarry, sizeof( bitarry ) )
+unsigned long long bitarray64 = getDataCodingBitArray( bitarry, sizeof( bitarry ) )
 ```
 
 

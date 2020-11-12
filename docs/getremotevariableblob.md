@@ -1,7 +1,7 @@
 
 
 ```clike
-vscphlp_getRemoteVariableBlob( long handle, 
+getRemoteVariableBlob( long handle, 
                             const char *pName, 
                             char *pValue, 
                             size_t len ) 
@@ -10,7 +10,7 @@ vscphlp_getRemoteVariableBlob( long handle,
 ### Parameters
 
 #### handle
-Handle for the communication channel obtained from a call to [vscphlp_newsession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](newsession.md).
 
 #### pName
 Pointer to a string containing the name of the variable. This name should have a character a-z as its first character and is not case sensitive.
@@ -40,7 +40,7 @@ TODO
 ```
 
 ### See Also
-[vscphlp_setRemoteVariableBlob](vscphlp_setremotevariableblob.md)
+[setRemoteVariableBlob](setremotevariableblob.md)
 
 
 

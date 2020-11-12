@@ -1,6 +1,6 @@
 
 
-```python
+```clike
 closeSession(handle)
 ```
 
@@ -16,7 +16,6 @@ Close an open session. This is the last operation that should be done after you 
 
 
 ### Example
-There is no Python sample yet
 
 ```python    
     import vscp

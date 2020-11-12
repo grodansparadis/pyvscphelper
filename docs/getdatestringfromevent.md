@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_getDateStringFromEvent( char *buf, 
+int getDateStringFromEvent( char *buf, 
                             size_t buf_len, 
                             vscpEvent *pEvent )
 ```
@@ -28,7 +28,7 @@ Extract an ISO date string from the datetime block of an event.
 #### C example
 
 ### See Also
-[vscphlp_getDateStringFromEventEx](vscphlp_getdatestringfromeventex.md)
+[getDateStringFromEventEx](getdatestringfromeventex.md)
 
 
 

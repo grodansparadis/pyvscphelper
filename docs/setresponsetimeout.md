@@ -1,24 +1,17 @@
 
 
 ```clike
-int vscphlp_setResponseTimeout( long handle, 
-                        unsigned long timeout )
-```
-
-```python
-int pyvscphlp_setResponseTimeout( handle, 
-                                    timeout )
+int setResponseTimeout( handle, timeout )
 ```
 
 ### Parameters
 
 #### handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](newsession.md).
 
 #### timeout 
 Timeout given in milliseconds. Can be set also before a session is open.
-
 
 ### Return Value
 VSCP_ERROR_SUCCESS is returned on success. VSCP_ERROR_INVALID_HANDLE is returned if an invalid handle is given. 
@@ -28,8 +21,7 @@ This is the timeout in seconds used when checking for replies after commands has
 
 
 ### See also
-[vscphlp_setAfterCommandSleep](vscphlp_setaftercommandsleep.md)
-
+[setAfterCommandSleep](setaftercommandsleep.md)
 
 
 [filename](./bottom_copyright.md ':include')

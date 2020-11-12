@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_convertEventToXML( vscpEvent *pEvent, 
+int convertEventToXML( vscpEvent *pEvent, 
                                 char *pBuffer, 
                                 size_t len )
 ```
@@ -25,7 +25,7 @@ Write VSCP event on XML format to string. Format is specified in [vscp.h](https:
 
 
 ### See Also
-[vscphlp_convertEventExToXML](vscphlp_converteventextoxml.md)
+[convertEventExToXML](converteventextoxml.md)
 
 
 

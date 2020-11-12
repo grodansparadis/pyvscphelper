@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_isSameGUID( const unsigned char *pGUID1, 
+int isSameGUID( const unsigned char *pGUID1, 
                         const unsigned char *pGUID2 )
 ```
 
@@ -23,11 +23,11 @@ Check if two GUID's is equal to each other.
 #### C example
 
 ```clike
-if ( vscphlp_isSameGUID( emptyGUID, GUID2) ) {
-    printf( "\aError: vscphlp_isSameGUID\n");
+if ( isSameGUID( emptyGUID, GUID2) ) {
+    printf( "\aError: isSameGUID\n");
 }
 else {
-    printf( "vscphlp_isSameGUID  - Correct, GUIDs are not the same.\n" );
+    printf( "isSameGUID  - Correct, GUIDs are not the same.\n" );
 }
 ```
 

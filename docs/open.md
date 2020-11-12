@@ -1,23 +1,13 @@
 
 
 ```clike
-long vscphlp_open( long handle,
-                        const char *host, 
-                        const char *username, 
-                        const char *password )
-```
-
-```python
-long pyvscphlp_open( handle,
-                     host, 
-                     username, 
-                     password )
+long pyopen( handle, host, username, password )
 ```
 
 ### Parameters
 
 #### handle
-Handle for the communication channel obtained from a call to [vscphlp_newsession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](newsession.md).
 
 #### host
 
@@ -44,37 +34,26 @@ VSCP_ERROR_SUCCESS is returned on success. VSCP_ERROR_INVALID_HANDLE will be ret
 ### Description
 Opens a session to the TCP/IP interface of a VSCP server. 
 
-#### C example
 
-```clike
-// Open Channel 1
-rv=vscphlp_open( handle1, 
-                    "127.0.0.1:9598",
-                    "admin",
-                    "secret" ); 
-if ( VSCP_ERROR_SUCCESS == rv ) {
-    printf("Command success: vscphlp_open on channel 1\n");
-}
-else {
-    printf("\aCommand error: vscphlp_open on channel 1  Error code=%d\n", rv);
-}
-```
 
-#### Python example
+### Example
 
 ```python
-print "\n\nConnection in progress..."
-rv = pyvscphlp_open(h1,"127.0.0.1:9598","admin","secret")
-if VSCP_ERROR_SUCCESS == rv :
-    print "Command success: pyvscphlp_open on channel 1"
+import vscp
+import vscphelper as vhlp
+
+print("\n\nConnection in progress...")
+rv = vhlp.open(h1,"127.0.0.1:9598","admin","secret")
+if vscp.VSCP_ERROR_SUCCESS == rv :
+    print("Command success: pyopen on channel 1")
 else:
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: pyvscphlp_open on channel 1  Error code=%d' % rv )
+    vhlp.closeSession(h1)
+    raise ValueError('Command error: open on channel 1  Error code=%d' % rv )
 ```
 
 ### See Also
-[vscphlp_openInterface](vscphlp_openinterface.md)  
-[vscphlp_close](vscphlp_close.md)
+[openInterface](openinterface.md)  
+[close](close.md)
 
 
 

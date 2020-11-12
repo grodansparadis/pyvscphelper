@@ -2,12 +2,12 @@
 
 Most functionality for handling variables on the VSCP daemon is supported by the library. The API is described here. Variables and there use is discussed [here](https://docs.vscp.org/vscpd/latest/#/decision_matrix)
 
-**note** From version 2 names has been changed to **vscphlp_xxxxRemoteVariable** instead of **vscphlp_xxxxVariable**
+**note** From version 2 names has been changed to **xxxxRemoteVariable** instead of **xxxxVariable**
 
-## vscphlp_createRemoteVariable
+## createRemoteVariable
 
 `<code="c">`
-int vscphlp_createRemoteVariable( long handle, 
+int createRemoteVariable( long handle, 
                                     const char *pName,
                                     const char* pType,
                                     const char* pValue,
@@ -18,7 +18,7 @@ Create a variable of a specific type. All the write methods below also create a 
 
 #### handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #### pName
 
@@ -43,42 +43,42 @@ If non zero the variable will be set to be persistent. This means that is will b
 // Create a variable
 char strBuf[32];
 if ( VSCP_ERROR_SUCCESS == 
-       (rv = vscphlp_createRemoteVariable( handle1, 
+       (rv = createRemoteVariable( handle1, 
                                       "test_of_create_variable",
                                       "string",
                                       "Carpe Diem",
                                       1 ) ) )  {
-    printf( "Command success: vscphlp_createRemoteVariable on channel 1\n" );
+    printf( "Command success: createRemoteVariable on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_createRemoteVariable on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: createRemoteVariable on channel 1  Error code=%d\n", rv);
 }
 
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_getRemoteVariableString( handle1, 
+        ( rv = getRemoteVariableString( handle1, 
                                              "test_of_create_variable", 
                                              strBuf, 
                                              sizeof( strBuf )-1 ) ) ) {
-    printf( "Command success: vscphlp_getRemoteVariableString on channel 1\n" );
+    printf( "Command success: getRemoteVariableString on channel 1\n" );
     printf(" Value = %s\n", strBuf );
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableString on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableString on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
-## vscphlp_deleteRemoteVariable
+## deleteRemoteVariable
 
 `<code="c">`
-int vscphlp_deleteRemoteVariable( long handle, const char *pName ) 
+int deleteRemoteVariable( long handle, const char *pName ) 
 `</code>`
 
 Delete a remote variable.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -89,52 +89,52 @@ Pointer to a string containing the name of the variable. This name should have a
 `<code="C">`
 // Delete a variable
 if ( VSCP_ERROR_SUCCESS == 
-      ( rv = vscphlp_deleteRemoteVariable( handle1, 
+      ( rv = deleteRemoteVariable( handle1, 
                                        "test_of_create_variable" ) ) )  {
-    printf( "Command success: vscphlp_deleteRemoteVariable on channel 1\n" );
+    printf( "Command success: deleteRemoteVariable on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_deleteRemoteVariable on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: deleteRemoteVariable on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
-## vscphlp_saveRemoteVariablesToDisk
+## saveRemoteVariablesToDisk
 
 `<code="c">`
-int vscphlp_saveRemoteVariablesToDisk( long handle ) 
+int saveRemoteVariablesToDisk( long handle ) 
 `</code>`
 
 Saves variables marked as persistent to disk.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #### Example
 
 `<code="C">`
 // Save variables marked as persistent
 if ( VSCP_ERROR_SUCCESS == 
-       ( rv = vscphlp_saveRemoteVariablesToDisk( handle1 ) ) )  {
-    printf( "Command success: vscphlp_saveRemoteVariablesToDisk on channel 1\n" );
+       ( rv = saveRemoteVariablesToDisk( handle1 ) ) )  {
+    printf( "Command success: saveRemoteVariablesToDisk on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_saveRemoteVariablesToDisk on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: saveRemoteVariablesToDisk on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
-## vscphlp_getRemoteVariableString
+## getRemoteVariableString
 
 `<code="c">`
-int vscphlp_getRemoteVariableString( const char *pName, char *pValue, size_t len ) 
+int getRemoteVariableString( const char *pName, char *pValue, size_t len ) 
 `</code>`
 
 get value of string variable.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -160,31 +160,31 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 char strBuf[32];
 
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_getRemoteVariableString( handle1, "test_string_variable", strBuf, sizeof( strBuf )-1 ) ) ) {
-    printf( "Command success: vscphlp_getRemoteVariableString on channel 1\n" );
+        ( rv = getRemoteVariableString( handle1, "test_string_variable", strBuf, sizeof( strBuf )-1 ) ) ) {
+    printf( "Command success: getRemoteVariableString on channel 1\n" );
     printf(" Value = %s\n", strBuf );
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableString on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableString on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
-## vscphlp_getRemoteVariableValue
+## getRemoteVariableValue
 
-This function calls **vscphlp_getRemoteVariableValue**
+This function calls **getRemoteVariableValue**
 
 
-## vscphlp_setRemoteVariableString
+## setRemoteVariableString
 
 `<code="c">`
-int vscphlp_setRemoteVariableString( long handle, const char *pName, char *pValue ) 
+int setRemoteVariableString( long handle, const char *pName, char *pValue ) 
 `</code>`
 
 Write a value to a string variable. If the variable does not exist it will be created.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -204,32 +204,32 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 // Write a value to a string variable
 if ( VSCP_ERROR_SUCCESS == 
-        (rv = vscphlp_setRemoteVariableString( handle1, 
+        (rv = setRemoteVariableString( handle1, 
                             "test_sting_variable", 
                             "this is the value of the string variable" )  ) ) {
-    printf( "Command success: vscphlp_setRemoteVariableString on channel 1\n" );
+    printf( "Command success: setRemoteVariableString on channel 1\n" );
 }
 else {
-    printf("Command error: vscphlp_setRemoteVariableString on channel 1  Error code=%d\n", rv);
+    printf("Command error: setRemoteVariableString on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
-## vscphlp_setRemoteVariableValue
+## setRemoteVariableValue
 
-This function calls **vscphlp_setRemoteVariableString**
+This function calls **setRemoteVariableString**
 
 
-## vscphlp_getRemoteVariableBool
+## getRemoteVariableBool
 
 `<code="c">`
-int vscphlp_getRemoteVariableBool( long handle, const char *pName, bool *bValue ) 
+int getRemoteVariableBool( long handle, const char *pName, bool *bValue ) 
 `</code>`
 
 Get variable value from boolean variable 
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -246,12 +246,12 @@ Pointer to boolean variable that get the value of the string variable.
 // Read a value from a boolean variable
 int valBool;
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_getRemoteVariableBool( handle1, "test_bool_variable", &valBool ) ) ) {
-    printf( "Command success: vscphlp_getRemoteVariableBool on channel 1\n" );
+        ( rv = getRemoteVariableBool( handle1, "test_bool_variable", &valBool ) ) ) {
+    printf( "Command success: getRemoteVariableBool on channel 1\n" );
     printf(" Value = %s\n", valBool ? "true" : "false" );
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableBool on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableBool on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
@@ -261,17 +261,17 @@ else {
 
 Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connection is closed VSCP_ERROR_CONNECTION is returned. VSCP_ERROR_PARAMETER is returned if called while in a receive loop.
 
-## vscphlp_setRemoteVariableBool
+## setRemoteVariableBool
 
 `<code="c">`
-int vscphlp_setRemoteVariableBool( long handle, const char *pName, bool bValue ) 
+int setRemoteVariableBool( long handle, const char *pName, bool bValue ) 
 `</code>`
 
 Get variable value from boolean variable
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -291,26 +291,26 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 // Write a value (false) to a boolean variable
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_setRemoteVariableBool( handle1, "test_bool_variable", 0 )  ) ) {
-    printf( "Command success: vscphlp_setRemoteVariableBool on channel 1\n" );
+        ( rv = setRemoteVariableBool( handle1, "test_bool_variable", 0 )  ) ) {
+    printf( "Command success: setRemoteVariableBool on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_setRemoteVariableBool on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: setRemoteVariableBool on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_getRemoteVariableInt
+## getRemoteVariableInt
 
 `<code="c">`
-int vscphlp_getRemoteVariableInt( long handle, const char *pName, int *value ) 
+int getRemoteVariableInt( long handle, const char *pName, int *value ) 
 `</code>`
 Get variable value from integer variable 
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -331,27 +331,27 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 // Read a value from a int variable
 int intValue;
 if ( VSCP_ERROR_SUCCESS == 
-            (rv = vscphlp_getRemoteVariableInt( handle1, "test_integer_variable", &intValue ) ) ) {
-    printf( "Command success: vscphlp_getRemoteVariableInt on channel 1\n" );
+            (rv = getRemoteVariableInt( handle1, "test_integer_variable", &intValue ) ) ) {
+    printf( "Command success: getRemoteVariableInt on channel 1\n" );
     printf(" Value = %d\n", intValue );
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableInt on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableInt on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_setRemoteVariableInt
+## setRemoteVariableInt
 
 `<code="c">`
-int vscphlp_setRemoteVariableInt( long handle, const char *pName, int value ) 
+int setRemoteVariableInt( long handle, const char *pName, int value ) 
 `</code>`
 Get variable value from integer variable 
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -371,26 +371,26 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 // Write a value to an int variable
 if ( VSCP_ERROR_SUCCESS == 
-       ( rv = vscphlp_setRemoteVariableInt( handle1, "test_integer_variable", 777666 )  ) ) {
-    printf( "Command success: vscphlp_setRemoteVariableInt on channel 1\n" );
+       ( rv = setRemoteVariableInt( handle1, "test_integer_variable", 777666 )  ) ) {
+    printf( "Command success: setRemoteVariableInt on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_setRemoteVariableInt on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: setRemoteVariableInt on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_getRemoteVariableLong
+## getRemoteVariableLong
 
 `<code="c">`
-int vscphlp_getRemoteVariableLong( long handle, const char *pName, long *value ) 
+int getRemoteVariableLong( long handle, const char *pName, long *value ) 
 `</code>`
 Get variable value from long variable 
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -411,27 +411,27 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 // Read a value from a long variable
 long longValue;
 if ( VSCP_ERROR_SUCCESS == 
-         ( rv = vscphlp_getRemoteVariableLong( handle1, "test_long_variable", &longValue ) ) ) {
-    printf( "Command success: vscphlp_getRemoteVariableLong on channel 1\n" );
+         ( rv = getRemoteVariableLong( handle1, "test_long_variable", &longValue ) ) ) {
+    printf( "Command success: getRemoteVariableLong on channel 1\n" );
     printf(" Value = %lu\n", longValue );
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableLong on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableLong on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_setRemoteVariableLong
+## setRemoteVariableLong
 
 `<code="c">`
-int vscphlp_setRemoteVariableLong( long handle, const char *pName, long value ) 
+int setRemoteVariableLong( long handle, const char *pName, long value ) 
 `</code>`
 Get variable value from long variable
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -451,26 +451,26 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 // Write a value to an long variable
 if ( VSCP_ERROR_SUCCESS == 
-    ( rv = vscphlp_setRemoteVariableLong( handle1, "test_long_variable", 123456780 )  ) ) {
-    printf( "Command success: vscphlp_setRemoteVariableLong on channel 1\n" );
+    ( rv = setRemoteVariableLong( handle1, "test_long_variable", 123456780 )  ) ) {
+    printf( "Command success: setRemoteVariableLong on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_setRemoteVariableLong on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: setRemoteVariableLong on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_getRemoteVariableDouble
+## getRemoteVariableDouble
 
 `<code="c">`
-int vscphlp_getRemoteVariableDouble( long handle, const char *pName, double *value ) 
+int getRemoteVariableDouble( long handle, const char *pName, double *value ) 
 `</code>`
 Get variable value from double variable 
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -491,27 +491,27 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 // Read a value from a float variable
 double floatValue;
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_getRemoteVariableDouble( handle1, "test_float_variable", &floatValue ) ) ) {
-    printf( "Command success: vscphlp_getRemoteVariableDouble on channel 1\n" );
+        ( rv = getRemoteVariableDouble( handle1, "test_float_variable", &floatValue ) ) ) {
+    printf( "Command success: getRemoteVariableDouble on channel 1\n" );
     printf(" Value = %f\n", floatValue );
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableDouble on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableDouble on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_setRemoteVariableDouble
+## setRemoteVariableDouble
 
 `<code="c">`
-int vscphlp_setRemoteVariableDouble( long handle, const char *pName, double value ) 
+int setRemoteVariableDouble( long handle, const char *pName, double value ) 
 `</code>`
 Get variable value from double variable 
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -531,19 +531,19 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 // Write a value to an float variable
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_setRemoteVariableDouble( handle1, "test_float_variable", 1.2345001 )  ) ) {
-    printf( "Command success: vscphlp_setRemoteVariableDouble on channel 1\n" );
+        ( rv = setRemoteVariableDouble( handle1, "test_float_variable", 1.2345001 )  ) ) {
+    printf( "Command success: setRemoteVariableDouble on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_setRemoteVariableDouble on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: setRemoteVariableDouble on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
-## vscphlp_getRemoteVariableMeasurement
+## getRemoteVariableMeasurement
 
 `<code="c">`
-int vscphlp_getRemoteVariableMeasurement( long handle, 
+int getRemoteVariableMeasurement( long handle, 
                                           const char *pName, 
                                           double *pvalue,
                                           int *punit,
@@ -555,7 +555,7 @@ Get variable value, unit, sensor index, zone, subzone from a named measurement v
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -591,21 +591,21 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 // Read a value from a measurement variable 
 if ( VSCP_ERROR_SUCCESS == 
-       ( rv = vscphlp_getRemoteVariableMeasurement( handle1, "test_measurement_variable", strBuf, sizeof(strBuf)-1  ) ) ) {
-    printf( "Command success: vscphlp_getRemoteVariableMeasurement on channel 1\n" );
+       ( rv = getRemoteVariableMeasurement( handle1, "test_measurement_variable", strBuf, sizeof(strBuf)-1  ) ) ) {
+    printf( "Command success: getRemoteVariableMeasurement on channel 1\n" );
     printf(" Value = %s\n", strBuf );
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableMeasurement on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableMeasurement on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_setRemoteVariableMeasurement
+## setRemoteVariableMeasurement
 
 `<code="c">`
-int vscphlp_setRemoteVariableMeasurement( long handle, 
+int setRemoteVariableMeasurement( long handle, 
                                         const char *pName, 
                                         double value,
                                         int unit,
@@ -617,7 +617,7 @@ Set variable value, unit sensor index, zone and sub zone for a measurement varia
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -653,26 +653,26 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 // Write a value to an measurement variable
 if ( VSCP_ERROR_SUCCESS == 
-       ( rv = vscphlp_setRemoteVariableMeasurement( handle1, "test_measurement_variable", "138,0,23" )  ) ) {
-    printf( "Command success: vscphlp_setRemoteVariableMeasurement on channel 1\n" );
+       ( rv = setRemoteVariableMeasurement( handle1, "test_measurement_variable", "138,0,23" )  ) ) {
+    printf( "Command success: setRemoteVariableMeasurement on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_setRemoteVariableMeasurement on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: setRemoteVariableMeasurement on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_getRemoteVariableEvent
+## getRemoteVariableEvent
 
 `<code="c">`
-int vscphlp_getVariableEvent( long handle, const char *pName, vscpEvent *pEvent ) 
+int getVariableEvent( long handle, const char *pName, vscpEvent *pEvent ) 
 `</code>`
 Get variable value from event variable 
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -694,8 +694,8 @@ pEvent = new vscpEvent;
 
 // Read a value from a event variable 
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_getRemoteVariableEvent( handle1, "test_event_variable", pEvent  ) ) ) {
-    printf( "Command success: vscphlp_getRemoteVariableEvent on channel 1\n" );
+        ( rv = getRemoteVariableEvent( handle1, "test_event_variable", pEvent  ) ) ) {
+    printf( "Command success: getRemoteVariableEvent on channel 1\n" );
     printf(" Event: class=%d Type=%d sizeData=%d\n", 
                         pEvent->vscp_class,
                         pEvent->vscp_type,
@@ -709,25 +709,25 @@ if ( VSCP_ERROR_SUCCESS ==
     }
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableEvent on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableEvent on channel 1  Error code=%d\n", rv);
 }
 
 // Free the event
-vscphlp_deleteVSCPevent( pEvent );
+deleteVSCPevent( pEvent );
 `</code>`
 
 
 
-## vscphlp_setRemoteVariableEvent
+## setRemoteVariableEvent
 
 `<code="c">`
-int vscphlp_setRemoteVariableEvent( long handle, const char *pName, vscpEvent *pEvent ) 
+int setRemoteVariableEvent( long handle, const char *pName, vscpEvent *pEvent ) 
 `</code>`
 Get variable value from event variable 
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -760,29 +760,29 @@ pEvent->pdata[ 2 ] = 30;
 pEvent->pdata[ 3 ] = 40;
     
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_setRemoteVariableEvent( handle1, "test_event_variable", pEvent )  ) ) {
-    printf( "Command success: vscphlp_setVariableEvent on channel 1\n" );
+        ( rv = setRemoteVariableEvent( handle1, "test_event_variable", pEvent )  ) ) {
+    printf( "Command success: setVariableEvent on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_setRemoteVariableEvent on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: setRemoteVariableEvent on channel 1  Error code=%d\n", rv);
 }
 
 // Free the event
-vscphlp_deleteVSCPevent( pEvent );
+deleteVSCPevent( pEvent );
 `</code>`
 
 
 
-## vscphlp_getRemoteVariableEventEx
+## getRemoteVariableEventEx
 
 `<code="c">`
-int vscphlp_getRemoteVariableEventEx( long handle, const char *pName, vscpEventEx *pEvent ) 
+int getRemoteVariableEventEx( long handle, const char *pName, vscpEventEx *pEvent ) 
 `</code>`
 Get variable value from event variable 
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -803,8 +803,8 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 // Read a value from a event variable 
 vscpEventEx ex1;
 if ( VSCP_ERROR_SUCCESS == 
-         ( rv = vscphlp_getRemoteVariableEventEx( handle1, "test_eventex_variable", &ex1  ) ) ) {
-    printf( "Command success: vscphlp_getVariableEventEx on channel 1\n" );
+         ( rv = getRemoteVariableEventEx( handle1, "test_eventex_variable", &ex1  ) ) ) {
+    printf( "Command success: getVariableEventEx on channel 1\n" );
     printf(" Event: class=%d Type=%d sizeData=%d\n", 
                         ex1.vscp_class,
                         ex1.vscp_type,
@@ -818,22 +818,22 @@ if ( VSCP_ERROR_SUCCESS ==
     }
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableEvent on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableEvent on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_setRemoteVariableEventEx
+## setRemoteVariableEventEx
 
 `<code="c">`
-int vscphlp_setRemoteVariableEventEx( long handle, const char *pName, vscpEventEx *pEvent ) 
+int setRemoteVariableEventEx( long handle, const char *pName, vscpEventEx *pEvent ) 
 `</code>`
 Get variable value from event variable 
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -866,17 +866,17 @@ ex1.data[ 2 ] = 20;
 ex1.data[ 3 ] = 10;
     
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_setRemoteVariableEventEx( handle1, "test_eventex_variable", &ex1 )  ) ) {
-    printf( "Command success: vscphlp_setRemoteVariableEventEx on channel 1\n" );
+        ( rv = setRemoteVariableEventEx( handle1, "test_eventex_variable", &ex1 )  ) ) {
+    printf( "Command success: setRemoteVariableEventEx on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_setRemoteVariableEventEx on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: setRemoteVariableEventEx on channel 1  Error code=%d\n", rv);
 }
 
 // Read a value from a event variable 
 if ( VSCP_ERROR_SUCCESS == 
-     ( rv = vscphlp_getRemoteVariableEventEx( handle1, "test_eventex_variable", &ex1  ) ) ) {
-    printf( "Command success: vscphlp_getRemoteVariableEventEx on channel 1\n" );
+     ( rv = getRemoteVariableEventEx( handle1, "test_eventex_variable", &ex1  ) ) ) {
+    printf( "Command success: getRemoteVariableEventEx on channel 1\n" );
     printf(" Event: class=%d Type=%d sizeData=%d\n", 
                         ex1.vscp_class,
                         ex1.vscp_type,
@@ -890,16 +890,16 @@ if ( VSCP_ERROR_SUCCESS ==
     }
 }
 else {
-     printf("\aCommand error: vscphlp_getRemoteVariableEvent on channel 1  Error code=%d\n", rv);
+     printf("\aCommand error: getRemoteVariableEvent on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_getRemoteVariableGUIDString
+## getRemoteVariableGUIDString
 
 `<code="c">`
-int vscphlp_getRemoteVariableGUIDString( long handle, 
+int getRemoteVariableGUIDString( long handle, 
                                             const char *pName, 
                                             const char *pGUID, size_t len ) 
 `</code>`
@@ -908,7 +908,7 @@ Get variable value from GUID variable
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -932,28 +932,28 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 // Read a value from a GUID variable - string type
 if ( VSCP_ERROR_SUCCESS == 
-         ( rv = vscphlp_getRemoteVariableGUIDString( handle1, "test_guidstr_variable", strGUID, sizeof(strGUID)-1 )  ) )  {
-    printf( "Command success: vscphlp_getRemoteVariableGUIDString on channel 1\n" );
+         ( rv = getRemoteVariableGUIDString( handle1, "test_guidstr_variable", strGUID, sizeof(strGUID)-1 )  ) )  {
+    printf( "Command success: getRemoteVariableGUIDString on channel 1\n" );
     printf(" Value = %s\n", strGUID );
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableGUIDString on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableGUIDString on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_setRemoteVariableGUIDString
+## setRemoteVariableGUIDString
 
 `<code="c">`
-int vscphlp_getRemoteVariableGUID( long handle, const char *pName, const char * pGUID ) 
+int getRemoteVariableGUID( long handle, const char *pName, const char * pGUID ) 
 `</code>`
 
 Set the value for GUID variable.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -977,26 +977,26 @@ char strGUID[64];
 strcpy( strGUID, "FF:FF:FF:FF:FF:FF:FF:00:00:00:00:7F:00:01:01:FD" );
 
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_setRemoteVariableGUIDString( handle1, "test_guidstr_variable", strGUID ) ) ) {
-    printf( "Command success: vscphlp_setRemoteVariableGUIDString on channel 1\n" );
+        ( rv = setRemoteVariableGUIDString( handle1, "test_guidstr_variable", strGUID ) ) ) {
+    printf( "Command success: setRemoteVariableGUIDString on channel 1\n" );
 }
 else {
-     printf("\aCommand error: vscphlp_setRemoteVariableGUIDString on channel 1  Error code=%d\n", rv);
+     printf("\aCommand error: setRemoteVariableGUIDString on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
-## vscphlp_getRemoteVariableGUIDArray
+## getRemoteVariableGUIDArray
 
 `<code="c">`
-int vscphlp_getRemoteVariableGUIDArray( long handle, const char *pName, const char * pGUID ) 
+int getRemoteVariableGUIDArray( long handle, const char *pName, const char * pGUID ) 
 `</code>`
 
 Get variable value from GUID variable. Array type. 
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1016,8 +1016,8 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 // Read a value from a GUID variable - array type
 if ( VSCP_ERROR_SUCCESS == 
-      ( rv = vscphlp_getRemoteVariableGUIDArray( handle1, "test_guidarray_variable", GUID  ) ) )  {
-    printf( "Command success: vscphlp_getRemoteVariableGUIDArray on channel 1\n" );
+      ( rv = getRemoteVariableGUIDArray( handle1, "test_guidarray_variable", GUID  ) ) )  {
+    printf( "Command success: getRemoteVariableGUIDArray on channel 1\n" );
     printf(" Value = " );
     for ( int i=0; i<16; i++ ) {
         printf("%d ", GUID[i] );    
@@ -1025,23 +1025,23 @@ if ( VSCP_ERROR_SUCCESS ==
     printf("\n");
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableGUIDArray on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableGUIDArray on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_setRemoteVariableGUIDArray
+## setRemoteVariableGUIDArray
 
 `<code="c">`
-int vscphlp_getRemoteVariableGUIDArray( long handle, const char *pName, const char * pGUID ) 
+int getRemoteVariableGUIDArray( long handle, const char *pName, const char * pGUID ) 
 `</code>`
 
 Get variable value from GUID variable. This is a variant where the GUID is stored in an array.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1067,25 +1067,25 @@ for ( int i=0;i<16; i++ ) {
 }
 
 if ( VSCP_ERROR_SUCCESS == 
-         ( rv = vscphlp_setRemoteVariableGUIDArray( handle1, "test_guidarray_variable", GUID ) ) ) {
-    printf( "Command success: vscphlp_setRemoteVariableGUIDArray on channel 1\n" );
+         ( rv = setRemoteVariableGUIDArray( handle1, "test_guidarray_variable", GUID ) ) ) {
+    printf( "Command success: setRemoteVariableGUIDArray on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_setRemoteVariableGUIDArray on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: setRemoteVariableGUIDArray on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
-## vscphlp_getRemoteVariableVSCPdata
+## getRemoteVariableVSCPdata
 
 `<code="c">`
-int vscphlp_getRemoteVariableVSCPdata( long handle, const char *pName, uint16_t *psizeData, uint8_t *pData ) 
+int getRemoteVariableVSCPdata( long handle, const char *pName, uint16_t *psizeData, uint8_t *pData ) 
 `</code>`
 
 Get variable value from VSCP data variable 
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1113,8 +1113,8 @@ memset( dataArray, 0, sizeof( dataArray ) );
    
 // Read a value from a data variable 
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_getRemoteVariableVSCPData( handle1, "test_dataarray_variable", dataArray, &size  ) ) )  {
-    printf( "Command success: vscphlp_getRemoteVariableVSCPData on channel 1\n" );
+        ( rv = getRemoteVariableVSCPData( handle1, "test_dataarray_variable", dataArray, &size  ) ) )  {
+    printf( "Command success: getRemoteVariableVSCPData on channel 1\n" );
     printf(" Value = " );
     for ( int i=0; i<size; i++ ) {
         printf("%d ", dataArray[i] );    
@@ -1122,16 +1122,16 @@ if ( VSCP_ERROR_SUCCESS ==
     printf("\n");
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableVSCPData on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableVSCPData on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_setRemoteVariableVSCPdata
+## setRemoteVariableVSCPdata
 
 `<code="c">`
-int vscphlp_setRemoteVariableVSCPdata( long handle, 
+int setRemoteVariableVSCPdata( long handle, 
                                   const char *pName, 
                                   uint16_t sizeData, 
                                   uint8_t *pData ) 
@@ -1141,7 +1141,7 @@ Get variable value from VSCP data variable
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1170,20 +1170,20 @@ for ( int i=0; i<sizeof(dataArray); i++ ) {
 }
 
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_setRemoteVariableVSCPData( handle1, "test_dataarray_variable", dataArray, sizeof( dataArray ) ) ) ) {
-    printf( "Command success: vscphlp_setRemoteVariableVSCPData on channel 1\n" );
+        ( rv = setRemoteVariableVSCPData( handle1, "test_dataarray_variable", dataArray, sizeof( dataArray ) ) ) ) {
+    printf( "Command success: setRemoteVariableVSCPData on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_setRemoteVariableVSCPData on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: setRemoteVariableVSCPData on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_getRemoteVariableVSCPclass
+## getRemoteVariableVSCPclass
 
 `<code="c">`
-int vscphlp_getRemoteVariableVSCPclass( long handle, 
+int getRemoteVariableVSCPclass( long handle, 
                                     const char *pName, 
                                     uint16_t *vscp_class ) 
 `</code>`
@@ -1191,7 +1191,7 @@ Get variable value from class variable
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1214,21 +1214,21 @@ unsigned short vscpclass;
 
 // Read a value from aVSCP class type
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_getRemoteVariableVSCPClass( handle1, "test_vscp_class_variable", &vscpclass ) ) )  {
-    printf( "Command success: vscphlp_getRemoteVariableVSCPClass on channel 1\n" );
+        ( rv = getRemoteVariableVSCPClass( handle1, "test_vscp_class_variable", &vscpclass ) ) )  {
+    printf( "Command success: getRemoteVariableVSCPClass on channel 1\n" );
     printf(" Value = %d\n", vscpclass );
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableVSCPClass on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableVSCPClass on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_setRemoteVariableVSCPclass
+## setRemoteVariableVSCPclass
 
 `<code="c">`
-int vscphlp_setRemoteVariableVSCPclass( long handle, 
+int setRemoteVariableVSCPclass( long handle, 
                                      const char *pName, 
                                      unsigned short vscp_class ) 
 `</code>`
@@ -1237,7 +1237,7 @@ Get variable value from class variable
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1257,20 +1257,20 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 // Write a value for VSCP class type
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_setRemoteVariableVSCPClass( handle1, "test_vscp_class_variable", 10 ) ) ) {
-    printf( "Command success: vscphlp_setRemoteVariableVSCPClass on channel 1\n" );
+        ( rv = setRemoteVariableVSCPClass( handle1, "test_vscp_class_variable", 10 ) ) ) {
+    printf( "Command success: setRemoteVariableVSCPClass on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_setRemoteVariableVSCPClass on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: setRemoteVariableVSCPClass on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_getRemoteVariableVSCPtype
+## getRemoteVariableVSCPtype
 
 `<code="c">`
-int vscphlp_getRemoteVariableVSCPtype( long handle, 
+int getRemoteVariableVSCPtype( long handle, 
                                    const char *pName, 
                                    unsigned short *vscp_type ) 
 `</code>`
@@ -1279,7 +1279,7 @@ Get variable value from type variable
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1301,21 +1301,21 @@ unsigned short vscptype;
 
 // Read a value from aVSCP type type
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_getRemoteVariableVSCPType( handle1, "test_vscp_type_variable", &vscptype ) ) )  {
-    printf( "Command success: vscphlp_getRemoteVariableVSCPType on channel 1\n" );
+        ( rv = getRemoteVariableVSCPType( handle1, "test_vscp_type_variable", &vscptype ) ) )  {
+    printf( "Command success: getRemoteVariableVSCPType on channel 1\n" );
     printf(" Value = %d\n", vscptype );
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableVSCPType on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableVSCPType on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
 
 
-## vscphlp_setRemoteVariableVSCPtype
+## setRemoteVariableVSCPtype
 
 `<code="c">`
-int vscphlp_setRemoteVariableVSCPtype( long handle, 
+int setRemoteVariableVSCPtype( long handle, 
                                     const char *pName, 
                                     unsigned short vscp_type ) 
 `</code>`
@@ -1324,7 +1324,7 @@ Get variable value from type variable
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1345,18 +1345,18 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 // Write a value for VSCP type type
 if ( VSCP_ERROR_SUCCESS == 
-      ( rv = vscphlp_setRemoteVariableVSCPType( handle1, "test_vscp_type_variable", 22 ) ) ) {
-    printf( "Command success: vscphlp_setRemoteVariableVSCPType on channel 1\n" );
+      ( rv = setRemoteVariableVSCPType( handle1, "test_vscp_type_variable", 22 ) ) ) {
+    printf( "Command success: setRemoteVariableVSCPType on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_setRemoteVariableVSCPType on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: setRemoteVariableVSCPType on channel 1  Error code=%d\n", rv);
 }
 `</code>`
 
-## vscphlp_getRemoteVariableVSCPTimestamp
+## getRemoteVariableVSCPTimestamp
 
 `<code="c">`
-int vscphlp_getRemoteVariableVSCPTimestamp( long handle, 
+int getRemoteVariableVSCPTimestamp( long handle, 
                                                 const char *pName, 
                                                 unsigned long *vscp_timestamp ) 
 `</code>`
@@ -1365,7 +1365,7 @@ Get variable value from VSCP timestamp variable
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1387,10 +1387,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableVSCPTimestamp
+## setRemoteVariableVSCPTimestamp
 
 `<code="c">`
-vscphlp_setRemoteVariableVSCPTimestamp( long handle, 
+setRemoteVariableVSCPTimestamp( long handle, 
                                             const char *pName, 
                                             unsigned long vscp_timestamp ) 
 `</code>`
@@ -1399,7 +1399,7 @@ Set variable value from VSCP timstamp
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1421,10 +1421,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `</code>`
 
 
-## vscphlp_getRemoteVariableDateTime
+## getRemoteVariableDateTime
 
 `<code="c">`
-vscphlp_getRemoteVariableDateTime( long handle, 
+getRemoteVariableDateTime( long handle, 
                                     const char *pName, 
                                     char *pValue, 
                                     size_t len ) 
@@ -1434,7 +1434,7 @@ Get variable value from datetime variable. The returned value is on ISO form "YY
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1459,10 +1459,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 `</code>`
 
-## vscphlp_setRemoteVariableDateTime
+## setRemoteVariableDateTime
 
 `<code="c">`
-int vscphlp_setRemoteVariableDateTime( long handle, 
+int setRemoteVariableDateTime( long handle, 
                                         const char *pName, 
                                         char *pValue ) 
 `</code>`
@@ -1471,7 +1471,7 @@ Set variable value from dattime on ISO form "YYYY-MM-DDTHH:MM:SS"
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1493,10 +1493,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `</code>`
 
 
-## vscphlp_getRemoteVariableDate
+## getRemoteVariableDate
 
 `<code="c">`
-vscphlp_getRemoteVariableDate( long handle, 
+getRemoteVariableDate( long handle, 
                                  const char *pName, 
                                  char *pValue, 
                                  size_t len ) 
@@ -1506,7 +1506,7 @@ Get variable value from date variable. The returned value is on ISO form "YYYY-M
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1532,10 +1532,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableDate
+## setRemoteVariableDate
 
 `<code="c">`
-int vscphlp_setRemoteVariableDate( long handle, 
+int setRemoteVariableDate( long handle, 
                                         const char *pName, 
                                         char *pValue ) 
 `</code>`
@@ -1544,7 +1544,7 @@ Set variable value from dattime on ISO form "YYYY-MM-DD"
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1566,10 +1566,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `</code>`
 
 
-## vscphlp_getRemoteVariableTime
+## getRemoteVariableTime
 
 `<code="c">`
-vscphlp_getRemoteVariableTime( long handle, 
+getRemoteVariableTime( long handle, 
                                  const char *pName, 
                                  char *pValue, 
                                  size_t len ) 
@@ -1579,7 +1579,7 @@ Get variable value from time variable. The returned value is on ISO form "HH:MM:
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1605,10 +1605,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableTime
+## setRemoteVariableTime
 
 `<code="c">`
-int vscphlp_setRemoteVariableTime( long handle, 
+int setRemoteVariableTime( long handle, 
                                         const char *pName, 
                                         char *pValue ) 
 `</code>`
@@ -1617,7 +1617,7 @@ Set variable value from time on ISO form "HH:MM:SS"
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1639,10 +1639,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `</code>`
 
 
-## vscphlp_getRemoteVariableBlob
+## getRemoteVariableBlob
 
 `<code="c">`
-vscphlp_getRemoteVariableBlob( long handle, 
+getRemoteVariableBlob( long handle, 
                                  const char *pName, 
                                  char *pValue, 
                                  size_t len ) 
@@ -1652,7 +1652,7 @@ Get variable value from blob variable. The returned value is BASE64 encoded.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1678,10 +1678,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableBlob
+## setRemoteVariableBlob
 
 `<code="c">`
-int vscphlp_setRemoteVariableBlob( long handle, 
+int setRemoteVariableBlob( long handle, 
                                         const char *pName, 
                                         char *pValue ) 
 `</code>`
@@ -1690,7 +1690,7 @@ Set variable value for a blob variable. The value is always expected to be BASE6
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1711,10 +1711,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 `</code>`
 
-## vscphlp_getRemoteVariableMIME
+## getRemoteVariableMIME
 
 `<code="c">`
-vscphlp_getRemoteVariableMIME( long handle, 
+getRemoteVariableMIME( long handle, 
                                  const char *pName, 
                                  char *pValue, 
                                  size_t len ) 
@@ -1724,7 +1724,7 @@ Get variable value from MIME variable. The returned value is BASE64 encoded.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1750,10 +1750,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableMIME
+## setRemoteVariableMIME
 
 `<code="c">`
-int vscphlp_setRemoteVariableMIME( long handle, 
+int setRemoteVariableMIME( long handle, 
                                      const char *pName, 
                                      char *pValue ) 
 `</code>`
@@ -1762,7 +1762,7 @@ Set variable value for a MIME variable. The value is always expected to be BASE6
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1783,10 +1783,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 `</code>`
 
-## vscphlp_getRemoteVariableHTML
+## getRemoteVariableHTML
 
 `<code="c">`
-vscphlp_getRemoteVariableHTML( long handle, 
+getRemoteVariableHTML( long handle, 
                                  const char *pName, 
                                  char *pValue, 
                                  size_t len ) 
@@ -1796,7 +1796,7 @@ Get variable value from HTML variable. The returned value is BASE64 encoded.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1822,10 +1822,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableHTML
+## setRemoteVariableHTML
 
 `<code="c">`
-int vscphlp_setRemoteVariableHTML( long handle, 
+int setRemoteVariableHTML( long handle, 
                                         const char *pName, 
                                         char *pValue ) 
 `</code>`
@@ -1834,7 +1834,7 @@ Set variable value for a HTML variable. The value is always expected to be BASE6
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1853,10 +1853,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 `</code>`
 
-## vscphlp_getRemoteVariableJavaScript
+## getRemoteVariableJavaScript
 
 `<code="c">`
-vscphlp_getRemoteVariableJavaScript( long handle, 
+getRemoteVariableJavaScript( long handle, 
                                     const char *pName, 
                                     char *pValue, 
                                     size_t len ) 
@@ -1866,7 +1866,7 @@ Get variable value from JavaScript variable. The returned value is BASE64 encode
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1892,10 +1892,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableJavaScript
+## setRemoteVariableJavaScript
 
 `<code="c">`
-int vscphlp_setRemoteVariableJavaScript( long handle, 
+int setRemoteVariableJavaScript( long handle, 
                                         const char *pName, 
                                         char *pValue ) 
 `</code>`
@@ -1904,7 +1904,7 @@ Set variable value for a JavaScript variable. The value is always expected to be
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1923,10 +1923,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 `</code>`
 
-## vscphlp_getRemoteVariableLUA
+## getRemoteVariableLUA
 
 `<code="c">`
-vscphlp_getRemoteVariableLUA( long handle, 
+getRemoteVariableLUA( long handle, 
                                 const char *pName, 
                                 char *pValue, 
                                 size_t len ) 
@@ -1936,7 +1936,7 @@ Get variable value from LUA script variable. The returned value is BASE64 encode
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1962,10 +1962,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableLUA
+## setRemoteVariableLUA
 
 `<code="c">`
-int vscphlp_setRemoteVariableLUA( long handle, 
+int setRemoteVariableLUA( long handle, 
                                         const char *pName, 
                                         char *pValue ) 
 `</code>`
@@ -1974,7 +1974,7 @@ Set variable value for a LUA script variable. The value is always expected to be
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -1996,10 +1996,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `</code>`
 
 
-## vscphlp_getRemoteVariableLUARES
+## getRemoteVariableLUARES
 
 `<code="c">`
-vscphlp_getRemoteVariableLUARES( long handle, 
+getRemoteVariableLUARES( long handle, 
                                     const char *pName, 
                                     char *pValue, 
                                     size_t len ) 
@@ -2009,7 +2009,7 @@ Get variable value from LUARES variable. The returned value is BASE64 encoded.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -2035,10 +2035,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableLUARES
+## setRemoteVariableLUARES
 
 `<code="c">`
-int vscphlp_setRemoteVariableLUARES( long handle, 
+int setRemoteVariableLUARES( long handle, 
                                         const char *pName, 
                                         char *pValue ) 
 `</code>`
@@ -2047,7 +2047,7 @@ Set variable value for a LUARES variable. The value is always expected to be BAS
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -2069,10 +2069,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `</code>`
 
 
-## vscphlp_getRemoteVariableUX1
+## getRemoteVariableUX1
 
 `<code="c">`
-vscphlp_getRemoteVariableUX1( long handle, 
+getRemoteVariableUX1( long handle, 
                                 const char *pName, 
                                 char *pValue, 
                                 size_t len ) 
@@ -2082,7 +2082,7 @@ Get variable value from UX1 (User interface version 1) variable. The returned va
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -2108,10 +2108,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableUX1
+## setRemoteVariableUX1
 
 `<code="c">`
-int vscphlp_setRemoteVariableUX1( long handle, 
+int setRemoteVariableUX1( long handle, 
                                         const char *pName, 
                                         char *pValue ) 
 `</code>`
@@ -2120,7 +2120,7 @@ Set variable value for a UX1 (User interface version 1) variable. The value is a
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -2141,10 +2141,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 `</code>`
 
-## vscphlp_getRemoteVariableDMROW
+## getRemoteVariableDMROW
 
 `<code="c">`
-vscphlp_getRemoteVariableDMROW( long handle, 
+getRemoteVariableDMROW( long handle, 
                                   const char *pName, 
                                   char *pValue, 
                                   size_t len ) 
@@ -2154,7 +2154,7 @@ Get variable value from a DM row variable. The returned value is BASE64 encoded.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -2180,10 +2180,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableDMROW
+## setRemoteVariableDMROW
 
 `<code="c">`
-int vscphlp_setRemoteVariableDMROW( long handle, 
+int setRemoteVariableDMROW( long handle, 
                                         const char *pName, 
                                         char *pValue ) 
 `</code>`
@@ -2192,7 +2192,7 @@ Set variable value for a DM row variable. The value is always expected to be BAS
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -2213,10 +2213,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 `</code>`
 
-## vscphlp_getRemoteVariableDriver
+## getRemoteVariableDriver
 
 `<code="c">`
-vscphlp_getRemoteVariableDriver( long handle, 
+getRemoteVariableDriver( long handle, 
                                    const char *pName, 
                                    char *pValue, 
                                    size_t len ) 
@@ -2226,7 +2226,7 @@ Get variable value from a driver variable. The returned value is BASE64 encoded.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -2252,10 +2252,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableDriver
+## setRemoteVariableDriver
 
 `<code="c">`
-int vscphlp_setRemoteVariableDriver( long handle, 
+int setRemoteVariableDriver( long handle, 
                                         const char *pName, 
                                         char *pValue ) 
 `</code>`
@@ -2264,7 +2264,7 @@ Set variable value for a driver variable. The value is always expected to be BAS
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -2285,10 +2285,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
 `</code>`
 
-## vscphlp_getRemoteVariableUser
+## getRemoteVariableUser
 
 `<code="c">`
-vscphlp_getRemoteVariableUser( long handle, 
+getRemoteVariableUser( long handle, 
                                     const char *pName, 
                                     char *pValue, 
                                     size_t len ) 
@@ -2298,7 +2298,7 @@ Get variable value from a user variable. The returned value is BASE64 encoded.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -2324,10 +2324,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableUser
+## setRemoteVariableUser
 
 `<code="c">`
-int vscphlp_setRemoteVariableUser( long handle, 
+int setRemoteVariableUser( long handle, 
                                         const char *pName, 
                                         char *pValue ) 
 `</code>`
@@ -2336,7 +2336,7 @@ Set variable value for a user variable. The value is always expected to be BASE6
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -2358,10 +2358,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `</code>`
 
 
-## vscphlp_getRemoteVariableFilter
+## getRemoteVariableFilter
 
 `<code="c">`
-vscphlp_getRemoteVariableFilter( long handle, 
+getRemoteVariableFilter( long handle, 
                                     const char *pName, 
                                     char *pValue, 
                                     size_t len ) 
@@ -2371,7 +2371,7 @@ Get variable value from a filter variable. The returned value is BASE64 encoded.
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 
@@ -2397,10 +2397,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `</code>`
 
-## vscphlp_setRemoteVariableFilter
+## setRemoteVariableFilter
 
 `<code="c">`
-int vscphlp_setRemoteVariableFilter( long handle, 
+int setRemoteVariableFilter( long handle, 
                                         const char *pName, 
                                         char *pValue ) 
 `</code>`
@@ -2409,7 +2409,7 @@ Set variable value for a filter variable. The value is always expected to be BAS
 
 ####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ####  pName
 

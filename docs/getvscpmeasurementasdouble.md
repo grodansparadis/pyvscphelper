@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_getVSCPMeasurementAsDouble( const vscpEvent *pEvent, 
+int getVSCPMeasurementAsDouble( const vscpEvent *pEvent, 
                                         double *pvalue)
 ```
 
@@ -28,11 +28,11 @@ pEventMeasurement->pdata[1] = 0xFF;
 pEventMeasurement->pdata[2] = 0xFF;
 pEventMeasurement->pdata[3] = 0xFF;
  
-if ( VSCP_ERROR_SUCCESS == vscphlp_getVSCPMeasurementAsDouble( pEventMeasurement, &value ) ) {
-    printf("OK - vscphlp_getVSCPMeasurementAsDouble value = %lf\n", value );
+if ( VSCP_ERROR_SUCCESS == getVSCPMeasurementAsDouble( pEventMeasurement, &value ) ) {
+    printf("OK - getVSCPMeasurementAsDouble value = %lf\n", value );
 }
 else {
-    printf("Error - vscphlp_getVSCPMeasurementAsDouble value = %slf \n", value );
+    printf("Error - getVSCPMeasurementAsDouble value = %slf \n", value );
 }
 ```
 

@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_getVSCPMeasurementFloat64AsString(const vscpEvent *pEvent, 
+int getVSCPMeasurementFloat64AsString(const vscpEvent *pEvent, 
                                     char *pStrResult, 
                                     size_t len )
 ```
@@ -45,17 +45,17 @@ pEventfloat->pdata[6] = 9;
 pEventfloat->pdata[7] = 64;
  
 if ( VSCP_ERROR_SUCCESS == 
-       vscphlp_getVSCPMeasurementFloat64AsString( pEventfloat, 
+       getVSCPMeasurementFloat64AsString( pEventfloat, 
                                                     stringbuf,
                                                     sizeof( stringbuf ) ) ) {
-    printf("OK - vscphlp_getVSCPMeasurementFloat64AsString value = %s \n", stringbuf );
+    printf("OK - getVSCPMeasurementFloat64AsString value = %s \n", stringbuf );
 }
 else {
-    printf("Error - vscphlp_getVSCPMeasurementFloat64AsString value = %s \n", stringbuf );
+    printf("Error - getVSCPMeasurementFloat64AsString value = %s \n", stringbuf );
 }
  
 // Free the event
-vscphlp_deleteVSCPevent( pEventfloat );
+deleteVSCPevent( pEventfloat );
 ```
 
 

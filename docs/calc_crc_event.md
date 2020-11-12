@@ -1,7 +1,7 @@
 
 
 ```clike
-short vscphlp_calc_crc_Event ( vscpEvent *pEvent, 
+short calc_crc_Event ( vscpEvent *pEvent, 
                                 int bSet )
 ```
 
@@ -22,12 +22,12 @@ Calculate VSCP CRC and optionally set it.
 #### C example
 
 ```clike
-unsigned short crc = vscphlp_calc_crc_Event( pEvent, false );
+unsigned short crc = calc_crc_Event( pEvent, false );
 printf("CRC = %04X\n", crc );
 ```
 
 ### See Also
-[vscphlp_calc_crc_Event](vscphlp_calc_crc_event.md)
+[calc_crc_Event](calc_crc_event.md)
 
 
 

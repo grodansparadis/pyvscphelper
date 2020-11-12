@@ -1,18 +1,18 @@
 
 
 ```clike
-int vscphlp_receiveEvent( long handle, 
+int receiveEvent( long handle, 
                           vscpEvent *pEvent )
 ```
 
 ```python
-int pyvscphlp_receiveEvent( handle, event )
+int pyreceiveEvent( handle, event )
 ```
 
 ### Parameters
 
 #### handle
-Handle for the communication channel obtained from a call to [vscphlp_newsession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](newsession.md).
 
 #### pEvent
 Pointer to vscpEvent structure that will receive the event if the call is successful. The structure vscpEvent is define in [vscp.h](https://github.com/grodansparadis/vscp_software/blob/master/src/vscp/common/vscp.h) and is defined as
@@ -55,7 +55,7 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 ### Description
 Receive one VSCP event from the remote VSCP server if there is one available in the server queue. Data for the event is dynamically allocated and must be deleted by the application. 
 
-For Python use of [pyvscphlp_receiveEventEx](pyvscphlp_receiveeventex.md) may be simpler as there id no dynamically allocated data to take care off. 
+For Python use of [pyreceiveEventEx](pyreceiveeventex.md) may be simpler as there id no dynamically allocated data to take care off. 
 
 #### C example
 
@@ -63,8 +63,8 @@ For Python use of [pyvscphlp_receiveEventEx](pyvscphlp_receiveeventex.md) may be
 // Read event
 vscpEvent *pEvent = new vscpEvent;
 pEvent->pdata = NULL;   // A must for a successful delete
-if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_receiveEvent( handle2, pEvent ) ) ) {
-    printf( "Command success: vscphlp_receiveEvent on handle2\n" );
+if ( VSCP_ERROR_SUCCESS == (rv = receiveEvent( handle2, pEvent ) ) ) {
+    printf( "Command success: receiveEvent on handle2\n" );
     printf( "VSCP class=%d VSCP type=%d sizeData=%d\n", 
                     pEvent->vscp_class,
                     pEvent->vscp_type,
@@ -76,14 +76,14 @@ if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_receiveEvent( handle2, pEvent ) ) ) {
     printf("\n");
 }
 else {
-    printf("\aCommand error: vscphlp_receiveEvent on channel 2  Error code=%d\n", rv);
+    printf("\aCommand error: receiveEvent on channel 2  Error code=%d\n", rv);
 }
  
 // Do something with the received event
  
 //delete pEvent->pdata;
 //delete pEvent;
-vscphlp_deleteVSCPevent( pEvent );  // This helper is the same as the above two commented lines
+deleteVSCPevent( pEvent );  // This helper is the same as the above two commented lines
 ```
 
 #### Python example
@@ -93,7 +93,7 @@ vscphlp_deleteVSCPevent( pEvent );  // This helper is the same as the above two 
 ```
 
 ### See Also
-[vscphlp_receiveEventEx](vscphlp_receiveeventex.md)
+[receiveEventEx](receiveeventex.md)
 
 
 

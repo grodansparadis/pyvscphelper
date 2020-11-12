@@ -1,13 +1,13 @@
 
 
 ```clike
-unsigned long vscphlp_makeTimeStamp( void )
+unsigned long makeTimeStamp( void )
 ```
 
 ### Parameters
 
 #### handle
-Handle for the communication channel obtained from a call to [vscphlp_newsession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](newsession.md).
 
 ### Return Value
 Timestamp in microseconds.
@@ -18,7 +18,7 @@ Get new VSCP timestamp.
 #### C example
 
 ```clike
-printf( "vscphlp_makeTimeStamp  %04X\n", vscphlp_makeTimeStamp() );
+printf( "makeTimeStamp  %04X\n", makeTimeStamp() );
 ```
 
 

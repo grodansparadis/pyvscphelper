@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_getISOTimeString( char *buf, 
+int getISOTimeString( char *buf, 
                                 size_t buf_len, 
                                 time_t *t )
 ```

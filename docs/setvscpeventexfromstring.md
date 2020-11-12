@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_setVscpEventExFromString( vscpEventEx *pEvent, 
+int setVscpEventExFromString( vscpEventEx *pEvent, 
                                         const char *pstr )
 ```
 
@@ -27,18 +27,18 @@ Set VSCP event ex from a string.
 
 ```clike
 vscpEventEx ex6;
-if ( VSCP_ERROR_SUCCESS == vscphlp_setVscpEventExFromString( &ex6,  
+if ( VSCP_ERROR_SUCCESS == setVscpEventExFromString( &ex6,  
       "0,10,6,0,20170102T19:32:48,0,FF:FF:FF:FF:FF:FF:FF:00:00:00:00:7F:00:01:01:FD,0x8A,0x00,0x1E" ) ) 
-    printf( "OK vscphlp_setVscpEventExFromString class=%d Type=%d\n", 
+    printf( "OK setVscpEventExFromString class=%d Type=%d\n", 
                    ex6.vscp_class, ex6.vscp_type );
 }
 else {
-    printf( "\aError: vscphlp_setVscpEventExFromString\n");
+    printf( "\aError: setVscpEventExFromString\n");
 }
 ```
 
 ### See Also
-[vscphlp_setVscpEventFromString](vscphlp_setvscpeventfromstring.md)
+[setVscpEventFromString](setvscpeventfromstring.md)
 
 
 

@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_getMeasurementSenzorIndex( const vscpEvent *pEvent )
+int getMeasurementSenzorIndex( const vscpEvent *pEvent )
 ```
 
 ### Parameters

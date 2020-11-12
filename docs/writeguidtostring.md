@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_writeGuidToString( const vscpEvent *pEvent, 
+int writeGuidToString( const vscpEvent *pEvent, 
                                 char *pStr, 
                                 size_t len )
 ```
@@ -28,17 +28,17 @@ Write GUID from VSCP event to string.
 
 
 ```clike
-if ( VSCP_ERROR_SUCCESS == vscphlp_getGuidFromString( pEvent, strguid ) ) {
-   vscphlp_writeGuidToString( pEvent, strguid2, sizeof( strguid2 )-1 );
+if ( VSCP_ERROR_SUCCESS == getGuidFromString( pEvent, strguid ) ) {
+   writeGuidToString( pEvent, strguid2, sizeof( strguid2 )-1 );
    printf( "GUID=%s\n", strguid2 );
 }
 else {
-    printf( "\aError: vscphlp_writeGuidArrayToString\n");
+    printf( "\aError: writeGuidArrayToString\n");
 }
 ```
 
 ### See Also
-[vscphlp_writeGuidToStringEx](vscphlp_writeguidtostringex.md)
+[writeGuidToStringEx](writeguidtostringex.md)
 
 
 

@@ -1,23 +1,15 @@
 
 
 ```clike
-int vscphlp_isDataAvailable( long handle, 
-                                unsigned int *pCount )
-```
-
-```python
-int pyvscphlp_isDataAvailable( handle, count )
+int pyisDataAvailable( handle, count )
 ```
 
 ### Parameters
 
 #### handle
-Handle for the communication channel obtained from a call to [vscphlp_newsession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](newsession.md).
 
-### pCount (c/c++)
-Pointer to variable that gets the number of events waiting in the queue on a successful call.
-
-### count (Python)
+### count
 Variable that gets the number of events waiting in the queue on a successful call.
 
 
@@ -27,36 +19,27 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 ### Description
 Check the number of events (if any) that are available in the remote input queue. 
 
-#### C example
-
-```clike
-// Check queue for events
-if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_isDataAvailable( handle2, &count ) ) ) {
-     printf( "Command success: vscphlp_isDataAvailable on handle2\n" );
-    printf( "count = %d\n", count );
-        if ( 3 == count ) printf("Which is correct.\n");
-}
-else {
-    printf("\aCommand error: vscphlp_isDataAvailable on channel 2  Error code=%d\n", rv);
-}
-```
-
-#### Python example
+#### Example
 
 ```python
-print "Waiting for incoming data..."
+import vscp
+import vscphelper as vhlp
+
+....
+
+print("Waiting for incoming data...")
  
 cntAvailable = ctypes.c_uint(0)
 while cntAvailable.value==0:
-    print 'Still waiting...'
+    print('Still waiting...')
     time.sleep(1)
-    pyvscphlp_isDataAvailable(h1,cntAvailable)
+    vhlp.isDataAvailable(h1,cntAvailable)
  
-print '%d event(s) is available' % cntAvailable.value
+print('%d event(s) is available' % cntAvailable.value)
  
 for i in range(0,cntAvailable.value):
-    ex = vscpEventEx()
-    if VSCP_ERROR_SUCCESS == pyvscphlp_receiveEventEx(h1,ex):
+    ex = vscp.vscpEventEx()
+    if vscp.VSCP_ERROR_SUCCESS == vhlp.receiveEventEx(h1,ex):
         ex.dump()
 ```
 

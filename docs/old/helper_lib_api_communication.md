@@ -4,23 +4,23 @@ This part describes the main functionality and communication methods available i
 
 ----
 
-## vscphlp_setResponseTimeout
+## setResponseTimeout
 
 **c/c++**
 `<code="c">`
-int vscphlp_setResponseTimeout( long handle, unsigned long timeout )
+int setResponseTimeout( long handle, unsigned long timeout )
 `</code>`
 
 **Python**
 `<code="python">`
-int pyvscphlp_setResponseTimeout( handle, timeout )
+int pysetResponseTimeout( handle, timeout )
 `</code>`
 
 This is the timeout in seconds used when checking for replies after commands has been sent to the server.  It can be changed anytime during a communication session. Default value is 3000 milliseconds.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ##### timeout
 
@@ -32,23 +32,23 @@ VSCP_ERROR_SUCCESS is returned on success. VSCP_ERROR_INVALID_HANDLE is returned
 
 ----
 
-## vscphlp_setAfterCommandSleep
+## setAfterCommandSleep
 
 **c/c++**
 `<code="c">`
-int vscphlp_setAfterCommandSleep( long handle, unsigned short millisecondSleep )
+int setAfterCommandSleep( long handle, unsigned short millisecondSleep )
 `</code>`
 
 **Python**
 `<code="python">`
-int vscphlp_setAfterCommandSleep( handle, millisecondSleep )
+int setAfterCommandSleep( handle, millisecondSleep )
 `</code>`
 
 This is the sleep time in milliseconds used to wait for the server to reply to a command. If there is not valid response received the thread will sleep for the amount of time set here + 200 milliseconds and then check the queue again for a valid response then sleep again and so on until the time set for the response timeout has elapsed, a valid response or an error response has been received. Default value is 0 milliseconds.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ##### secondsTimeout
 
@@ -60,23 +60,23 @@ VSCP_ERROR_SUCCESS is returned on success. VSCP_ERROR_INVALID_HANDLE is returned
 
 ----
 
-## vscphlp_isConnected
+## isConnected
 
 **c/c++**
 `<code="c">`
-int vscphlp_isConnected( long handle )
+int isConnected( long handle )
 `</code>`
 
 **Python**
 `<code="python">`
-int vscphlp_isConnected( handle )
+int isConnected( handle )
 `</code>`
 
 Check if the session is active or not.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ##### Return value
 
@@ -85,7 +85,7 @@ VSCP_ERROR_SUCCESS if the session is active and VSCP_ERROR_ERROR if it is inacti
 ##### Example (c/c++)
 
 `<code="c">`
-    if ( VSCP_ERROR_SUCCESS == vscphlp_isConnected( handle1 ) ) {
+    if ( VSCP_ERROR_SUCCESS == isConnected( handle1 ) ) {
         // Do your stuff here 
     }
 `</code>`
@@ -94,14 +94,14 @@ VSCP_ERROR_SUCCESS if the session is active and VSCP_ERROR_ERROR if it is inacti
 
 `<code="python">`
 print "\n\nConnection in progress..."
-rv = pyvscphlp_open(h1,"127.0.0.1:9598","admin","secret")
+rv = pyopen(h1,"127.0.0.1:9598","admin","secret")
 if VSCP_ERROR_SUCCESS == rv :
-    print "Command success: pyvscphlp_open on channel 1"
+    print "Command success: pyopen on channel 1"
 else:
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: pyvscphlp_open on channel 1  Error code=%d' % rv )
+    pycloseSession(h1)
+    raise ValueError('Command error: pyopen on channel 1  Error code=%d' % rv )
 
-if ( VSCP_ERROR_SUCCESS == pyvscphlp_isConnected(h1) ):
+if ( VSCP_ERROR_SUCCESS == pyisConnected(h1) ):
     print "CONNECTED!"
 else:
     print "DISCONNECTED!" 
@@ -109,23 +109,23 @@ else:
 
 ----
 
-## vscphlp_doCommand
+## doCommand
 
 **c/c++**
 `<code="c">`
-int vscphlp_doCommand( long handle, const char * cmd )
+int doCommand( long handle, const char * cmd )
 `</code>`
 
 **Python**
 `<code="python">`
-int vscphlp_doCommand( handle, command )
+int doCommand( handle, command )
 `</code>`
 
 Send a command over the communication link. The command should have "\r\n" to it's end. The response from the server will be checked for **+OK**. 
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ##### cmd
 
@@ -138,7 +138,7 @@ VSCP_ERROR_SUCCESS if the VSCP daemon respond with **+OK** after it has received
 ##### Example (c/c++)
 
 `<code="c">`
-    if ( VSCP_ERROR_SUCCESS == vscphlp_doCommand( handle1, "NOOP\r\n" ) ) {
+    if ( VSCP_ERROR_SUCCESS == doCommand( handle1, "NOOP\r\n" ) ) {
         printf("Command sent successfully!\n");   
     ]
 `</code>`
@@ -148,31 +148,31 @@ VSCP_ERROR_SUCCESS if the VSCP daemon respond with **+OK** after it has received
 `<code="python">`
 print "command: doCommand"
 command = "NOOP\r\n"
-rv = pyvscphlp_doCommand( h1, command )
+rv = pydoCommand( h1, command )
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
+    pycloseSession(h1)
     raise ValueError('Command error: ''doCommand''  Error code=%d' % rv ) 
 `</code>`
 
 ----
 
-## vscphlp_checkReply
+## checkReply
 
 **c/c++**
 `<code="c">`
-int vscphlp_checkReply( long handle, int bClear )
+int checkReply( long handle, int bClear )
 `</code>`
 
 **Python**
 `<code="python">`
-int pyvscphlp_checkReply( handle, bclear )
+int pycheckReply( handle, bclear )
 `</code>`
 
 Check reply data for "+OK"/"-OK" on server.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ##### bClear
 
@@ -185,7 +185,7 @@ VSCP_ERROR_SUCCESS if the VSCP daemon respond with "+OK" after it has received t
 ##### Example /c/c++)
 
 `<code="c">`
-    if ( VSCP_ERROR_SUCCESS == vscphlp_checkReply( handle1, TRUE ) ) {
+    if ( VSCP_ERROR_SUCCESS == checkReply( handle1, TRUE ) ) {
         printf("+OK was received from VSCP daemon.\n");   
     }
 `</code>`
@@ -193,32 +193,32 @@ VSCP_ERROR_SUCCESS if the VSCP daemon respond with "+OK" after it has received t
 ##### Example (Python)
 
 `<code="python">`
-print "command: vscphlp_checkReply"
-rv = lib.vscphlp_checkReply( h1, command, 1 )
+print "command: checkReply"
+rv = lib.checkReply( h1, command, 1 )
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: ''vscphlp_checkReply''  Error code=%d' % rv ) 
+    pycloseSession(h1)
+    raise ValueError('Command error: ''checkReply''  Error code=%d' % rv ) 
 `</code>`
 
 ----
 
-## vscphlp_clearLocalInputQueue
+## clearLocalInputQueue
 
 **c/c++**
 `<code="c">`
-int vscphlp_clearLocalInputQueue( long handle )
+int clearLocalInputQueue( long handle )
 `</code>`
 
 **Python**
 `<code="python">`
-int pyvscphlp_clearLocalInputQueue( handle )
+int pyclearLocalInputQueue( handle )
 `</code>`
 
-Clear the local communication input queue. This is the same things that is done when setting **bClear** for [vscphlp_checkReply](#vscphlp_checkReply)
+Clear the local communication input queue. This is the same things that is done when setting **bClear** for [checkReply](#checkReply)
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ##### Return value
 
@@ -227,7 +227,7 @@ VSCP_ERROR_SUCCESS if the VSCP daemon cleared the queue and VSCP_ERROR_ERROR if 
 ##### Example (c/c++)
 
 `<code="c">`
-    if ( VSCP_ERROR_SUCCESS == vscphlp_clearLocalInputQueue( handle1 ) ) {
+    if ( VSCP_ERROR_SUCCESS == clearLocalInputQueue( handle1 ) ) {
         printf("Our local input queue cleared.\n");   
     }
 `</code>`
@@ -235,20 +235,20 @@ VSCP_ERROR_SUCCESS if the VSCP daemon cleared the queue and VSCP_ERROR_ERROR if 
 ##### Example (Python)
 
 `<code="c">`
-print "command: pyvscphlp_clearLocalInputQueue"
+print "command: pyclearLocalInputQueue"
 command = "NOOP\r\n"
-rv = lib.pyvscphlp_clearLocalInputQueue( h1 )
+rv = lib.pyclearLocalInputQueue( h1 )
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: ''pyvscphlp_clearLocalInputQueue''  Error code=%d' % rv ) 
+    pycloseSession(h1)
+    raise ValueError('Command error: ''pyclearLocalInputQueue''  Error code=%d' % rv ) 
 `</code>`
 ----
 
-## vscphlp_open
+## open
 
 **c/c++**
 `<code="c">`
-long vscphlp_open( long handle,
+long open( long handle,
                         const char *Host, 
                         const char *pUsername, 
                         const char *pPassword )
@@ -256,7 +256,7 @@ long vscphlp_open( long handle,
 
 **Python**
 `<code="python">`
-long pyvscphlp_open( handle,
+long pyopen( handle,
                      host, 
                      username, 
                      password )
@@ -266,7 +266,7 @@ Opens a session to the TCP/IP interface of a VSCP server.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  pHost
 
@@ -280,7 +280,7 @@ For SSL connections, specify CERT if server is requiring client auth. Specify CA
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  pUserName
 
@@ -298,15 +298,15 @@ VSCP_ERROR_SUCCESS is returned on success. VSCP_ERROR_INVALID_HANDLE will be ret
 
 `<code="c">`
     // Open Channel 1
-    rv=vscphlp_open( handle1, 
+    rv=open( handle1, 
                         "127.0.0.1:9598",
                         "admin",
                         "secret" ); 
     if ( VSCP_ERROR_SUCCESS == rv ) {
-        printf("Command success: vscphlp_open on channel 1\n");
+        printf("Command success: open on channel 1\n");
     }
     else {
-        printf("\aCommand error: vscphlp_open on channel 1  Error code=%d\n", rv);
+        printf("\aCommand error: open on channel 1  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -314,35 +314,35 @@ VSCP_ERROR_SUCCESS is returned on success. VSCP_ERROR_INVALID_HANDLE will be ret
 
 `<code="python">`
 print "\n\nConnection in progress..."
-rv = pyvscphlp_open(h1,"127.0.0.1:9598","admin","secret")
+rv = pyopen(h1,"127.0.0.1:9598","admin","secret")
 if VSCP_ERROR_SUCCESS == rv :
-    print "Command success: pyvscphlp_open on channel 1"
+    print "Command success: pyopen on channel 1"
 else:
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: pyvscphlp_open on channel 1  Error code=%d' % rv )
+    pycloseSession(h1)
+    raise ValueError('Command error: pyopen on channel 1  Error code=%d' % rv )
 `</code>`
 
 ----
 
-## vscphlp_openInterface
+## openInterface
 
 **c/c++**
 `<code="c">`
-int vscphlp_openInterface( long handle,
+int openInterface( long handle,
                                    const char *pInterface, 
                                    unsigned long flags )
 `</code>`
 
 **Python**
 `<code="python">`
-int pyvscphlp_openInterface( handle,
+int pyopenInterface( handle,
                                interface, 
                                flags )
 `</code>`
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  pInterface
 
@@ -365,18 +365,18 @@ Flags to use for the interface. Currently not used.
 
 #####  Return value
 
-Possible return values are the same as for [vscphlp_doCmdOpen](./vscphlp_docmdopen.md)
+Possible return values are the same as for [doCmdOpen](./docmdopen.md)
 
 ##### Example (c/c++)
 
 `<code="c">`
     // Open Channel 1
-    rv=vscphlp_open( handle1, "192.168.1.9:9598;admin;secret" ); 
+    rv=open( handle1, "192.168.1.9:9598;admin;secret" ); 
     if ( VSCP_ERROR_SUCCESS == rv ) {
-        printf("Command success: vscphlp_open on channel 1\n");
+        printf("Command success: open on channel 1\n");
     }
     else {
-        printf("\aCommand error: vscphlp_open on channel 1  Error code=%d\n", rv);
+        printf("\aCommand error: open on channel 1  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -384,33 +384,33 @@ Possible return values are the same as for [vscphlp_doCmdOpen](./vscphlp_docmdop
 
 `<code="python">`
 print "\n\nConnection in progress..."
-rv = pyvscphlp_openInterface(h1,"127.0.0.1:9598;admin;secret")
+rv = pyopenInterface(h1,"127.0.0.1:9598;admin;secret")
 if VSCP_ERROR_SUCCESS == rv :
-    print "Command success: pyvscphlp_openInterface on channel 1"
+    print "Command success: pyopenInterface on channel 1"
 else:
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: pyvscphlp_openInterface on channel 1  Error code=%d' % rv )
+    pycloseSession(h1)
+    raise ValueError('Command error: pyopenInterface on channel 1  Error code=%d' % rv )
 `</code>`
 
 ----
 
-## vscphlp_close
+## close
 
 **c/c++**
 `<code="c">`
-int vscphlp_close( long handle )
+int close( long handle )
 `</code>`
 
 **Python**
 `<code="python">`
-int pyvscphlp_close( handle )
+int pyclose( handle )
 `</code>`
 
 Close the interface.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ##### return==  
 
@@ -419,7 +419,7 @@ VSCP_ERROR_SUCCESS is returned on sucess. VSCP_ERROR_INVALID_HANDLE will be retu
 ##### Example (c/c++)
 
 `<code="c">`
-    if ( VSCP_ERROR_SUCCESS == vscphlp_close( handle1 ) ) {
+    if ( VSCP_ERROR_SUCCESS == close( handle1 ) ) {
         // prinf("Closed successfully.\n");
     }
 `</code>`
@@ -428,31 +428,31 @@ VSCP_ERROR_SUCCESS is returned on sucess. VSCP_ERROR_INVALID_HANDLE will be retu
 
 `<code="python">`
 print "command: close"
-rv = pyvscphlp_close(h1)
+rv = pyclose(h1)
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
+    pycloseSession(h1)
     raise ValueError('Command error: close  Error code=%d' % rv )
 `</code>`
 
 ----
 
-## vscphlp_noop
+## noop
 
 **c/c++**
 `<code="c">`
-int vscphlp_noop( long handle )
+int noop( long handle )
 `</code>`
 
 **Python**
 `<code="python">`
-int pyvscphlp_noop( handle )
+int pynoop( handle )
 `</code>`
 
 This is a command that can be used for test purposes. It does not do anything else then to send a command over the interfaces and check the result.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  Return value
 
@@ -462,11 +462,11 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `<code="c">`
     // NOOP on handle1
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_noop( handle1 ) ) ) {
-        printf( "Command success: vscphlp_noop on channel 1\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = noop( handle1 ) ) ) {
+        printf( "Command success: noop on channel 1\n" );
     }
     else {
-        printf("\aCommand error: vscphlp_noop on channel 1  Error code=%d\n", rv);
+        printf("\aCommand error: noop on channel 1  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -474,31 +474,31 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `<code="python">`
 print "command: noop"
-rv = lib.vscphlp_noop( h1 )
+rv = lib.noop( h1 )
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
+    pycloseSession(h1)
     raise ValueError('Command error: ''noop''  Error code=%d' % rv )
 `</code>`
 
 ----
 
-## vscphlp_clearDaemonEventQueue
+## clearDaemonEventQueue
 
 **c/c++**
 `<code="c">`
-int vscphlp_clearDaemonEventQueue( long handle )
+int clearDaemonEventQueue( long handle )
 `</code>`
 
 **Python**
 `<code="python">`
-int pyvscphlp_clearDaemonEventQueue( handle )
+int pyclearDaemonEventQueue( handle )
 `</code>`
 
 Clear the receiving side (to us) event queue on the VSCP daemon.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ##### Return value
 
@@ -508,11 +508,11 @@ VSCP_ERROR_SUCCESS if the VSCP daemon cleared the queue and VSCP_ERROR_ERROR. if
 
 `<code="c">`
     // Clear event queue on VSCP daemon on handle1
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_clearDaemonEventQueue( handle1 ) ) ) {
-        printf( "Command success: vscphlp_clearDaemonEventQueueon channel 1\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = clearDaemonEventQueue( handle1 ) ) ) {
+        printf( "Command success: clearDaemonEventQueueon channel 1\n" );
     }
     else {
-        printf("\aCommand error: vscphlp_clearDaemonEventQueueon channel 1  Error code=%d\n", rv);
+        printf("\aCommand error: clearDaemonEventQueueon channel 1  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -520,7 +520,7 @@ VSCP_ERROR_SUCCESS if the VSCP daemon cleared the queue and VSCP_ERROR_ERROR. if
 
 `<code="python">`
 print "Empty VSCP server queue"
-rv = pyvscphlp_clearDaemonEventQueue(h1)
+rv = pyclearDaemonEventQueue(h1)
 if VSCP_ERROR_SUCCESS == rv:
     print "Server queue now is empty"
 else:
@@ -529,27 +529,27 @@ else:
 
 ----
 
-## vscphlp_sendEvent
+## sendEvent
 
 **c/c++**
 `<code="c">`
-int vscphlp_sendEvent( long handle, const vscpEvent *pEvent )
+int sendEvent( long handle, const vscpEvent *pEvent )
 `</code>`
 
 **Python**
 `<code="python">`
-int pyvscphlp_sendEvent( handle, event )
+int pysendEvent( handle, event )
 `</code>`
 
 Send a VSCP event. If the event is successfully sent or not it's the calling programs responsibility to deallocate the event. It's easy to forget to free the data part of an event created on the stack. 
 
 Note that there is no need to calculate a crc for the data it is only used as placeholder for more insecure transfer mechanisms. Also **head**, **obid**, the UTC timeblock and **timestamp** can be set to zero in most cases. The timeblock and timestamp will be set by the server interface when the event is received.
 
-**pyvscphlp_sendEventEx** may a better alternative to use with Python as that version does not have dynamically allocated event data but one should be aware that it is more wasteful with memory.
+**pysendEventEx** may a better alternative to use with Python as that version does not have dynamically allocated event data but one should be aware that it is more wasteful with memory.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  pEvent
 
@@ -606,17 +606,17 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
     e.pdata[2] = 6;
     memset(e.GUID, 0, sizeof(e.GUID) ); // Setting GUID to all zero tell interface to use it's own GUID
 
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_sendEvent( handle1, &e ) ) ) {
-        printf( "Command success: vscphlp_sendEvent on channel 1\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = sendEvent( handle1, &e ) ) ) {
+        printf( "Command success: sendEvent on channel 1\n" );
     }
     else {
-        printf("\aCommand error: vscphlp_sendEvent on channel 1  Error code=%d\n", rv);
+        printf("\aCommand error: sendEvent on channel 1  Error code=%d\n", rv);
     }
     
     // The event must be deallocated
     //delete pEvent->pdata;
     //delete pEvent;
-    vscphlp_deleteVSCPevent( pEvent );  // This helper is the same as the above two commented lines
+    deleteVSCPevent( pEvent );  // This helper is the same as the above two commented lines
     
 `</code>`
 
@@ -636,25 +636,25 @@ e.pdata = cast(p, POINTER(c_ubyte))
 
 print "------------------------------------------------------------------------"
 print "command: sendEvent"
-rv = pyvscphlp_sendEvent(h1,e)
+rv = pysendEvent(h1,e)
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
+    pycloseSession(h1)
     raise ValueError('Command error: sendEvent  Error code=%d' % rv )
 e.pdata = None  
 `</code>`
 
 ----
 
-## vscphlp_sendEventEx
+## sendEventEx
 
 **c/c++**
 `<code="c">`
-int vscphlp_sendEventEx( long handle, const vscpEventEx *pEvent )
+int sendEventEx( long handle, const vscpEventEx *pEvent )
 `</code>`
 
 **Python**
 `<code="python">`
-int pyvscphlp_sendEventEx( handle, eventex )
+int pysendEventEx( handle, eventex )
 `</code>`
 
 Send a VSCP event. If the event is not successfully sent it's the calling programs responsibility to deallocate the event. 
@@ -663,7 +663,7 @@ Note that there is no need to calculate a crc for the data it is only used as pl
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  pEvent
 
@@ -726,11 +726,11 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
     memset(ex.GUID, 0, sizeof(e.GUID) ); // Setting GUID to all zero tell interface to use it's own GUID
 
     // Send event again
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_sendEventEx( handle1, &ex ) ) ) {
-        printf( "Command success: vscphlp_sendEventEx on channel 1\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = sendEventEx( handle1, &ex ) ) ) {
+        printf( "Command success: sendEventEx on channel 1\n" );
     }
     else {
-        printf("\aCommand error: vscphlp_sendEventEx on channel 1  Error code=%d\n", rv);
+        printf("\aCommand error: sendEventEx on channel 1  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -746,33 +746,33 @@ ex.data[0] = 1
 ex.data[1] = 2
 ex.data[2] = 3
 print "command: sendEventEx"
-rv = pyvscphlp_sendEventEx(h1,ex)
+rv = pysendEventEx(h1,ex)
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
+    pycloseSession(h1)
     raise ValueError('Command error: sendEventEx  Error code=%d' % rv )
 `</code>`
 
 ----
 
-## vscphlp_receiveEvent
+## receiveEvent
 
 **c/c++**
 `<code="c">`
-int vscphlp_receiveEvent( long handle, vscpEvent *pEvent )
+int receiveEvent( long handle, vscpEvent *pEvent )
 `</code>`
 
 **Python**
 `<code="python">`
-int pyvscphlp_receiveEvent( handle, event )
+int pyreceiveEvent( handle, event )
 `</code>`
 
 Receive one VSCP event from the remote VSCP server if there is one available in the server queue. Data for the event is dynamically allocated and must be deleted by the application.
 
-For Python use of **pyvscphlp_receiveEvent** may be simpler as there id no dynamically allocated data to take care off.
+For Python use of **pyreceiveEvent** may be simpler as there id no dynamically allocated data to take care off.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  pEvent
 
@@ -820,8 +820,8 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
     // Read event
     vscpEvent *pEvent = new vscpEvent;
     pEvent->pdata = NULL;   // A must for a successful delete
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_receiveEvent( handle2, pEvent ) ) ) {
-        printf( "Command success: vscphlp_receiveEvent on handle2\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = receiveEvent( handle2, pEvent ) ) ) {
+        printf( "Command success: receiveEvent on handle2\n" );
         printf( "VSCP class=%d VSCP type=%d sizeData=%d\n", 
                     pEvent->vscp_class,
                     pEvent->vscp_type,
@@ -833,35 +833,35 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
         printf("\n");
     }
     else {
-        printf("\aCommand error: vscphlp_receiveEvent on channel 2  Error code=%d\n", rv);
+        printf("\aCommand error: receiveEvent on channel 2  Error code=%d\n", rv);
     }
 
     // Do something with the received event
 
     //delete pEvent->pdata;
     //delete pEvent;
-    vscphlp_deleteVSCPevent( pEvent );  // This helper is the same as the above two commented lines
+    deleteVSCPevent( pEvent );  // This helper is the same as the above two commented lines
 `</code>`
 
 ----
 
-## vscphlp_receiveEventEx
+## receiveEventEx
 
 **c/c++**
 `<code="c">`
-int vscphlp_receiveEventEx( long handle, vscpEventEx *pEventEx )
+int receiveEventEx( long handle, vscpEventEx *pEventEx )
 `</code>`
 
 **Python**
 `<code="python">`
-int pyvscphlp_receiveEventEx( handle, eventex )
+int pyreceiveEventEx( handle, eventex )
 `</code>`
 
-Receive a VSCP event. The difference to vscphlp_receiveEvent is that the vscphlp_vscpEventEx structure have the data in the structure and vscpEvent that have a pointer to the data in the structure.
+Receive a VSCP event. The difference to receiveEvent is that the vscpEventEx structure have the data in the structure and vscpEvent that have a pointer to the data in the structure.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  pEvent
 
@@ -876,8 +876,8 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
     // Read event  -  Use vscpEventEx
     vscpEventEx ex2;
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_receiveEventEx( handle2, &ex2 ) ) ) {
-        printf( "Command success: vscphlp_receiveEventEx on handle2\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = receiveEventEx( handle2, &ex2 ) ) ) {
+        printf( "Command success: receiveEventEx on handle2\n" );
         printf( "VSCP class=%d VSCP type=%d sizeData=%d\n", 
                     ex2.vscp_class,
                     ex2.vscp_type,
@@ -889,7 +889,7 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
         printf("\n");
     }
     else {
-        printf("\aCommand error: vscphlp_receiveEventEx on channel 2  Error code=%d\n", rv);
+        printf("\aCommand error: receiveEventEx on channel 2  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -902,35 +902,35 @@ cntAvailable = ctypes.c_uint(0)
 while cntAvailable.value==0:
     print 'Still waiting...'
     time.sleep(1)
-    pyvscphlp_isDataAvailable(h1,cntAvailable)
+    pyisDataAvailable(h1,cntAvailable)
 
 print '%d event(s) is available' % cntAvailable.value
 
 for i in range(0,cntAvailable.value):
     ex = vscpEventEx()
-    if VSCP_ERROR_SUCCESS == pyvscphlp_receiveEventEx(h1,ex):
+    if VSCP_ERROR_SUCCESS == pyreceiveEventEx(h1,ex):
         ex.dump()
 `</code>`
 
 ----
 
-## vscphlp_isDataAvailable
+## isDataAvailable
 
 **c/c++**
 `<code="c">`
-int vscphlp_isDataAvailable( long handle, unsigned int *pCount )
+int isDataAvailable( long handle, unsigned int *pCount )
 `</code>`
 
 **Python**
 `<code="python">`
-int pyvscphlp_isDataAvailable( handle, count )
+int pyisDataAvailable( handle, count )
 `</code>`
 
 Check the number of events (if any) that are available in the remote input queue.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  pCount (c/c++)
 
@@ -948,13 +948,13 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `<code="c">`
     // Check queue for events
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_isDataAvailable( handle2, &count ) ) ) {
-        printf( "Command success: vscphlp_isDataAvailable on handle2\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = isDataAvailable( handle2, &count ) ) ) {
+        printf( "Command success: isDataAvailable on handle2\n" );
         printf( "count = %d\n", count );
         if ( 3 == count ) printf("Which is correct.\n");
     }
     else {
-        printf("\aCommand error: vscphlp_isDataAvailable on channel 2  Error code=%d\n", rv);
+        printf("\aCommand error: isDataAvailable on channel 2  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -967,35 +967,35 @@ cntAvailable = ctypes.c_uint(0)
 while cntAvailable.value==0:
     print 'Still waiting...'
     time.sleep(1)
-    pyvscphlp_isDataAvailable(h1,cntAvailable)
+    pyisDataAvailable(h1,cntAvailable)
 
 print '%d event(s) is available' % cntAvailable.value
 
 for i in range(0,cntAvailable.value):
     ex = vscpEventEx()
-    if VSCP_ERROR_SUCCESS == pyvscphlp_receiveEventEx(h1,ex):
+    if VSCP_ERROR_SUCCESS == pyreceiveEventEx(h1,ex):
         ex.dump()
 `</code>`
 
 ----
 
-## vscphlp_enterReceiveLoop
+## enterReceiveLoop
 
 ** c/c++ ** 
 `<code="c">`
-int vscphlp_enterReceiveLoop( long handle )
+int enterReceiveLoop( long handle )
 `</code>`
 
 ** Python ** 
 `<code="python">`
-int pyvscphlp_enterReceiveLoop( handle )
+int pyenterReceiveLoop( handle )
 `</code>`
 
-Enter the receive loop. After this command only [vscphlp_quitReceiveLoop](#vscphlp_quitReceiveLoop) and [vscphlp_Close](#vscphlp_Close) and the blocking receive methods [vscphlp_blockingReceiveEvent](#vscphlp_blockingreceiveevent) / [vscphlp_blockingReceiveEventEx](#vscphlp_blockingreceiveeventex) is available. The intent of the command is for threaded communication where one thread is sending events and one is receiving events and can use blocking calls to do so.
+Enter the receive loop. After this command only [quitReceiveLoop](#quitReceiveLoop) and [Close](#Close) and the blocking receive methods [blockingReceiveEvent](#blockingreceiveevent) / [blockingReceiveEventEx](#blockingreceiveeventex) is available. The intent of the command is for threaded communication where one thread is sending events and one is receiving events and can use blocking calls to do so.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 
 #####  Return value
@@ -1007,11 +1007,11 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `<code="c">`
     // Enter receiveloop
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_enterReceiveLoop( handle2 ) ) ) {
-        printf( "Command success: vscphlp_enterReceiveLoop on channel 2\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = enterReceiveLoop( handle2 ) ) ) {
+        printf( "Command success: enterReceiveLoop on channel 2\n" );
     }
     else {
-        printf("\aCommand error: vscphlp_enterReceiveLoop on channel 2  Error code=%d\n", rv);
+        printf("\aCommand error: enterReceiveLoop on channel 2  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -1019,13 +1019,13 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `<code="python">`
 print "Enter receive loop. Will lock channel on just receiving events"
-if VSCP_ERROR_SUCCESS == pyvscphlp_enterReceiveLoop(h1):
+if VSCP_ERROR_SUCCESS == pyenterReceiveLoop(h1):
     print "Now blocking receive - will take forever if no events is received"
     
     rv = -1
     while VSCP_ERROR_SUCCESS != rv:
         ex = vscpEventEx()
-        rv = pyvscphlp_blockingReceiveEventEx(h1,ex, 1000 )
+        rv = pyblockingReceiveEventEx(h1,ex, 1000 )
         
         if VSCP_ERROR_SUCCESS == rv: 
             ex.dump()
@@ -1035,7 +1035,7 @@ if VSCP_ERROR_SUCCESS == pyvscphlp_enterReceiveLoop(h1):
                 break;
             print "Waiting for event in blocking mode rv=%d" % rv
 
-    if VSCP_ERROR_SUCCESS == pyvscphlp_quitReceiveLoop(h1):
+    if VSCP_ERROR_SUCCESS == pyquitReceiveLoop(h1):
         print "Successfully left receive loop"
     else:
         print "failed to leave receive loop"    
@@ -1046,23 +1046,23 @@ else:
 
 ----
 
-## vscphlp_quitReceiveLoop
+## quitReceiveLoop
 
 **c/c++**
 `<code="c">`
-int vscphlp_quitReceiveLoop( long handle )
+int quitReceiveLoop( long handle )
 `</code>`
 
 **Python**
 `<code="python">`
-int vscphlp_quitReceiveLoop( handle )
+int quitReceiveLoop( handle )
 `</code>`
 
 Quit the receive loop. 
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 
 #####  Return value
@@ -1074,18 +1074,18 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `<code="c">`
     // Quit receiveloop
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_quitReceiveLoop( handle2 ) ) ) {
-        printf( "Command success: vscphlp_quitReceiveLoop on channel 2\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = quitReceiveLoop( handle2 ) ) ) {
+        printf( "Command success: quitReceiveLoop on channel 2\n" );
     }
     else {
-        printf("Command error: vscphlp_quitReceiveLoop on channel 2  Error code=%d\n", rv);
+        printf("Command error: quitReceiveLoop on channel 2  Error code=%d\n", rv);
     }
 `</code>`
 
 ##### Example (Python)
 
 `<code="python">`
-if VSCP_ERROR_SUCCESS == pyvscphlp_quitReceiveLoop(h1):
+if VSCP_ERROR_SUCCESS == pyquitReceiveLoop(h1):
         print "Successfully left receive loop"
     else:
         print "failed to leave receive loop"
@@ -1093,29 +1093,29 @@ if VSCP_ERROR_SUCCESS == pyvscphlp_quitReceiveLoop(h1):
 
 ----
 
-## vscphlp_blockingReceiveEvent
+## blockingReceiveEvent
 
 **c/c++**
 `<code="c">`
-int vscphlp_blockingReceiveEvent( long handle, vscpEvent *Event, unsigned long timeout )
+int blockingReceiveEvent( long handle, vscpEvent *Event, unsigned long timeout )
 `</code>`
 
 **Python**
 `<code="python">`
-int vscphlp_blockingReceiveEvent( handle, event, timeout )
+int blockingReceiveEvent( handle, event, timeout )
 `</code>`
 
 Blocking receive one VSCP event from the remote VSCP server if there is one available in the server queue. Data for the event is dynamically allocated and must be deleted by the application.
 
-For Python use of **pyvscphlp_receiveEvent** may be simpler as there id no dynamically allocated data to take care off.
+For Python use of **pyreceiveEvent** may be simpler as there id no dynamically allocated data to take care off.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ##### pEvent
 
-Pointer to event that will get event data after a sucessfull call. See [vscphlp_receiveEvent](#vscphlp_receiveEvent) for a description.
+Pointer to event that will get event data after a sucessfull call. See [receiveEvent](#receiveEvent) for a description.
 
 ##### timeout
 
@@ -1123,7 +1123,7 @@ This is the max time to block. Zero means wait forever.
 
 #####  Return value
 
-Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connection is closed VSCP_ERROR_CONNECTION is returned. VSCP_ERROR_PARAMETER is returned if called while NOT in a receive loop (see [#vscphlp_enterReceiveLoop](#vscphlp_enterReceiveLoop).
+Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connection is closed VSCP_ERROR_CONNECTION is returned. VSCP_ERROR_PARAMETER is returned if called while NOT in a receive loop (see [#enterReceiveLoop](#enterReceiveLoop).
 
 
 ##### Example (c/c++)
@@ -1133,8 +1133,8 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
     pEvent = new vscpEvent;
     pEvent->pdata = NULL;   // A must for a successful delete
-    if ( VSCP_ERROR_SUCCESS == vscphlp_blockingReceiveEvent( handle2, pEvent ) ) {
-        printf( "Command success: vscphlp_blockingReceiveEvent on channel 2\n" );
+    if ( VSCP_ERROR_SUCCESS == blockingReceiveEvent( handle2, pEvent ) ) {
+        printf( "Command success: blockingReceiveEvent on channel 2\n" );
         printf(" Event: class=%d Type=%d sizeData=%d\n", 
                         pEvent->vscp_class,
                         pEvent->vscp_type,
@@ -1147,20 +1147,20 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
             printf("\n");
         }
     }
-    vscphlp_deleteVSCPevent( pEvent );
+    deleteVSCPevent( pEvent );
 `</code>`
 
 ##### Example (Python)
 
 `<code="C">`
 print "Enter receive loop. Will lock channel on just receiving events"
-if VSCP_ERROR_SUCCESS == pyvscphlp_enterReceiveLoop(h1):
+if VSCP_ERROR_SUCCESS == pyenterReceiveLoop(h1):
     print "Now blocking receive - will take forever if no events is received"
     
     rv = -1
     while VSCP_ERROR_SUCCESS != rv:
         e = vscpEvent()
-        rv = pyvscphlp_blockingReceiveEvent(h1,e, 1000 )
+        rv = pyblockingReceiveEvent(h1,e, 1000 )
         
         if VSCP_ERROR_SUCCESS == rv: 
             e.dump()
@@ -1170,7 +1170,7 @@ if VSCP_ERROR_SUCCESS == pyvscphlp_enterReceiveLoop(h1):
                 break;
             print "Waiting for event in blocking mode rv=%d" % rv
 
-    if VSCP_ERROR_SUCCESS == pyvscphlp_quitReceiveLoop(h1):
+    if VSCP_ERROR_SUCCESS == pyquitReceiveLoop(h1):
         print "Successfully left receive loop"
     else:
         print "failed to leave receive loop"    
@@ -1181,16 +1181,16 @@ else:
 
 ----
 
-## vscphlp_blockingReceiveEventEx
+## blockingReceiveEventEx
 
 **c/c++**
 `<code="c">`
-int vscphlp_blockingReceiveEventEx( long handle, vscpEventEx *Eventex, unsigned long timeout )
+int blockingReceiveEventEx( long handle, vscpEventEx *Eventex, unsigned long timeout )
 `</code>`
 
 **Python**
 `<code="python">`
-int pyvscphlp_blockingReceiveEventEx( handle, eventex, timeout )
+int pyblockingReceiveEventEx( handle, eventex, timeout )
 `</code>`
 
 Blocking receive one VSCP event from the remote VSCP server if there is one available in the server queue.
@@ -1198,15 +1198,15 @@ Blocking receive one VSCP event from the remote VSCP server if there is one avai
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ##### pEvent (c/c++)
 
-Pointer to event that will get event data after a sucessfull call. See [vscphlp_receiveEvent](#vscphlp_receiveEvent) for a description.
+Pointer to event that will get event data after a sucessfull call. See [receiveEvent](#receiveEvent) for a description.
 
 ##### pEvent (Python)
 
-Event that will get event data after a sucessfull call. See [vscphlp_receiveEvent](#vscphlp_receiveEvent) for a description.
+Event that will get event data after a sucessfull call. See [receiveEvent](#receiveEvent) for a description.
 
 ##### timeout
 
@@ -1222,8 +1222,8 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="C">`
     vscpEventEx ex;
 
-    if ( VSCP_ERROR_SUCCESS == vscphlp_blockingReceiveEventEx( handle2, &ex ) ) {
-        printf( "Command success: vscphlp_blockingReceiveEventEx on channel 2\n" );
+    if ( VSCP_ERROR_SUCCESS == blockingReceiveEventEx( handle2, &ex ) ) {
+        printf( "Command success: blockingReceiveEventEx on channel 2\n" );
         printf(" Event: class=%d Type=%d sizeData=%d\n", 
                         ex.vscp_class,
                         ex.vscp_type,
@@ -1236,20 +1236,20 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
             printf("\n");
         }
     }
-    vscphlp_deleteVSCPevent( pEvent );
+    deleteVSCPevent( pEvent );
 `</code>`
 
 ##### Example (c/c++)
 
 `<code="C">`
 print "Enter receive loop. Will lock channel on just receiving events"
-if VSCP_ERROR_SUCCESS == pyvscphlp_enterReceiveLoop(h1):
+if VSCP_ERROR_SUCCESS == pyenterReceiveLoop(h1):
     print "Now blocking receive - will take forever if no events is received"
     
     rv = -1
     while VSCP_ERROR_SUCCESS != rv:
         ex = vscpEventEx()
-        rv = pyvscphlp_blockingReceiveEventEx(h1,ex, 1000 )
+        rv = pyblockingReceiveEventEx(h1,ex, 1000 )
         
         if VSCP_ERROR_SUCCESS == rv: 
             ex.dump()
@@ -1259,7 +1259,7 @@ if VSCP_ERROR_SUCCESS == pyvscphlp_enterReceiveLoop(h1):
                 break;
             print "Waiting for event in blocking mode rv=%d" % rv
 
-    if VSCP_ERROR_SUCCESS == pyvscphlp_quitReceiveLoop(h1):
+    if VSCP_ERROR_SUCCESS == pyquitReceiveLoop(h1):
         print "Successfully left receive loop"
     else:
         print "failed to leave receive loop"    
@@ -1270,23 +1270,23 @@ else:
 
 ----
 
-## vscphlp_setFilter
+## setFilter
 
 **c/c++**
 `<code="c">`
-int vscphlp_setFilter( long handle, const vscpEventFilter *pFilter )
+int setFilter( long handle, const vscpEventFilter *pFilter )
 `</code>`
 
 **Python**
 `<code="c">`
-int pyvscphlp_setFilter( handle, filter )
+int pysetFilter( handle, filter )
 `</code>`
 
 Set VSCP filter/mask.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####   pFilter (c/c++)
 
@@ -1354,11 +1354,11 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
     filter.mask_type = 0;               // Any type
     filter.mask_priority = 0;           // Any priority
     memset( filter.mask_GUID, 0, 16 );  // Any GUID
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_setFilter( handle2, &filter ) ) ) {
-        printf( "Command success: vscphlp_setFilter on channel 2\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = setFilter( handle2, &filter ) ) ) {
+        printf( "Command success: setFilter on channel 2\n" );
     }
     else {
-        printf("\aCommand error: vscphlp_setFilter on channel 2  Error code=%d\n", rv);
+        printf("\aCommand error: setFilter on channel 2  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -1367,11 +1367,11 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
     // Clear the filter
     memset( &filter, 0, sizeof( vscpEventFilter ) );
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_setFilter( handle2, &filter ) ) ) {
-        printf( "Command success: vscphlp_setFilter on channel 2\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = setFilter( handle2, &filter ) ) ) {
+        printf( "Command success: setFilter on channel 2\n" );
     }
     else {
-        printf("\aCommand error: vscphlp_setFilter on channel 2  Error code=%d\n", rv);
+        printf("\aCommand error: setFilter on channel 2  Error code=%d\n", rv);
     }
 `</code>` 
 
@@ -1383,19 +1383,19 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 filter = vscpEventFilter()
 filter.mask_class = 0xFFFF                      # All bits should be checked
 filter.filter_class = VSCP_CLASS1_MEASUREMENT   # Only CLASS1.MEASUREMENT received
-rv = pyvscphlp_setFilter( h1, filter )
+rv = pysetFilter( h1, filter )
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: pyvscphlp_setFilter  Error code=%d' % rv )
+    pycloseSession(h1)
+    raise ValueError('Command error: pysetFilter  Error code=%d' % rv )
 
 print "Enter receive loop. Will lock channel for 60 seconds or unit CLASS1.MEASUREMENT event received"
-if VSCP_ERROR_SUCCESS == pyvscphlp_enterReceiveLoop(h1):
+if VSCP_ERROR_SUCCESS == pyenterReceiveLoop(h1):
        
     cnt = 0   
     rv = -1
     while VSCP_ERROR_SUCCESS != rv:
         ex = vscpEventEx()
-        rv = pyvscphlp_blockingReceiveEventEx(h1,ex, 1000 )
+        rv = pyblockingReceiveEventEx(h1,ex, 1000 )
         
         if VSCP_ERROR_SUCCESS == rv: 
             ex.dump()
@@ -1407,7 +1407,7 @@ if VSCP_ERROR_SUCCESS == pyvscphlp_enterReceiveLoop(h1):
             print "Not received within 60 seconds. We quit!"
             break
 
-    if VSCP_ERROR_SUCCESS == pyvscphlp_quitReceiveLoop(h1):
+    if VSCP_ERROR_SUCCESS == pyquitReceiveLoop(h1):
         print "Successfully left receive loop"
     else:
         print "failed to leave receive loop"    
@@ -1424,31 +1424,31 @@ else:
 print "Clear filter"
 filter = vscpEventFilter()
 filter.clear()
-rv = pyvscphlp_setFilter( h1, filter )
+rv = pysetFilter( h1, filter )
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: pyvscphlp_setFilter  Error code=%d' % rv )
+    pycloseSession(h1)
+    raise ValueError('Command error: pysetFilter  Error code=%d' % rv )
 `</code>`
 
 ----
 
-## vscphlp_getStatistics
+## getStatistics
 
 **c/c++**
 `<code="c">`
-int vscphlp_getStatistics( long handle, canalStatistics *pStatistics )
+int getStatistics( long handle, canalStatistics *pStatistics )
 `</code>`
 
 **Python**
 `<code="python">`
-int vscphlp_getStatistics( handle, statistics )
+int getStatistics( handle, statistics )
 `</code>`
 
 Get VSCP statistics. 
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  pStatistics (c/c++)
 
@@ -1503,11 +1503,11 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
     // Get statistics
     VSCPStatistics stat;
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_getStatistics( handle2, &stat ) ) ) {
-        printf( "Command success: vscphlp_getStatistics on channel 2\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = getStatistics( handle2, &stat ) ) ) {
+        printf( "Command success: getStatistics on channel 2\n" );
     }
     else {
-        printf("\aCommand error: vscphlp_getStatistics on channel 2  Error code=%d\n", rv);
+        printf("\aCommand error: getStatistics on channel 2  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -1515,10 +1515,10 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="python">`
 print "Get statistics"
 statistics = VSCPStatistics()
-rv = pyvscphlp_getStatistics( h1, statistics )
+rv = pygetStatistics( h1, statistics )
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: pyvscphlp_setStatistics  Error code=%d' % rv )      
+    pycloseSession(h1)
+    raise ValueError('Command error: pysetStatistics  Error code=%d' % rv )      
 print "Received frames = %d" % statistics.cntReceiveFrames
 print "Transmitted frames = %d" % statistics.cntTransmitFrames
 print "Receive data = %d" % statistics.cntReceiveData
@@ -1528,23 +1528,23 @@ print "Overruns = %d" % statistics.cntOverruns
 
 ----
 
-## vscphlp_getStatus
+## getStatus
 
 **c/c++**
 `<code="c">`
-const char * vscphlp_getStatus( long handle, VSCPStatus *pstatus )
+const char * getStatus( long handle, VSCPStatus *pstatus )
 `</code>`
 
 **Python**
 `<code="python">`
-const char * pyvscphlp_getStatus( handle, char status)
+const char * pygetStatus( handle, char status)
 `</code>`
 
 Fetch the status structure from the VSCP server.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  pstatus (c/c++)
 
@@ -1563,11 +1563,11 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `<code="c">`
 VSCPStatus status;
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_getStatus( handle2, &status ) ) ) {
-        printf( "Command success: vscphlp_getStatus on channel 2\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = getStatus( handle2, &status ) ) ) {
+        printf( "Command success: getStatus on channel 2\n" );
     }
     else {
-        printf("\aCommand error: vscphlp_getStatus on channel 2  Error code=%d\n", rv);
+        printf("\aCommand error: getStatus on channel 2  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -1576,10 +1576,10 @@ VSCPStatus status;
 `<code="python">`
 print "Get status"
 status = VSCPStatus()
-rv = pyvscphlp_getStatus( h1, status )
+rv = pygetStatus( h1, status )
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: pyvscphlp_setFilter  Error code=%d' % rv )
+    pycloseSession(h1)
+    raise ValueError('Command error: pysetFilter  Error code=%d' % rv )
 print "Channel status = %d" % status.channel_status 
 print "Channel status = %d" % status.lasterrorcode 
 print "Channel status = %d" % status.lasterrorsubcode 
@@ -1587,11 +1587,11 @@ print "Channel status = %d" % status.lasterrorsubcode
 
 ----
    
-## vscphlp_getVersion
+## getVersion
 
 **c/c++**
 `<code="c">`
-unsigned long vscphlp_getVersion( long handle, 
+unsigned long getVersion( long handle, 
                                     unsigned char *pMajorVer,
                                     unsigned char *pMinorVer,
                                     unsigned char *pSubMinorVer )
@@ -1599,7 +1599,7 @@ unsigned long vscphlp_getVersion( long handle,
 
 **Python**
 `<code="python">`
-unsigned long pyvscphlp_getVersion( handle, 
+unsigned long pygetVersion( handle, 
                                       MajorVer,
                                       MinorVer,
                                       SubMinorVer )
@@ -1609,7 +1609,7 @@ Get the version of the remote VSCP server.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ##### MajorVer
 
@@ -1633,12 +1633,12 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 `<code="c">`
     // Get server version
     unsigned char v1,v2,v3;
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_getVersion( handle2, &v1, &v2, &v3 ) ) ) {
-        printf( "Command success: vscphlp_getVersion on channel 2\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = getVersion( handle2, &v1, &v2, &v3 ) ) ) {
+        printf( "Command success: getVersion on channel 2\n" );
         printf( "Version for VSCP daemon on channel 2 is %d.%d.%d\n", v1,v2,v3 );
     }
     else {
-        printf("\aCommand error: vscphlp_getVersion on channel 2  Error code=%d\n", rv);
+        printf("\aCommand error: getVersion on channel 2  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -1646,32 +1646,32 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `<code="python">`
 print "command: Get sever version"
-(rv,v1,v2,v3) = pyvscphlp_getVersion(h1)
+(rv,v1,v2,v3) = pygetVersion(h1)
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: ''pyvscphlp_getVersion''  Error code=%d' % rv )
+    pycloseSession(h1)
+    raise ValueError('Command error: ''pygetVersion''  Error code=%d' % rv )
 print "Server version = %d.%d.%d" % (v1.value,v2.value,v3.value) 
 `</code>`
 
 ----
 
-## vscphlp_getDLLVersion
+## getDLLVersion
 
 **c/c++**
 `<code="c">`
-const char * vscphlp_getDLLVersion( long handle, unsigned long *pdllversion )
+const char * getDLLVersion( long handle, unsigned long *pdllversion )
 `</code>`
 
 **Python**
 `<code="python">`
-(rv,dllversion) = pyvscphlp_getDLLVersion( handle )
+(rv,dllversion) = pygetDLLVersion( handle )
 `</code>`
 
 Fetch the dll version from the VSCP server. This is the version of the interface.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  pdllversion (c/c++)
 
@@ -1690,12 +1690,12 @@ Returned a tuple consisting of return value and dllversion. See above c/c++ vers
 `<code="c">`
     // Get DLL version
     unsigned long dllversion;
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_getDLLVersion( handle2, &dllversion ) ) ) {
-        printf( "Command success: vscphlp_getDLLVersion on channel 2\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = getDLLVersion( handle2, &dllversion ) ) ) {
+        printf( "Command success: getDLLVersion on channel 2\n" );
         printf( "DL(L) version is %08X\n", dllversion );
     }
     else {
-        printf("\aCommand error: vscphlp_getDLLVersion on channel 2  Error code=%d\n", rv);
+        printf("\aCommand error: getDLLVersion on channel 2  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -1703,32 +1703,32 @@ Returned a tuple consisting of return value and dllversion. See above c/c++ vers
 
 `<code="python">`
 print "Get DLL version"
-(rv,dllversion) = pyvscphlp_getDLLVersion( h1 )
+(rv,dllversion) = pygetDLLVersion( h1 )
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: pyvscphlp_getStatus  Error code=%d' % rv )
+    pycloseSession(h1)
+    raise ValueError('Command error: pygetStatus  Error code=%d' % rv )
 print "DLL version = %d" % dllversion
 `</code>`
 
 ----
 
-## vscphlp_getVendorString
+## getVendorString
 
 **c/c++**
 `<code="c">`
-iny vscphlp_getVendorString( long handle, char *pVendor, size_t len )
+iny getVendorString( long handle, char *pVendor, size_t len )
 `</code>`
 
 **Python**
 `<code="python">`
-(rv,strversion) pyvscphlp_getVendorString( handle )
+(rv,strversion) pygetVendorString( handle )
 `</code>`
 
 Fetch the vendor string from the driver.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  pVendor (c/c++)
 
@@ -1751,12 +1751,12 @@ A tuple that consist of the return value (see c/c++ version) and the vendorstirn
 `<code="c">`
     // Get vendor string
     char buf[120];
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_getVendorString( handle2, buf, sizeof(buf) ) ) ) {
-        printf( "Command success: vscphlp_getVendorString on channel 2\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = getVendorString( handle2, buf, sizeof(buf) ) ) ) {
+        printf( "Command success: getVendorString on channel 2\n" );
         printf( "Vendorstring = \"%s\"\n", buf );
     }
     else {
-        printf("\aCommand error: vscphlp_getVendorString on channel 2  Error code=%d\n", rv);
+        printf("\aCommand error: getVendorString on channel 2  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -1764,32 +1764,32 @@ A tuple that consist of the return value (see c/c++ version) and the vendorstirn
 
 `<code="python">`
 print "Get vendor string"
-(rv,strvendor) = pyvscphlp_getVendorString( h1 )
+(rv,strvendor) = pygetVendorString( h1 )
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: pyvscphlp_getVendorString  Error code=%d' % rv )
+    pycloseSession(h1)
+    raise ValueError('Command error: pygetVendorString  Error code=%d' % rv )
 print "Vendor string = %s" % strvendor
 `</code>`
 
 ----
 
-## vscphlp_getDriverInfo
+## getDriverInfo
 
 **c/c++**
 `<code="c">`
-const char * vscphlp_getDriverInfo( long handle, char *pInfo, size_t len )
+const char * getDriverInfo( long handle, char *pInfo, size_t len )
 `</code>`
 
 **Python**
 `<code="python">`
-(rv,strdriverinfo) = vscphlp_getDriverInfo( handle )
+(rv,strdriverinfo) = getDriverInfo( handle )
 `</code>`
 
 Get driver information. A buffer with size enough to hold the XML data must be supplied. For Python 32000 byte is used.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 ##### pInfo
 
@@ -1811,12 +1811,12 @@ A touple consisting of the the return vale and the driver info string is returne
 
 `<code="c">`
     // Get driver info
-    if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_getDriverInfo( handle2, buf, sizeof(buf) ) ) ) {
-     printf( "Command success: vscphlp_getDriverInfo on channel 2\n" );
+    if ( VSCP_ERROR_SUCCESS == (rv = getDriverInfo( handle2, buf, sizeof(buf) ) ) ) {
+     printf( "Command success: getDriverInfo on channel 2\n" );
      printf( "Driver info = \"%s\"\n", buf );
     }
     else {
-     printf("\aCommand error: vscphlp_getDriverInfo on channel 2  Error code=%d\n", rv);
+     printf("\aCommand error: getDriverInfo on channel 2  Error code=%d\n", rv);
     }
 `</code>`
 
@@ -1824,32 +1824,32 @@ A touple consisting of the the return vale and the driver info string is returne
 
 `<code="c">`
 print "Get driver info string"
-(rv,strdriverinfo) = pyvscphlp_getDriverInfo( h1 )
+(rv,strdriverinfo) = pygetDriverInfo( h1 )
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: pyvscphlp_getDriverInfo  Error code=%d' % rv )
+    pycloseSession(h1)
+    raise ValueError('Command error: pygetDriverInfo  Error code=%d' % rv )
 print "Driver info string = %s" % strdriverinfo
 `</code>`
 
 ----
 
-## vscphlp_doCmdShutDown
+## doCmdShutDown
 
 **c/c++**
 `<code="c">`
-int vscphlp_doCmdShutDown( long handle )
+int doCmdShutDown( long handle )
 `</code>`
 
 **Python**
 `<code="python">`
-int vscphlp_doCmdShutDown( handle )
+int doCmdShutDown( handle )
 `</code>`
 
 Shut down the daemon. Needless to say this is a privileged command on the server side.
 
 #####  handle
 
-Handle for the communication channel obtained from a call to [vscphlp_newSession](./vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](./newsession.md).
 
 #####  Return value 
 
@@ -1860,11 +1860,11 @@ Return VSCP_ERROR_SUCCESS on success, VSCP_ERROR_ERROR on failure. If the connec
 
 `<code="c">`
 // Shut down the server
-if ( VSCP_ERROR_SUCCESS == (rv = vscphlp_doCmdShutDown( handle2 ) ) ) {
-    printf( "Command success: vscphlp_doCmdShutDownon channel 2\n" );
+if ( VSCP_ERROR_SUCCESS == (rv = doCmdShutDown( handle2 ) ) ) {
+    printf( "Command success: doCmdShutDownon channel 2\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_doCmdShutDownon channel 2  Error code=%d\n", rv);
+    printf("\aCommand error: doCmdShutDownon channel 2  Error code=%d\n", rv);
 }
 `</code>`
 
@@ -1873,10 +1873,10 @@ else {
 
 `<code="python">`
 print "Shut down server"
-rv = pyvscphlp_serverShutDown( h1 )
+rv = pyserverShutDown( h1 )
 if VSCP_ERROR_SUCCESS != rv :
-    pyvscphlp_closeSession(h1)
-    raise ValueError('Command error: pyvscphlp_serverShutDown  Error code=%d' % rv )
+    pycloseSession(h1)
+    raise ValueError('Command error: pyserverShutDown  Error code=%d' % rv )
 `</code>`
 
 \\ 

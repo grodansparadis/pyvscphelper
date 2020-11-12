@@ -2,7 +2,7 @@
 
 ```clike
 double 
-vscphlp_getDataCodingNormalizedInteger(const unsigned char *pCode, 
+getDataCodingNormalizedInteger(const unsigned char *pCode, 
                                         int size )
 ```
 
@@ -28,12 +28,12 @@ normarry[0] = 0x89; // Data coding byte: Normalized integer, unit=1, sensoridx=1
 normarry[1] = 0x02;
 normarry[2] = 0x01;
 normarry[3] = 0x36;
-double value =  vscphlp_getDataCodingNormalizedInteger (normarry, sizeof( normarry ) );
+double value =  getDataCodingNormalizedInteger (normarry, sizeof( normarry ) );
 if ( 3.1 == value ) {
-    printf("OK - vscphlp_getDataCodingNormalizedInteger value = %f \n", value );
+    printf("OK - getDataCodingNormalizedInteger value = %f \n", value );
 }
 else {
-    printf("Error - vscphlp_getDataCodingNormalizedInteger value = %f \n", value );
+    printf("Error - getDataCodingNormalizedInteger value = %f \n", value );
 }
 ```
 

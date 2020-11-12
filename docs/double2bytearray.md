@@ -1,4 +1,3 @@
-# double2ByteArray
 
 
 ```python

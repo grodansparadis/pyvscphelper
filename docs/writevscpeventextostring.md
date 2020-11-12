@@ -2,7 +2,7 @@
 
 
 ```clike
-int vscphlp_writeVscpEventExToString( const vscpEventEx     *pEvent, 
+int writeVscpEventExToString( const vscpEventEx     *pEvent, 
                                         char *pstr, 
                                         size_t len )
 ```
@@ -28,19 +28,19 @@ Write VSCP event ex content to a string.
 
 ```clike
 char eventBuf[128];
-if ( VSCP_ERROR_SUCCESS == vscphlp_writeVscpEventExToString( &ex, 
+if ( VSCP_ERROR_SUCCESS == writeVscpEventExToString( &ex, 
                                            eventBuf, 
                                            sizeof( eventBuf )-1 ) ) {
-    printf( "OK vscphlp_writeVscpEventExToString Event = %s\n", eventBuf );    
+    printf( "OK writeVscpEventExToString Event = %s\n", eventBuf );    
 }
 else {
-    printf( "\aError: vscphlp_writeVscpEventExToString\n");
+    printf( "\aError: writeVscpEventExToString\n");
 }
 
 ```
 
 ### See Also
-[vscphlp_writeVscpEventToString](vscphlp_writevscpeventtostring.md)
+[writeVscpEventToString](writevscpeventtostring.md)
 
 
 

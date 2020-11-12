@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_getMeasurementAsFloat(const unsigned char *pData, 
+int getMeasurementAsFloat(const unsigned char *pData, 
                                      unsigned char length,
                                      float *pResult )
 ```

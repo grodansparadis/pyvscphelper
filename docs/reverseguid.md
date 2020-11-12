@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_reverseGUID(unsigned char *pGUID)
+int reverseGUID(unsigned char *pGUID)
 ```
 
 ```python
@@ -23,14 +23,14 @@ Reverse a GUID array.
 #### C example
 
 ```clike
-vscphlp_writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 );
+writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 );
 printf( "GUID before reverse = %s\n", strguid2 );
-if ( VSCP_ERROR_SUCCESS == vscphlp_reverseGUID( GUID2 ) ) {
-    vscphlp_writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 );
+if ( VSCP_ERROR_SUCCESS == reverseGUID( GUID2 ) ) {
+    writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 );
     printf( "GUID  after reverse = %s\n", strguid2 );
 }
 else {
-    printf( "\aError: vscphlp_reverseGUID\n");
+    printf( "\aError: reverseGUID\n");
 }
 ```
 

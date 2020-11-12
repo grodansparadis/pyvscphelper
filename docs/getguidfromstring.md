@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_getGuidFromString( vscpEvent *pEvent, 
+int getGuidFromString( vscpEvent *pEvent, 
                             const char *pGUID )
 ```
 ### Parameters
@@ -24,17 +24,17 @@ mmmm
 ```clike
 char strguid[64], strguid2[64];
  
-if ( VSCP_ERROR_SUCCESS == vscphlp_getGuidFromString( pEvent, strguid ) )  { 
-    vscphlp_writeGuidToString( pEvent, strguid2, sizeof( strguid2 )-1 );
+if ( VSCP_ERROR_SUCCESS == getGuidFromString( pEvent, strguid ) )  { 
+    writeGuidToString( pEvent, strguid2, sizeof( strguid2 )-1 );
     printf( "GUID=%s\n", strguid2 );
 }
 else {
-    printf( "\aError: vscphlp_writeGuidArrayToString\n");
+    printf( "\aError: writeGuidArrayToString\n");
 }
 ```
 
 ### See Also
-[vscphlp_getGuidFromString](vscphlp_getguidfromstring.md)
+[getGuidFromString](getguidfromstring.md)
 
 
 

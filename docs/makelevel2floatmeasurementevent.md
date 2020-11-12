@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_makeLevel2FloatMeasurementEvent( vscpEvent *pEvent, 
+int makeLevel2FloatMeasurementEvent( vscpEvent *pEvent, 
                                     uint16_t type,
                                     double value,
                                     uint8_t unit,
@@ -40,7 +40,7 @@ VSCP_ERROR_SUCCESS is returned if the measurement event is constructed correctly
 Construct a Level II floating point measurement event from supplied data. **Note** that the GUID must be set externally. 
 
 ### See Also
-[vscphlp_makeLevel2StringMeasurementEvent](vscphlp_makelevel2stringmeasurementevent.md)
+[makeLevel2StringMeasurementEvent](makelevel2stringmeasurementevent.md)
 
 
 

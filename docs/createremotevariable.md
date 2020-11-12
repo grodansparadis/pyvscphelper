@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_createRemoteVariable( long handle, 
+int createRemoteVariable( long handle, 
                                     const char *pName,
                                     const char* pType,
                                     const char* pValue,
@@ -11,7 +11,7 @@ int vscphlp_createRemoteVariable( long handle,
 ### Parameters
 
 #### handle
-Handle for the communication channel obtained from a call to [vscphlp_newsession](vscphlp_newsession.md).
+Handle for the communication channel obtained from a call to [newSession](newsession.md).
 
 #### pName
 Pointer to a string containing the name of the variable. This name should have a character a-z as its first character and is not case sensitive.
@@ -39,27 +39,27 @@ Create a variable of a specific type. All the write methods below also create a 
 // Create a variable
 char strBuf[32];
 if ( VSCP_ERROR_SUCCESS == 
-       (rv = vscphlp_createRemoteVariable( handle1, 
+       (rv = createRemoteVariable( handle1, 
                                       "test_of_create_variable",
                                       "string",
                                       "Carpe Diem",
                                       1 ) ) )  {
-    printf( "Command success: vscphlp_createRemoteVariable on channel 1\n" );
+    printf( "Command success: createRemoteVariable on channel 1\n" );
 }
 else {
-    printf("\aCommand error: vscphlp_createRemoteVariable on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: createRemoteVariable on channel 1  Error code=%d\n", rv);
 }
  
 if ( VSCP_ERROR_SUCCESS == 
-        ( rv = vscphlp_getRemoteVariableString( handle1, 
+        ( rv = getRemoteVariableString( handle1, 
                                              "test_of_create_variable", 
                                              strBuf, 
                                              sizeof( strBuf )-1 ) ) ) {
-    printf( "Command success: vscphlp_getRemoteVariableString on channel 1\n" );
+    printf( "Command success: getRemoteVariableString on channel 1\n" );
     printf(" Value = %s\n", strBuf );
 }
 else {
-    printf("\aCommand error: vscphlp_getRemoteVariableString on channel 1  Error code=%d\n", rv);
+    printf("\aCommand error: getRemoteVariableString on channel 1  Error code=%d\n", rv);
 }
 ```
 

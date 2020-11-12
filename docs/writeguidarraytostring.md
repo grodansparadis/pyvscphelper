@@ -2,7 +2,7 @@
 
 
 ```clike
-int vscphlp_writeGuidArrayToString( const unsigned char * pGUID, 
+int writeGuidArrayToString( const unsigned char * pGUID, 
                                     char *strGUID,
                                     size_t len )
 ```
@@ -27,11 +27,11 @@ Write GUID from byte array to string.
 #### C example
 
 ```clike
-if ( VSCP_ERROR_SUCCESS == vscphlp_writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 ) ) {
+if ( VSCP_ERROR_SUCCESS == writeGuidArrayToString( GUID2, strguid2, sizeof( strguid2 )-1 ) ) {
     printf( "GUID=%s\n", strguid2 );
 }
 else {
-    printf( "Error: vscphlp_writeGuidArrayToString\n");
+    printf( "Error: writeGuidArrayToString\n");
 }
 ```
 

@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_convertEventExToJSON( vscpEventEx *pEventEx, 
+int convertEventExToJSON( vscpEventEx *pEventEx, 
                                 char *pBuffer,
                                 size_t len )
 ```
@@ -25,7 +25,7 @@ Write VSCP event-ex on JSON format to string. Format is specified in [vscp.h](ht
 
 
 ### See Also
-[vscphlp_convertEventToJSON](vscphlp_converteventtojson.md)
+[convertEventToJSON](converteventtojson.md)
 
 
 

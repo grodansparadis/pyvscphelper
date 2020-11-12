@@ -1,7 +1,7 @@
 
 
 ```clike
-int vscphlp_readMaskFromString( vscpEventFilter *pFilter, 
+int readMaskFromString( vscpEventFilter *pFilter, 
                                 const char * strMask )
 ```
 
@@ -40,14 +40,14 @@ Read a mask from a string. If strMask is an empty string elements in mask will b
 #### C example
 
 ```clike
-if ( VSCP_ERROR_SUCCESS != vscphlp_readMaskFromString( &filter, 
+if ( VSCP_ERROR_SUCCESS != readMaskFromString( &filter, 
                 "1,0x0000,0x0006,ff:ff:ff:ff:ff:ff:ff:01:00:00:00:00:00:00:00:00" ) ) {
-    printf( "\aError: vscphlp_readMaskFromString\n");   
+    printf( "\aError: readMaskFromString\n");   
 }
 ```
 
 #### See Also
-* [vscphlp_writeMaskToString](vscphlp_writemasktostring.md)
+* [writeMaskToString](writemasktostring.md)
 
 
 
