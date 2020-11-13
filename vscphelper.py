@@ -315,6 +315,8 @@ def serverShutDown(handle):
 
 
 # -----------------------------------------------------------------------------
+#                              Python Helpers
+# -----------------------------------------------------------------------------
 
 
 ###############################################################################
@@ -393,4 +395,82 @@ def string2ByteArray(str):
 
 def byteArrayToPos(ba_to, pos, ba_from):
     return ba_to[:pos] + ba_from[:] + ba_to[pos+len(ba_from):]
+
+# -----------------------------------------------------------------------------
+#                              General Helpers
+# -----------------------------------------------------------------------------
+
+
+###############################################################################
+# convertEventToJSON
+#
+
+def convertEventToJSON(e):
+    result = create_string_buffer(b'\000' * 2048)
+    result_len = c_size_t(len(result))
+
+    rv = lib.vscphlp_convertEventToJSON( byref(e), result, result_len )
+    #s = repr(result.value).decode('utf-8')
+    s = result.value.decode('utf-8')
+    return rv,s
+
+###############################################################################
+# convertEventExToJSON
+#
+
+def convertEventExToJSON(ex):
+    result = create_string_buffer(b'\000' * 2048)
+    result_len = c_size_t(len(result))
+
+    rv = lib.vscphlp_convertEventExToJSON( byref(evexent), result, result_len )
+    s = result.value.decode('utf-8')
+    return rv,s
+
+###############################################################################
+# convertEventToXML
+#
+
+def convertEventToXML(e):
+    result = create_string_buffer(b'\000' * 2048)
+    result_len = c_size_t(len(result))
+
+    rv = lib.vscphlp_convertEventToXML( byref(e), result, result_len )    
+    s = result.value.decode('utf-8')
+    return rv,s
+
+###############################################################################
+# convertEventExToXML
+#
+
+def convertEventExToXML(ex):
+    result = create_string_buffer(b'\000' * 2048)
+    result_len = c_size_t(len(result))
+
+    rv = lib.vscphlp_convertEventExToXML( byref(ex), result, result_len )
+    s = result.value.decode('utf-8')
+    return rv,s
+
+###############################################################################
+# convertEventToHTML
+#
+
+def convertEventToHTML(e):
+    result = create_string_buffer(b'\000' * 2048)
+    result_len = c_size_t(len(result))
+
+    rv = lib.vscphlp_convertEventToHTML( byref(e), result, result_len )
+    s = result.value.decode('utf-8')
+    return rv,s
+
+###############################################################################
+# convertEventExToHTML
+#
+
+def cconvertEventExToHTML(ex):
+    result = create_string_buffer(b'\000' * 2048)
+    result_len = c_size_t(len(result))
+
+    rv = lib.convertEventExToHTML( byref(ex), result, result_len )
+    s = result.value.decode('utf-8')
+    return rv,s
 

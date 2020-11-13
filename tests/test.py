@@ -4,9 +4,12 @@
 
 import sys
 import math
+from ctypes import *
+import _ctypes
+import json
 
-sys.path.append('../..')
-from vscp import * 
+sys.path.append('../../pyvscp')
+import vscp
 
 sys.path.append('..')
 #from vscphelper import *
@@ -60,9 +63,41 @@ def test_conversions():
     print([ "0x%02x" % b for b in ba ])
     print([ "0x%02x" % b for b in ba1 ])
 
+def test_struct_conversions():
+
+    e = vscp.vscpEvent()
+    e.timestamp = 0
+    e.vscpclass = 20
+    e.vscptype = 9
+    e.sizedata = 3
+    p = (c_ubyte*3)()
+    p[0] = 11
+    p[1] = 22
+    p[2] = 33
+    e.pdata = cast(p, POINTER(c_ubyte))
+    (rv,s) = vhlp.convertEventToJSON(e)
+    e.pdata = None
+    print("rv=",rv,"str=",json.dumps(s, sort_keys=True, indent=4))
+    d = json.loads(s)
+    print("VSCP Class:", d["vscpClass"], "VSCP Type:", d["vscpType"])
+
+    e = vscp.vscpEvent()
+    e.timestamp = 0
+    e.vscpclass = 20
+    e.vscptype = 9
+    e.sizedata = 3
+    p = (c_ubyte*3)()
+    p[0] = 11
+    p[1] = 22
+    p[2] = 33
+    e.pdata = cast(p, POINTER(c_ubyte))
+    (rv,s) = vhlp.convertEventToXML(e)
+    e.pdata = None
+    print("rv=",rv,"str=",s)
 
 
 if __name__ == "__main__":
     test_connect()
     test_conversions()
+    test_struct_conversions()
     print("Everything passed")
