@@ -11,10 +11,17 @@ import json
 sys.path.append('../../pyvscp')
 import vscp
 
+sys.path.append('../../pyvscpclasses')
+import vscp_class as vc
+
+sys.path.append('../../pyvscptypes')
+import vscp_type as vt
+
 sys.path.append('..')
-#from vscphelper import *
 import vscphelper as vhlp
 
+
+# -----------------------------------------------------------------------------
 def test_connect():
     print("New session")
     h1 = vhlp.newSession()
@@ -30,6 +37,8 @@ def test_connect():
     print("Close session")
     vhlp.closeSession(h1)
 
+
+# -----------------------------------------------------------------------------
 def test_conversions():
     value = 3.14
     ba = vhlp.float2ByteArray(value)
@@ -63,6 +72,8 @@ def test_conversions():
     print([ "0x%02x" % b for b in ba ])
     print([ "0x%02x" % b for b in ba1 ])
 
+
+# -----------------------------------------------------------------------------
 def test_struct_conversions():
 
     e = vscp.vscpEvent()
@@ -95,9 +106,237 @@ def test_struct_conversions():
     e.pdata = None
     print("rv=",rv,"str=",s)
 
+# -----------------------------------------------------------------------------
+def test_makeFloatMeasurementEvent():
 
+    e = vscp.vscpEvent()
+    e.sizedata = 0
+    e.vscpclass = vc.VSCP_CLASS1_MEASUREMENT
+    e.vscptype = vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE
+    value = 3.14
+    unit = 2
+    sensorindex = 1
+    rv = vhlp.makeFloatMeasurementEvent( e, value, unit, sensorindex )
+    print("Return value = ",rv)
+    assert rv == vscp.VSCP_ERROR_SUCCESS
+
+# -----------------------------------------------------------------------------
+def test_makeFloatMeasurementEventEx():
+    ex = vscp.vscpEventEx()
+    ex.sizedata = 0
+    ex.vscpclass = vc.VSCP_CLASS1_MEASUREMENT
+    ex.vscptype = vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE
+    value = 3.14
+    unit = 2
+    sensorindex = 1
+    rv = vhlp.makeFloatMeasurementEventEx( ex, value, unit, sensorindex )
+    print("Return value = ",rv)
+    assert rv == vscp.VSCP_ERROR_SUCCESS
+
+# -----------------------------------------------------------------------------
+def test_makeStringMeasurementEvent():
+
+    e = vscp.vscpEvent()
+    e.sizedata = 0
+    e.vscpclass = vc.VSCP_CLASS1_MEASUREMENT
+    e.vscptype = vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE
+    value = 3.14
+    unit = 2
+    sensorindex = 1
+    rv = vhlp.makeStringMeasurementEvent( e, value, unit, sensorindex )
+    print("Return value = ",rv)
+    assert rv == vscp.VSCP_ERROR_SUCCESS
+
+# -----------------------------------------------------------------------------
+def test_makeStringMeasurementEventEx():
+
+    ex = vscp.vscpEventEx()
+    ex.sizedata = 0
+    ex.vscpclass = vc.VSCP_CLASS1_MEASUREMENT
+    ex.vscptype = vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE
+    value = 3.14
+    unit = 2
+    sensorindex = 1
+    rv = vhlp.makeStringMeasurementEventEx( ex, value, unit, sensorindex )
+    print("Return value = ",rv)
+    assert rv == vscp.VSCP_ERROR_SUCCESS
+
+# -----------------------------------------------------------------------------
+def test_makeLevel2FloatMeasurementEvent():
+
+    e = vscp.vscpEvent()
+    e.sizedata = 0
+    e.vscpclass = vc.VSCP_CLASS1_MEASUREMENT
+    e.vscptype = vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE
+    value = 3.14
+    unit = 2
+    sensorindex = 1
+    zone = 11
+    subzone = 22
+    rv = vhlp.makeLevel2FloatMeasurementEvent( e, vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE, 
+                                                value, unit, sensorindex, zone, subzone  )
+    print("Return value = ",rv)
+    assert rv == vscp.VSCP_ERROR_SUCCESS
+
+# -----------------------------------------------------------------------------
+def test_makeLevel2FloatMeasurementEventEx():
+
+    ex = vscp.vscpEvent()
+    ex.sizedata = 0
+    ex.vscpclass = vc.VSCP_CLASS1_MEASUREMENT
+    ex.vscptype = vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE
+    value = 3.14
+    unit = 2
+    sensorindex = 1
+    zone = 11
+    subzone = 22
+    rv = vhlp.makeLevel2FloatMeasurementEvent( ex, vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE, 
+                                                value, unit, sensorindex, zone, subzone  )
+    print("Return value = ",rv)
+    assert rv == vscp.VSCP_ERROR_SUCCESS
+
+# -----------------------------------------------------------------------------
+def test_makeLevel2StringMeasurementEvent():
+
+    e = vscp.vscpEvent()
+    e.sizedata = 0
+    e.vscpclass = vc.VSCP_CLASS1_MEASUREMENT
+    e.vscptype = vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE
+    value = 3.14
+    unit = 2
+    sensorindex = 1
+    zone = 11
+    subzone = 22
+    rv = vhlp.makeLevel2StringMeasurementEvent( e, vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE, 
+                                                value, unit, sensorindex, zone, subzone  )
+    print("Return value = ",rv)
+    assert rv == vscp.VSCP_ERROR_SUCCESS
+
+# -----------------------------------------------------------------------------
+def test_makeLevel2StringMeasurementEventEx():
+
+    ex = vscp.vscpEvent()
+    ex.sizedata = 0
+    ex.vscpclass = vc.VSCP_CLASS1_MEASUREMENT
+    ex.vscptype = vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE
+    value = 3.14
+    unit = 2
+    sensorindex = 1
+    zone = 11
+    subzone = 22
+    rv = vhlp.makeLevel2StringMeasurementEventEx( ex, vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE, 
+                                                    value, unit, sensorindex, zone, subzone  )
+    print("Return value = ",rv)
+    assert rv == vscp.VSCP_ERROR_SUCCESS
+
+# -----------------------------------------------------------------------------
+def test_convertLevel1MeasuremenToLevel2Double():
+
+    e = vscp.vscpEvent()
+
+    e.vscpclass = vc.VSCP_CLASS1_MEASUREMENT
+    e.vscptype = vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE
+
+    # 32-bit float coding = 100
+    e.sizedata = 4
+    p = (c_ubyte*4)()
+    p[0] = 0x80
+    p[1] = 0x02
+    p[2] = 0x1B
+    p[3] = 0x22
+    e.pdata = cast(p, POINTER(c_ubyte))
+
+    # IMPORTANT     TODO
+    # ---------
+    # Will give invalid free as the data structure size is changed
+    # in the lib. Have no solution on this yet.
+    # rv = vhlp.convertLevel1MeasuremenToLevel2Double( e )
+    # print("Return value = ",rv)
+    # assert rv == vscp.VSCP_ERROR_SUCCESS
+
+
+# -----------------------------------------------------------------------------
+def test_convertLevel1MeasuremenToLevel2DoubleEx():
+
+    e = vscp.vscpEventEx()
+
+    e.vscpclass = vc.VSCP_CLASS1_MEASUREMENT
+    e.vscptype = vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE
+
+    # 32-bit float coding = 100
+    e.sizedata = 4
+    e.data[0] = 0x80
+    e.data[1] = 0x02
+    e.data[2] = 0x1B
+    e.data[3] = 0x22
+    rv = vhlp.convertLevel1MeasuremenToLevel2DoubleEx( e )
+    print("Return value = ",rv)
+    assert rv == vscp.VSCP_ERROR_SUCCESS
+
+# -----------------------------------------------------------------------------
+def test_convertLevel1MeasuremenToLevel2String():
+
+    e = vscp.vscpEvent()
+
+    e.vscpclass = vc.VSCP_CLASS1_MEASUREMENT
+    e.vscptype = vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE
+
+    # 32-bit float coding = 100
+    e.sizedata = 4
+    p = (c_ubyte*4)()
+    p[0] = 0x80
+    p[1] = 0x02
+    p[2] = 0x1B
+    p[3] = 0x22
+    e.pdata = cast(p, POINTER(c_ubyte))
+
+    # IMPORTANT    TODO
+    # ---------
+    # Will give invalid free as the data structure size is changed
+    # in the lib. Have no solution on this yet.
+    rv = vhlp.convertLevel1MeasuremenToLevel2String( e )
+    print("Return value = ",rv)
+    assert rv == vscp.VSCP_ERROR_SUCCESS
+
+
+# -----------------------------------------------------------------------------
+def test_convertLevel1MeasuremenToLevel2StringEx():
+
+    e = vscp.vscpEventEx()
+
+    e.vscpclass = vc.VSCP_CLASS1_MEASUREMENT
+    e.vscptype = vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE
+
+    # 32-bit float coding = 100
+    e.sizedata = 4
+    e.data[0] = 0x80
+    e.data[1] = 0x02
+    e.data[2] = 0x1B
+    e.data[3] = 0x22
+    rv = vhlp.convertLevel1MeasuremenToLevel2StringEx( e )
+    print("Return value = ",rv)
+    assert rv == vscp.VSCP_ERROR_SUCCESS
+
+# -----------------------------------------------------------------------------
+#                                    The END
+# -----------------------------------------------------------------------------
+
+
+# -----------------------------------------------------------------------------
 if __name__ == "__main__":
     test_connect()
     test_conversions()
     test_struct_conversions()
+    test_makeFloatMeasurementEvent()
+    test_makeFloatMeasurementEventEx()
+    test_makeStringMeasurementEvent()
+    test_makeStringMeasurementEventEx()
+    test_makeLevel2FloatMeasurementEvent()
+    test_makeLevel2FloatMeasurementEventEx()
+    test_makeLevel2StringMeasurementEvent()
+    test_makeLevel2StringMeasurementEventEx()
+    test_convertLevel1MeasuremenToLevel2Double()
+    test_convertLevel1MeasuremenToLevel2DoubleEx()
+    test_convertLevel1MeasuremenToLevel2String()
+    test_convertLevel1MeasuremenToLevel2StringEx()
     print("Everything passed")

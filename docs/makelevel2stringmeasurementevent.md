@@ -1,19 +1,19 @@
 
 
 ```clike
-int makeLevel2StringMeasurementEvent( vscpEvent *pEvent, 
-                                    uint16_t type,
-                                    double value,
-                                    uint8_t unit,
-                                    uint8_t sensoridx,
-                                    uint8_t zone,
-                                    uint8_t subzone )
+int makeLevel2StringMeasurementEvent( e, 
+                                        type,
+                                        value,
+                                        unit,
+                                        sensoridx,
+                                        zone,
+                                        subzone )
 ```
 
 ### Parameters
 
-#### pEvent
-Pointer to event that data should be written to.
+#### e
+VSCP event that data should be written to.
 
 #### type
 The VSCP type for the event. Must be one of the types in [CLASS1.MEASUREMENT](https://grodansparadis.gitbooks.io/the-vscp-specification/class1.measurement.html)
@@ -38,6 +38,20 @@ VSCP_ERROR_SUCCESS is returned if the measurement event is constructed correctly
 
 ### Description
 Construct a Level II string measurement event from supplied data. **Note** that the GUID must be set externally. 
+
+### Example
+
+```python
+e = vscp.vscpEvent()
+e.sizedata = 0
+e.vscpclass = vc.VSCP_CLASS1_MEASUREMENT
+e.vscptype = vt.VSCP_TYPE_MEASUREMENT_TEMPERATURE
+value = 3.14
+unit = 2
+sensorindex = 1
+rv = vhlp.makeStringMeasurementEvent( e, value, unit, sensorindex )
+print("Return value = ",rv)
+```
 
 ### See Also
 [makeLevel2FloatMeasurementEvent](makelevel2floatmeasurementevent.md)

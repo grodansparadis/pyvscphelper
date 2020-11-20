@@ -160,6 +160,9 @@
     * [convertFloatToFloatEventData](convertfloattofloateventdata.md)
     * [convertIntegerToNormalizedEventData](convertintegertonormalizedeventdata.md)
     * [makeFloatMeasurementEvent](makefloatmeasurementevent.md)
+    * [makeFloatMeasurementEventEx](makefloatmeasurementeventex.md)
+    * [makeStringMeasurementEvent](makestringmeasurementevent.md)
+    * [makeStringMeasurementEventEx](makestringmeasurementeventex.md)
     * [getMeasurementAsFloat](getmeasurementasfloat.md)
     * [getMeasurementUnit](getmeasurementunit.md)
     * [getMeasurementSensorIndex](getmeasurementsensorindex.md)
@@ -167,9 +170,13 @@
     * [getMeasurementSubZone](getmeasurementSubzone.md)
     * [isMeasurement](ismeasurement.md)
     * [convertLevel1MeasuremenToLevel2Double](convertlevel1measurementolevel2double.md)
+    * [convertLevel1MeasuremenToLevel2DoubleEx](convertlevel1measurementolevel2doubleex.md)
     * [convertLevel1MeasuremenToLevel2String](convertlevel1measurementolevel2string.md)
+    * [convertLevel1MeasuremenToLevel2StringEx](convertlevel1measurementolevel2stringex.md)
     * [makeLevel2FloatMeasurementEvent](makelevel2floatmeasurementevent.md)
+    * [makeLevel2FloatMeasurementEventEx](makelevel2floatmeasurementeventex.md)
     * [makeLevel2StringMeasurementEvent](makelevel2stringmeasurementevent.md)
+    * [makeLevel2StringMeasurementEventEx](makelevel2stringmeasurementeventex.md)
 
   * General helpers
 

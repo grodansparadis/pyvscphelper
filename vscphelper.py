@@ -315,6 +315,74 @@ def serverShutDown(handle):
 
 
 # -----------------------------------------------------------------------------
+#                             Measurement Helpers
+# -----------------------------------------------------------------------------
+
+def makeFloatMeasurementEvent( e, value, unit, sensoridx ):
+    return lib.vscphlp_makeFloatMeasurementEvent( byref(e), c_float(value), c_ubyte(unit), c_ubyte(sensoridx) )                                
+
+def makeFloatMeasurementEventEx( ex, value, unit, sensoridx ):
+    return lib.vscphlp_makeFloatMeasurementEventEx( byref(ex), c_float(value), c_ubyte(unit), c_ubyte(sensoridx) )
+
+def makeStringMeasurementEvent( e, value, unit, sensoridx ):
+    return lib.vscphlp_makeStringMeasurementEvent( byref(e), c_float(value), c_ubyte(unit), c_ubyte(sensoridx) )                                
+
+def makeStringMeasurementEventEx( ex, value, unit, sensoridx ):
+    return lib.vscphlp_makeStringMeasurementEvent( byref(ex), c_float(value), c_ubyte(unit), c_ubyte(sensoridx) ) 
+
+def makeLevel2FloatMeasurementEvent( e,
+                                        type,
+                                        value,
+                                        unit,
+                                        sensoridx,
+                                        zone,
+                                        subzone ) :
+    return lib.vscphlp_makeStringMeasurementEvent( byref(e), c_uint16(type), c_float(value), c_ubyte(unit), 
+                                                    c_ubyte(sensoridx), c_ubyte(zone), c_ubyte(subzone) )                                       
+
+def makeLevel2FloatMeasurementEventEx( ex,
+                                        type,
+                                        value,
+                                        unit,
+                                        sensoridx,
+                                        zone,
+                                        subzone ) :
+    return lib.vscphlp_makeStringMeasurementEvent( byref(ex), c_uint16(type), c_float(value), c_ubyte(unit), 
+                                                    c_ubyte(sensoridx), c_ubyte(zone), c_ubyte(subzone) )
+
+def makeLevel2StringMeasurementEvent( e,
+                                        type,
+                                        value,
+                                        unit,
+                                        sensoridx,
+                                        zone,
+                                        subzone ) :
+    return lib.vscphlp_makeStringMeasurementEvent( byref(e), c_uint16(type), c_float(value), c_ubyte(unit), 
+                                                    c_ubyte(sensoridx), c_ubyte(zone), c_ubyte(subzone) )                                        
+
+def makeLevel2StringMeasurementEventEx( ex,
+                                        type,
+                                        value,
+                                        unit,
+                                        sensoridx,
+                                        zone,
+                                        subzone ) :
+    return lib.vscphlp_makeStringMeasurementEvent( byref(ex), c_uint16(type), c_float(value), c_ubyte(unit), 
+                                                    c_ubyte(sensoridx), c_ubyte(zone), c_ubyte(subzone) ) 
+
+def convertLevel1MeasuremenToLevel2Double( e ) :
+    return lib.vscphlp_convertLevel1MeasuremenToLevel2Double( byref(e) )
+
+def convertLevel1MeasuremenToLevel2DoubleEx( ex ) :
+    return lib.vscphlp_convertLevel1MeasuremenToLevel2DoubleEx( byref(ex) )
+
+def convertLevel1MeasuremenToLevel2String( e ) :
+    return lib.vscphlp_convertLevel1MeasuremenToLevel2String( byref(e) )
+
+def convertLevel1MeasuremenToLevel2StringEx( ex ) :
+    return lib.vscphlp_convertLevel1MeasuremenToLevel2StringEx( byref(ex) )
+
+# -----------------------------------------------------------------------------
 #                              Python Helpers
 # -----------------------------------------------------------------------------
 
