@@ -490,7 +490,7 @@ def convertEventExToJSON(ex):
     result = create_string_buffer(b'\000' * 2048)
     result_len = c_size_t(len(result))
 
-    rv = lib.vscphlp_convertEventExToJSON( byref(evexent), result, result_len )
+    rv = lib.vscphlp_convertEventExToJSON( byref(ex), result, result_len )
     s = result.value.decode('utf-8')
     return rv,s
 
@@ -534,11 +534,82 @@ def convertEventToHTML(e):
 # convertEventExToHTML
 #
 
-def cconvertEventExToHTML(ex):
+def convertEventExToHTML(ex):
     result = create_string_buffer(b'\000' * 2048)
     result_len = c_size_t(len(result))
 
-    rv = lib.convertEventExToHTML( byref(ex), result, result_len )
+    rv = lib.vscphlp_convertEventExToHTML( byref(ex), result, result_len )
     s = result.value.decode('utf-8')
     return rv,s
+
+
+###############################################################################
+# convertEventToString
+#
+
+def convertEventToString(e) :
+    result = create_string_buffer(b'\000' * 2048)
+    result_len = c_size_t(len(result))
+
+    rv = lib.vscphlp_writeVscpEventToString( byref(e), result, result_len )
+    #s = repr(result.value).decode('utf-8')
+    s = result.value.decode('utf-8')
+    return rv,s
+
+
+###############################################################################
+# convertEventExToString
+#
+
+def convertEventExToString(ex):
+    result = create_string_buffer(b'\000' * 2048)
+    result_len = c_size_t(len(result))
+
+    rv = lib.vscphlp_writeVscpEventExToString( byref(ex), result, result_len )
+    s = result.value.decode('utf-8')
+    return rv,s
+
+###############################################################################
+# convertStringToEvent
+#
+
+def convertStringToEvent(e, str) :
+    bstr = str.encode('utf-8')
+    rv = lib.vscphlp_convertStringToEvent( byref(e), c_char_p(bstr) )
+    return rv,e
+
+###############################################################################
+# convertStringToEventEx
+#
+
+def convertStringToEventEx(ex, str) :
+    bstr = str.encode('utf-8')
+    rv = lib.vscphlp_convertStringToEventEx( byref(ex), c_char_p(bstr) )
+    return rv,ex
+
+###############################################################################
+# getDateStringFromEvent
+#
+
+def getDateStringFromEvent(e) :
+    buf = create_string_buffer(b'\000' * 60)
+    buf_len = c_size_t(len(buf))
+    rv = lib.vscphlp_getDateStringFromEvent( buf, buf_len, byref(e) )
+    s = buf.value.decode('utf-8')
+    return rv,s
+
+###############################################################################
+# getDateStringFromEventEx
+#
+
+def getDateStringFromEventEx(ex) :
+    buf = create_string_buffer(b'\000' * 60)
+    buf_len = c_size_t(len(buf))
+    rv = lib.vscphlp_getDateStringFromEventEx( buf, buf_len, byref(ex) )
+    s = buf.value.decode('utf-8')
+    return rv,s
+
+
+
+
 
