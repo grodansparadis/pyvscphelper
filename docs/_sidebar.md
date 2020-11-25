@@ -139,12 +139,10 @@
 
     * Conversions
 
-      
-
-      * [convertCanalToEvent](convertcanaltoevent.md)
-      * [convertCanalToEventEx](convertcanaltoeventex.md)
-      * [convertEventToCanal](converteventtocanal.md)
-      * [convertEventExToCanal](converteventextocanal.md)
+    * [convertCanalToEvent](convertcanaltoevent.md)
+    * [convertCanalToEventEx](convertcanaltoeventex.md)
+    * [convertEventToCanal](converteventtocanal.md)
+    * [convertEventExToCanal](converteventextocanal.md)
 
   * Measurements
 
