@@ -137,7 +137,7 @@
     * [calc_crc_Event](calc_crc_event.md)
     * [calc_crc_EventEx](calc_crc_eventex.md)
 
-    * Conversions
+  * Conversions
 
     * [convertCanalToEvent](convertcanaltoevent.md)
     * [convertCanalToEventEx](convertcanaltoeventex.md)
