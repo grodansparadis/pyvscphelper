@@ -103,14 +103,12 @@
   
     * String
 
-      * [writeVscpEventToString](writevscpeventtostring.md)
-      * [writeVscpEventExToString](writevscpeventextostring.md)
-      * [setVscpEventFromString](setvscpeventfromstring.md)
-      * [setVscpEventExFromString](setvscpeventexfromstring.md)
+      * [convertStringToEvent](convertstringtoevent.md)
+      * [convertStringToEventEx](convertstringtoeventex.md)
+      * [convertEventToString](converteventtostring.md)
+      * [convertEventExToString](converteventextostring.md)
       * [getDateStringFromEvent](getdatestringfromevent.md)
       * [getDateStringFromEventEx](getdatestringfromeventex.md) 
-      * [convertStringToEvent](convertStringToEvent.md)
-      * [convertStringToEventEx](convertStringToEventEx.md)
 
     * JSON
 
@@ -140,6 +138,8 @@
     * [calc_crc_EventEx](calc_crc_eventex.md)
 
     * Conversions
+
+      
 
       * [convertCanalToEvent](convertcanaltoevent.md)
       * [convertCanalToEventEx](convertcanaltoeventex.md)

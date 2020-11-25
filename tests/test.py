@@ -252,9 +252,10 @@ def test_convertLevel1MeasuremenToLevel2Double():
     # ---------
     # Will give invalid free as the data structure size is changed
     # in the lib. Have no solution on this yet.
-    # rv = vhlp.convertLevel1MeasuremenToLevel2Double( e )
-    # print("Return value = ",rv)
-    # assert rv == vscp.VSCP_ERROR_SUCCESS
+    rv = vhlp.convertLevel1MeasuremenToLevel2Double( e )
+    p = None
+    #print("Return value = ",rv)
+    assert rv == vscp.VSCP_ERROR_SUCCESS
 
 
 # -----------------------------------------------------------------------------
@@ -642,9 +643,10 @@ if __name__ == "__main__":
     test_makeLevel2StringMeasurementEventEx()
     # ***** Fails to release pointer
     #test_convertLevel1MeasuremenToLevel2Double()
-    #test_convertLevel1MeasuremenToLevel2DoubleEx()
+    test_convertLevel1MeasuremenToLevel2DoubleEx()
+    # ***** Fails to release pointer
     #test_convertLevel1MeasuremenToLevel2String()
-    #test_convertLevel1MeasuremenToLevel2StringEx()
+    test_convertLevel1MeasuremenToLevel2StringEx()
     test_convertEventToJSON()
     test_convertEventExToJSON()
     test_convertEventToXML()
