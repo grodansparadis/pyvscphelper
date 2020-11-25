@@ -25,7 +25,7 @@ setup(
     # https://packaging.python.org/en/latest/single_source_version.html
     #use_scm_version=True,
     #setup_requires=["setuptools_scm"],
-    version='0.0.11',
+    version='0.0.12',
 
     description='Official VSCP helper Python package',
     long_description=long_description,
