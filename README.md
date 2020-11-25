@@ -12,5 +12,9 @@ Install with
 pip3 install pyvscphelper
 ```
 
+Upgrade with
 
+```bash
+pip3 install --upgrade pyvscphelper
+```
 

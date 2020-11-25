@@ -45,6 +45,13 @@ pip3 install pyvscphelper
 
 In both cases pyvscp, pyvscpclasses and pyvscptypes will also be installed.
 
+
+Upgrade with
+
+```bash
+pip3 install --upgrade pyvscphelper
+```
+
 ## Install on Windows
 
 On windows run 
