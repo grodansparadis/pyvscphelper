@@ -2,7 +2,7 @@
 
 [Document History](Document History)
 
-Copyright © 2000-2019 Åke Hedman, [Grodans Paradis AB](https://www.grodansparadis.com), `<[akhe@grodansparadis.com](akhe@grodansparadis.com)>` 
+Copyright © 2000-2026 Åke Hedman and contributors, the VSCP project
 
 If you use VSCP components professionally please consider contributing resources to the project ([https://vscp.org/support.php](https://vscp.org/support.php)). Keeping this project going is a daily struggle and has been so for fourteen years now.
 

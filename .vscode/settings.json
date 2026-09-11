@@ -1,0 +1,12 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^python - <<'EOF'\nfrom ctypes import cdll\nlib = cdll\\.LoadLibrary\\('libvscphelper\\.so'\\)\nprint\\(lib\\)\nEOF\nfind / -name \"libvscphelper\\.so\\*\" 2>/dev/null \\| head$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python - <<'EOF'\nimport json\nd = json\\.load\\(open\\('/home/akhe/\\.config/Code/User/workspaceStorage/85fe0b8a560e9da2ce63a94f9456db3a/GitHub\\.copilot-chat/chat-session-resources/214229b3-da8f-4cfa-bfbe-6f2316e5af73/toolu_01B7t26nY5d5qo7Re7J6Retn__vscode-1789129879666/content\\.json'\\)\\)\ndef walk\\(x\\):\n    if isinstance\\(x, dict\\):\n        if 'message' in x or 'patternId' in x:\n            yield x\n        else:\n            for v in x\\.values\\(\\): yield from walk\\(v\\)\n    elif isinstance\\(x, list\\):\n        for v in x: yield from walk\\(v\\)\nissues = list\\(walk\\(d\\)\\)\nprint\\(len\\(issues\\)\\)\nfor i in issues\\[:60\\]:\n    loc = i\\.get\\('location'\\) or i\\.get\\('region'\\) or \\{\\}\n    print\\(i\\.get\\('patternId'\\) or i\\.get\\('ruleId'\\), '-', str\\(i\\.get\\('message'\\)\\)\\[:110\\], '-', json\\.dumps\\(loc\\)\\[:120\\]\\)\nEOF$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

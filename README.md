@@ -1,6 +1,6 @@
 # Official VSCP Python helper library
 
-This is the official Python VSCP helper library for the VSCP project (https://www.vscp.org).
+This is the official Python VSCP helper library for the VSCP project (https://www.vscp.org). This is a wrapper for the vscphelper lib.
 
 Available on [PyPi](https://pypi.org/project/pyvscphelper/) Se also [pyvscp](https://pypi.org/project/pyvscp/), [pyvscpclasses](https://pypi.org/project/pyvscpclasses/) and [pyvscptypes](https://pypi.org/project/pyvscptypes/)
 

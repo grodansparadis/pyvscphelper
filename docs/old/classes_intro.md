@@ -2,7 +2,7 @@
 
 [HISTORY](vscp_class_usage_history)
 
-Copyright © 2000-2019 Åke Hedman, [Grodans Paradis AB](https://www.grodansparadis.com), `<[akhe@grodansparadis.com](akhe@grodansparadis.com)>` 
+Copyright © 2000-2026 Åke Hedman and contributors, the VSCP project, `<[akhe@grodansparadis.com](akhe@grodansparadis.com)>` 
 
 VSCP use the [wxWidgets library](https://wxwidgets.org/). For most people this library is considered a graphical C++ UI library but it also have a lot of functionality in it's non graphical (base) version and it is this version that is used in the VSCP project for all code except for the applications ([VSCP Works](https://grodansparadis.gitbooks.io/vscp-works/?id=start/)) that actually is a graphical application.
 

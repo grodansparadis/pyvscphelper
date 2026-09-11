@@ -2,7 +2,7 @@
 
 # The VSCP helper library for Python
 
-Author 2000-2020 Åke Hedman, [Grodans Paradis AB](https://www.grodansparadis.com), &lt;[akhe@grodansparadis.com](mailto:akhe@grodansparadis.com)&gt;
+Author 2000-2026 Åke Hedman and contributors, the VSCP project, &lt;[akhe@grodansparadis.com](mailto:akhe@grodansparadis.com)&gt;
 
 **Document created**: *${/var/creation-time}*  
 **Document version**: ${/var/document-version} 
