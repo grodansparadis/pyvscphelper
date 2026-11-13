@@ -7,6 +7,7 @@ tagged, rename **Unreleased** to the version and date, and start a new
 
 ## Unreleased
 
+- Add scripts/download-artifacts.sh to download and verify the newest CI build artifacts
 - Added missing functions (6684a68)
 - Add GitHub Actions workflow for Python package publishing (69ea3d0)
 - More formatting (145eeeb)
