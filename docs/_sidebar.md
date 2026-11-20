@@ -7,6 +7,7 @@
 
   * [Using the library](using.md)
   * [Return values and error handling](error_handling.md)
+  * [AES/HMAC and datagram clients](security.md)
 
 * Functions in library
 
@@ -153,6 +154,7 @@
     * [getDataCodingString](getdatacodingstring.md)
     * [getVSCPMeasurementAsString](getvscpmeasurementasstring.md)
     * [getVSCPMeasurementAsDouble](getvscpmeasurementasdouble.md)
+    * [Measurement unit conversion](measurementunits.md)
     * [getVSCPMeasurementFloat64AsString](getvscpmeasurementfloat64asstring.md)
     * [convertFloatToNormalizedEventData](convertfloattonormalizedeventdata.md)
     * [convertFloatToFloatEventData](convertfloattofloateventdata.md)
@@ -219,7 +221,6 @@
 
 * Other documentation
   * [VSCP documentation portal](https://docs.vscp.org)
-
 
 
 

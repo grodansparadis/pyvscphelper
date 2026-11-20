@@ -29,7 +29,7 @@
 import os
 import sys
 from ctypes import *
-import _ctypes
+import json
 import struct
 import vscp 
 
@@ -39,9 +39,12 @@ def _loadHelperLib():
     if 'VSCPHELPER_LIB' in os.environ:
         return cdll.LoadLibrary(os.environ['VSCPHELPER_LIB'])
     if os.name == "nt":
-        names = ['libvscphelper.dll', 'libvscphelper15.dll']
+        names = ['libvscphelper16.dll', 'libvscphelper.dll', 'libvscphelper15.dll']
+    elif sys.platform == "darwin":
+        names = ['libvscphelper16.dylib', 'libvscphelper.dylib', 'libvscphelper15.dylib']
     else:
-        names = ['libvscphelper.so', 'libvscphelper15.so', 'libvscphelper.so.15']
+        names = ['libvscphelper16.so', 'libvscphelper.so', 'libvscphelper.so.16',
+                 'libvscphelper15.so', 'libvscphelper.so.15']
     for name in names:
         try:
             return cdll.LoadLibrary(name)
@@ -60,6 +63,95 @@ def _libfunc(*names):
         except AttributeError:
             pass
     raise AttributeError('None of %s is exported by the VSCP helper library' % (names,))
+
+def _bindHelper(name, argtypes, restype=c_int):
+    func = _libfunc(name)
+    func.argtypes = argtypes
+    func.restype = restype
+    return func
+
+def _byteBuffer(value, name):
+    if value is None:
+        return None, 0
+    if not isinstance(value, (bytes, bytearray, memoryview)):
+        raise TypeError('%s must be bytes-like or None' % name)
+    value = bytes(value)
+    if not value:
+        return None, 0
+    return (c_ubyte * len(value)).from_buffer_copy(value), len(value)
+
+def _timeout(value, maximum):
+    if not isinstance(value, int) or value < 0 or value > maximum:
+        raise ValueError('timeout is outside the supported range')
+    return value
+
+class _EventDateTime(Structure):
+    _fields_ = [('day', c_ubyte), ('hour', c_ubyte),
+                ('minute', c_ubyte), ('second', c_ubyte),
+                ('timestamp', c_uint32)]
+
+class _EventTime(Union):
+    _anonymous_ = ('datetime',)
+    _fields_ = [('timestamp_ns', c_uint64), ('datetime', _EventDateTime)]
+
+class _NativeEventEx(Structure):
+    _anonymous_ = ('time',)
+    _fields_ = [('head', c_uint16), ('obid', c_uint32),
+                ('year', c_uint16), ('month', c_ubyte), ('time', _EventTime),
+                ('crc', c_uint16), ('vscpclass', c_uint16), ('vscptype', c_uint16),
+                ('guid', c_ubyte * 16), ('sizedata', c_uint16),
+                ('data', c_ubyte * 512)]
+
+def _checkEventEx(event):
+    if not isinstance(event, vscp.vscpEventEx):
+        raise TypeError('event must be a vscp.vscpEventEx')
+
+def _copyEventEx(source, destination):
+    if source.sizedata > 512:
+        raise ValueError('event data exceeds 512 bytes')
+    version_one = (source.head & 0x0300) == 0x0100
+    if version_one:
+        timestamp_ns = (source.timestamp_ns if hasattr(source, 'timestamp_ns')
+                        else source.getNsTimestamp())
+        if not isinstance(timestamp_ns, int):
+            raise TypeError('event timestamp_ns must be an integer')
+        if timestamp_ns < 0 or timestamp_ns > 0xffffffffffffffff:
+            raise ValueError('event timestamp_ns is outside the unsigned 64-bit range')
+    for field in ('head', 'obid', 'year', 'month', 'crc',
+                  'vscpclass', 'vscptype', 'sizedata'):
+        setattr(destination, field, getattr(source, field))
+    if version_one:
+        if not hasattr(type(destination), 'timestamp_ns'):
+            destination.setFromNsTimestamp(timestamp_ns)
+        destination.timestamp_ns = timestamp_ns
+    else:
+        for field in ('day', 'hour', 'minute', 'second', 'timestamp'):
+            setattr(destination, field, getattr(source, field))
+        if (not hasattr(type(destination), 'timestamp_ns') and
+                'timestamp_ns' in destination.__dict__):
+            del destination.timestamp_ns
+    memmove(destination.guid, source.guid, 16)
+    memset(destination.data, 0, 512)
+    memmove(destination.data, source.data, source.sizedata)
+
+def _sendEventEx(name, handle, event):
+    _checkEventEx(event)
+    native = _NativeEventEx()
+    _copyEventEx(event, native)
+    return _bindHelper(name, [c_long, POINTER(_NativeEventEx)])(handle, byref(native))
+
+def _receiveEventEx(name, handle, event, timeout_type=None, timeout=None):
+    _checkEventEx(event)
+    native = _NativeEventEx()
+    argtypes = [c_long, POINTER(_NativeEventEx)]
+    args = [handle, byref(native)]
+    if timeout_type is not None:
+        argtypes.append(timeout_type)
+        args.append(timeout)
+    rv = _bindHelper(name, argtypes)(*args)
+    if rv == 0:
+        _copyEventEx(native, event)
+    return rv
 
 ###############################################################################
 # newSession
@@ -85,12 +177,137 @@ def newSession():
 
 def closeSession( handle ):
     lib.vscphlp_closeSession( c_long(handle) )
-    _ctypes.dlclose(lib._handle) 
-    # Is this needed?
-    # if os.name == "nt":
-    #     _ctypes.FreeLibrary(lib1._handle)
-    # else:    
-    #     _ctypes.dlclose(lib.vscphlp__handle)      
+
+###############################################################################
+# Authenticated binary sessions and standalone frames
+#
+# Keys and frames are bytes-like. Status-returning helpers follow the existing
+# wrapper convention: a return code, or (return code, value) for outputs.
+
+def setBinarySecurity(handle, algorithm, key=None, hmacKey=None):
+    keybuf, keylen = _byteBuffer(key, 'key')
+    macbuf, maclen = _byteBuffer(hmacKey, 'hmacKey')
+    func = _bindHelper('vscphlp_setBinarySecurity',
+                       [c_long, c_int, POINTER(c_ubyte), c_size_t,
+                        POINTER(c_ubyte), c_size_t])
+    return func(handle, algorithm, keybuf, keylen, macbuf, maclen)
+
+def getBinarySecurity(handle):
+    algorithm = c_int()
+    func = _bindHelper('vscphlp_getBinarySecurity', [c_long, POINTER(c_int)])
+    rv = func(handle, byref(algorithm))
+    return rv, algorithm.value if rv == 0 else None
+
+def doCmdBinary(handle):
+    return _bindHelper('vscphlp_doCmdBinary', [c_long])(handle)
+
+def isBinaryMode(handle):
+    enabled = c_int()
+    func = _bindHelper('vscphlp_isBinaryMode', [c_long, POINTER(c_int)])
+    rv = func(handle, byref(enabled))
+    return rv, bool(enabled.value) if rv == 0 else None
+
+def sendBinaryFrame(handle, frame):
+    framebuf, length = _byteBuffer(frame, 'frame')
+    func = _bindHelper('vscphlp_sendBinaryFrame',
+                       [c_long, POINTER(c_ubyte), c_size_t])
+    return func(handle, framebuf, length)
+
+def receiveBinaryFrame(handle, timeout):
+    timeout = _timeout(timeout, 0xffffffff)
+    frame = POINTER(c_ubyte)()
+    length = c_size_t()
+    func = _bindHelper('vscphlp_receiveBinaryFrame',
+                       [c_long, POINTER(POINTER(c_ubyte)), POINTER(c_size_t), c_uint32])
+    rv = func(handle, byref(frame), byref(length), timeout)
+    if rv != 0:
+        return rv, None
+    try:
+        return rv, string_at(frame, length.value)
+    finally:
+        _bindHelper('vscphlp_freeBinaryFrame', [POINTER(c_ubyte)], None)(frame)
+
+def encryptFrameV1(frame, key, hmacKey, algorithm, iv=None):
+    framebuf, framelen = _byteBuffer(frame, 'frame')
+    keybuf, keylen = _byteBuffer(key, 'key')
+    macbuf, maclen = _byteBuffer(hmacKey, 'hmacKey')
+    ivbuf, ivlen = _byteBuffer(iv, 'iv')
+    output = (c_ubyte * (framelen + 48))()
+    length = c_size_t()
+    func = _bindHelper('vscphlp_encryptFrameV1',
+                       [POINTER(c_ubyte), c_size_t, POINTER(c_size_t),
+                        POINTER(c_ubyte), c_size_t, POINTER(c_ubyte), c_size_t,
+                        POINTER(c_ubyte), c_size_t, POINTER(c_ubyte), c_size_t, c_int])
+    rv = func(output, len(output), byref(length), framebuf, framelen,
+              keybuf, keylen, macbuf, maclen, ivbuf, ivlen, algorithm)
+    return rv, bytes(output[:length.value]) if rv == 0 else None
+
+def decryptFrameV1(frame, key, hmacKey):
+    framebuf, framelen = _byteBuffer(frame, 'frame')
+    keybuf, keylen = _byteBuffer(key, 'key')
+    macbuf, maclen = _byteBuffer(hmacKey, 'hmacKey')
+    output = (c_ubyte * max(framelen, 1))()
+    length = c_size_t()
+    func = _bindHelper('vscphlp_decryptFrameV1',
+                       [POINTER(c_ubyte), c_size_t, POINTER(c_size_t),
+                        POINTER(c_ubyte), c_size_t, POINTER(c_ubyte), c_size_t,
+                        POINTER(c_ubyte), c_size_t])
+    rv = func(output, len(output), byref(length), framebuf, framelen,
+              keybuf, keylen, macbuf, maclen)
+    return rv, bytes(output[:length.value]) if rv == 0 else None
+
+###############################################################################
+# UDP and multicast clients
+
+def newUdpClient():
+    return _bindHelper('vscphlp_newUdpClient', [], c_long)()
+
+def newMulticastClient():
+    return _bindHelper('vscphlp_newMulticastClient', [], c_long)()
+
+def configureDatagramClient(handle, config):
+    if isinstance(config, dict):
+        config = json.dumps(config, separators=(',', ':'))
+    if not isinstance(config, str):
+        raise TypeError('config must be a JSON string or dict')
+    func = _bindHelper('vscphlp_configureDatagramClient', [c_long, c_char_p])
+    return func(handle, config.encode('utf-8'))
+
+def connectDatagramClient(handle):
+    return _bindHelper('vscphlp_connectDatagramClient', [c_long])(handle)
+
+def disconnectDatagramClient(handle):
+    return _bindHelper('vscphlp_disconnectDatagramClient', [c_long])(handle)
+
+def closeDatagramClient(handle):
+    return _bindHelper('vscphlp_closeDatagramClient', [c_long])(handle)
+
+def isDatagramClientConnected(handle):
+    connected = c_int()
+    func = _bindHelper('vscphlp_isDatagramClientConnected', [c_long, POINTER(c_int)])
+    rv = func(handle, byref(connected))
+    return rv, bool(connected.value) if rv == 0 else None
+
+def sendDatagramEventEx(handle, event):
+    return _sendEventEx('vscphlp_sendDatagramEventEx', handle, event)
+
+def receiveDatagramEventEx(handle, event, timeout):
+    timeout = _timeout(timeout, (1 << (sizeof(c_long) * 8 - 1)) - 1)
+    return _receiveEventEx('vscphlp_receiveDatagramEventEx', handle, event, c_long, timeout)
+
+def setDatagramClientFilter(handle, eventFilter):
+    func = _bindHelper('vscphlp_setDatagramClientFilter',
+                       [c_long, POINTER(vscp.vscpEventFilter)])
+    return func(handle, byref(eventFilter))
+
+def getDatagramClientCount(handle):
+    count = c_uint16()
+    func = _bindHelper('vscphlp_getDatagramClientCount', [c_long, POINTER(c_uint16)])
+    rv = func(handle, byref(count))
+    return rv, count.value if rv == 0 else None
+
+def clearDatagramClientQueue(handle):
+    return _bindHelper('vscphlp_clearDatagramClientQueue', [c_long])(handle)
 
 ###############################################################################
 # setResponseTimeout
@@ -197,9 +414,8 @@ def sendEvent(handle,event):
 # sendEventEx
 #
 
-def sendEventEx(handle,eventex):    
-    rv = lib.vscphlp_sendEventEx( c_long(handle), byref(eventex) )
-    return rv 
+def sendEventEx(handle,eventex):
+    return _sendEventEx('vscphlp_sendEventEx', handle, eventex)
 
 
 ###############################################################################
@@ -214,9 +430,8 @@ def receiveEvent(handle,event):
 # receiveEventEx
 #
 
-def receiveEventEx(handle,eventex):    
-    rv = lib.vscphlp_receiveEventEx( c_long(handle), byref(eventex) )
-    return rv 
+def receiveEventEx(handle,eventex):
+    return _receiveEventEx('vscphlp_receiveEventEx', handle, eventex)
 
 ###############################################################################
 # isDataAvailable
@@ -254,9 +469,8 @@ def blockingReceiveEvent( handle, event, timeout):
 # blockingReceiveEventEx
 #
 
-def blockingReceiveEventEx( handle, eventex, timeout ):    
-    rv = lib.vscphlp_blockingReceiveEventEx( c_long(handle), byref(eventex), c_ulong(timeout) )
-    return rv 
+def blockingReceiveEventEx( handle, eventex, timeout ):
+    return _receiveEventEx('vscphlp_blockingReceiveEventEx', handle, eventex, c_ulong, timeout)
 
 ###############################################################################
 # setStatistics
@@ -1497,5 +1711,83 @@ def writeEventExToUdpFrame(ex, pkttype):
     rv = lib.vscphlp_writeEventExToUdpFrame( frame, c_size_t(size), c_ubyte(pkttype), byref(ex) )
     return rv, bytearray(frame)
 
+###############################################################################
+# Measurement unit conversion (unit table compiled into the helper library)
+#
+# All measurement classes use the types and units of CLASS1.MEASUREMENT.
+# Needs libvscphelper 16.0.0.292 or later.
+#
 
+def convertMeasurementUnit(vscp_type, from_unit, to_unit, value):
+    """Convert a measurement value between two units of a measurement type.
+    Returns (rv, result)."""
+    func = _bindHelper('vscphlp_convertMeasurementUnit',
+                       [c_ushort, c_ubyte, c_ubyte, c_double, POINTER(c_double)])
+    result = c_double()
+    rv = func(vscp_type, from_unit, to_unit, value, byref(result))
+    return rv, result.value
 
+def getMeasurementUnitInfo(vscp_type, unit):
+    """Get name, ASCII symbol, UTF-8 symbol and convertibility of a unit.
+    Returns (rv, name, symbol_ascii, symbol_utf8, convertible)."""
+    func = _bindHelper('vscphlp_getMeasurementUnitInfo',
+                       [c_ushort, c_ubyte, c_char_p, c_size_t, c_char_p, c_size_t,
+                        c_char_p, c_size_t, POINTER(c_int)])
+    name = create_string_buffer(256)
+    ascii_symbol = create_string_buffer(64)
+    utf8_symbol = create_string_buffer(64)
+    convertible = c_int(0)
+    rv = func(vscp_type, unit, name, len(name), ascii_symbol, len(ascii_symbol),
+              utf8_symbol, len(utf8_symbol), byref(convertible))
+    return (rv, name.value.decode('utf-8'), ascii_symbol.value.decode('utf-8'),
+            utf8_symbol.value.decode('utf-8'), bool(convertible.value))
+
+def convertMeasurement(e, to_unit):
+    """Convert the value of a measurement event to another unit.
+    Returns (rv, result)."""
+    result = c_double()
+    rv = lib.vscphlp_convertMeasurement(byref(e), c_ubyte(to_unit), byref(result))
+    return rv, result.value
+
+def convertMeasurementEx(ex, to_unit):
+    """As convertMeasurement() for a vscpEventEx. Returns (rv, result)."""
+    result = c_double()
+    rv = lib.vscphlp_convertMeasurementEx(byref(ex), c_ubyte(to_unit), byref(result))
+    return rv, result.value
+
+###############################################################################
+# Measurement unit conversion (expressions loaded at runtime from
+# vscp-units.json or vscp-hashtypeevents.json)
+#
+
+def evalUnitExpression(expr, value):
+    """Evaluate a unit conversion expression such as "({{{val}}} + 459.67) * 5/9".
+    Returns (rv, result)."""
+    func = _bindHelper('vscphlp_evalUnitExpression', [c_char_p, c_double, POINTER(c_double)])
+    result = c_double()
+    rv = func(expr.encode('utf-8'), value, byref(result))
+    return rv, result.value
+
+def loadUnitExpressions(path):
+    """Load the units and conversion expressions from a JSON file. Returns rv."""
+    func = _bindHelper('vscphlp_loadUnitExpressions', [c_char_p])
+    return func(os.fsencode(path))
+
+def loadUnitExpressionsFromString(text):
+    """Load the units and conversion expressions from JSON text (str, bytes
+    or a dict/list that is serialized). Returns rv."""
+    func = _bindHelper('vscphlp_loadUnitExpressionsFromString', [c_char_p])
+    if isinstance(text, (dict, list)):
+        text = json.dumps(text)
+    if isinstance(text, str):
+        text = text.encode('utf-8')
+    return func(text)
+
+def convertMeasurementUnitExpr(vscp_type, from_unit, to_unit, value):
+    """Convert a measurement value with the loaded expressions.
+    Returns (rv, result)."""
+    func = _bindHelper('vscphlp_convertMeasurementUnitExpr',
+                       [c_ushort, c_ubyte, c_ubyte, c_double, POINTER(c_double)])
+    result = c_double()
+    rv = func(vscp_type, from_unit, to_unit, value, byref(result))
+    return rv, result.value

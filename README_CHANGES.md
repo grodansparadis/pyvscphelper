@@ -7,6 +7,8 @@ tagged, rename **Unreleased** to the version and date, and start a new
 
 ## Unreleased
 
+- Measurement unit conversion: `convertMeasurementUnit()`, `getMeasurementUnitInfo()`, `convertMeasurement()`/`convertMeasurementEx()` (unit table in the helper library) and `loadUnitExpressions()`/`loadUnitExpressionsFromString()`, `convertMeasurementUnitExpr()`, `evalUnitExpression()` (expressions loaded at runtime). Needs libvscphelper 16.0.0.292 or later; tests in tests/test_units.py. Documentation in docs/measurementunits.md
+- The v16 helper library (libvscphelper16) is loaded first, then the older names
 - Add scripts/download-artifacts.sh to download and verify the newest CI build artifacts
 - Added missing functions (6684a68)
 - Add GitHub Actions workflow for Python package publishing (69ea3d0)
